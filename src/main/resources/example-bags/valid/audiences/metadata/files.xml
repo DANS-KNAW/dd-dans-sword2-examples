@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files xmlns:dcterms="http://purl.org/dc/terms/">
+<files xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:dcterms="http://purl.org/dc/terms/">
     <file filepath="data/random images/image01.png">
         <dcterms:title>The first image</dcterms:title>
         <dcterms:description>This description will be archived, but not displayed anywhere in the Web-UI</dcterms:description>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.easy.sword2examples;
+package nl.knaw.dans.sword2examples;
 
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;

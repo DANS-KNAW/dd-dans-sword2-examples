@@ -8,7 +8,10 @@ SYNOPSIS
 
 ```text
 mvn clean install
-./run.sh ...
+./run.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
+./run.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
+./run.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
+./run.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
 ```
 
 DESCRIPTION
@@ -17,7 +20,8 @@ This project contains two important resources for developers who are tasked with
 the DANS Data Stations (or the DANS Vault Service):
 
 * Java client code
-* Examples of bags that conform to the [DANS BagIt Profile v1]{:target=_blank} requirements (and, for illustration, some that violate some of the requirements).
+* Examples of bags that conform to the [DANS BagIt Profile v1]{:target=_blank} requirements (and&mdash;for illustration&mdash;some that violate some of the
+  requirements).
 
 !!! attention "Looking for legacy EASY2 examples?"
 
@@ -29,22 +33,22 @@ the DANS Data Stations (or the DANS Vault Service):
 Depositing to the DANS Archive via SWORD2 is basically a two-phase process:
 
 1. Submitting a deposit for ingest.
-2. Tracking the state of the deposit as it goes through the ingest-flow, until it reaches ARCHIVED status.
+2. Tracking the state of the deposit as it goes through the ingest-flow, until it reaches PUBLISHED status.
 
 The following diagram details this a bit further.
 
 ![SWORD diagram](img/sword2-summary.png)
 
-1. Client creates a deposit package.
+1. Client creates a deposit package (conforming to [DANS BagIt Profile v1]{:target=_blank}).
 2. Client sends deposit package to SWORD2 Service, getting back a URL to track the deposit's state.
-3. SWORD Service unzips and validates deposit.
+3. SWORD2 Service unzips and validates deposit.
 4. Ingest Flow performs checks and transformations and creates a dataset in the Data Station Repository.
-5. Ingest Flow reports back success or failure to SWORD Service.
+5. Ingest Flow reports back success or failure to SWORD2 Service.
 
 3-5. During this time the Client periodically checks the deposit state through the URL received in step 2.
-If the final state of `ARCHIVED` is reached, the process is concluded successfully. Other outcomes may be `INVALID` (the bag
-was [invalid according to the BagIt specs]{:target=_blank})or `REJECTED` (the additional requirements of [DANS BagIt Profile v1]{:target=_blank} were not met).
-In case the server encountered an unknown error `FAILED` will be returned.
+If the final state of `PUBLISHED` is reached, the process is concluded successfully. At this point the deposit has created a new dataset (version) in the Data
+Station repository. Other outcomes may be `INVALID` (the bag was [invalid according to the BagIt specs]{:target=_blank})or `REJECTED` (the additional
+requirements of [DANS BagIt Profile v1]{:target=_blank} were not met). In case the server encountered an unknown error `FAILED` will be returned.
 
 !!! note "DD SWORD2 service description"
 
@@ -67,7 +71,7 @@ The following is a step-by-step instruction on how to run a simple example using
 1. From your Data Station Manager at DANS request access to the demo Data Station server. The Data Station Manager will provide the information necessary to
    connect.
 2. Create an account in the demo Data Station.
-3. From your Data Station Manager at DANS request the account to be enabled for SWORD deposits.
+3. From your Data Station Manager at DANS request the account to be enabled for SWORD2 deposits.
 
 !!! note "Configuring which notifications to receive"
 
@@ -132,7 +136,7 @@ As the deposit is being processed by the server the client polls the Stat-IRI to
 The 5th and final step of the process is represented by the following response messaging.
 
 ```text
- Checking deposit status ... ARCHIVED
+ Checking deposit status ... PUBLISHED
  SUCCESS.
  Deposit has been archived at: <urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4>.  With DOI: [10.17026/test-Lwgy-zrn-jfyy]. Dataset landing page will be located at: <https://demo.<DS>.datastations.nl/ui/datasets/id/easy-dataset:24>.
  Complete statement follows:
@@ -144,7 +148,7 @@ The 5th and final step of the process is represented by the following response m
          <name>DANS-EASY</name>
      </author>
      <updated>2019-05-23T14:51:15.356Z</updated>
-     <category term="ARCHIVED" scheme="http://purl.org/net/sword/terms/state" label="State">http://demo.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24</category>
+     <category term="PUBLISHED" scheme="http://purl.org/net/sword/terms/state" label="State">http://demo.easy.dans.knaw.nl/ui/datasets/id/easy-dataset:24</category>
      <entry>
          <content type="multipart/related" src="urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4" />
          <id>urn:uuid:a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
@@ -158,57 +162,69 @@ The 5th and final step of the process is represented by the following response m
 
 ##### Statuses
 
-The deposit will go through a number of statuses. The following statuses are possible after sending a SWORD deposit:
+The deposit will go through a number of statuses.
 
-|  State       | Description                                                                                                                                                                                                                                                 |
-|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `DRAFT`      | The deposit is being prepared by the depositor. It is not submitted to the archive yet and<br/> still open for additional data.                                                                                                                             |
-| `UPLOADED`   | The deposit is in the process of being submitted. It is waiting to be finalized. The data is <br/>completely uploaded. It will automatically move to the next stage and the status will be <br/> updated accordingly.                                       |                                                   
-| `FINALIZING` | The deposit is in the process of being submitted. It is being checked for validity. It will automatically move to the next stage and the status will be updated accordingly.                                                                                |                                                  
-| `INVALID`    | The deposit is not accepted by the archive as the submitted bag is not valid. The description will detail what part of the bag is not according to specifications. The depositor is asked to fix the bag and resubmit the deposit.                          |                          
-| `SUBMITTED`  | The deposit is valid and being processed by the Ingest Flow. It will automatically move to the next stage and the status will be updated accordingly.                                                                                                       |                         
-| `REJECTED`   | The deposit does not meet the requirements of the Ingest Flow for its type. The description will detail what part of the deposit is not according to specifications. The depositor is asked to fix and resubmit the deposit.                                |                         
-| `FAILED`     | The deposit failed to be archive because of an unexpected condition during the Ingest Flow. DANS monitors the FAILED reports and aims to fix these issues as readily as possible. A following report should typically list the FAILED deposits as ARCHIVED. |  
-| `ARCHIVED`   | The deposit is successfully archived in the data vault.                                                                                                                                                                                                     |                                                                                                                                                                                                      
+| State        | Description                                                                                                                                                                                                                                           |
+|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `DRAFT`      | The deposit is being prepared by the depositor. It is not submitted to the archive yet <br/> and still open for additional data.                                                                                                                      |
+| `UPLOADED`   | The deposit is in the process of being submitted. It is waiting to be finalized. The data<br/> is completely uploaded. It will automatically move to the next stage and the status will <br/> be updated accordingly.                                 | 
+| `FINALIZING` | The deposit is in the process of being submitted. It is being checked for validity. It will <br/>  automatically move to the next stage and the status will be updated accordingly.                                                                   |
+| `INVALID`    | The deposit is not accepted by the archive as the submitted bag is not valid. <br/>The description will detail what part of the bag is not according to specifications. <br/>The depositor is asked to fix the bag and resubmit the deposit.          |
+| `SUBMITTED`  | The deposit is submitted for processing. `dd-sword2` will not update it anymore <br/> and limit itself to providing a Statement document on request.                                                                                                  |
+| `FAILED`     | An error occurred while processing the deposit                                                                                                                                                                                                        | 
+| `REJECTED`  | The deposit does not meet the requirements of [DANS BagIt Profile v1]{:target=_blank}. The description<br/> will detail what part of the deposit is not according to specifications. The depositor is<br/> requested to fix and resubmit the deposit. |                         
+| `PUBLISHED` | The deposit is successfully published in the Data Station repository.                                                                                                                                                                                 |                                                                                                                                                                                                      
 
-If an error occurs the deposit will end up INVALID, REJECTED (client error) or FAILED (server error).
-The text of the `category` element will contain details about the state.
+If an error occurs the deposit will end up INVALID, REJECTED (client error) or FAILED (server error). The text of the `category` element will contain details
+about the error.
+
+!!! note "What happened to ARCHIVED?"
+
+    In [easy-sword2-dans-examples]{:target=\_blank} the final state was called `ARCHIVED`. In the [Data Station Architecture]{:target=\_blank}, however, the 
+    deposit is not archived until an archival copy has been created in the DANS Data Vault (the tape archive). It is possible to verify that the archival copy 
+    has been created by dereferencing the URN:NBN identifier returned in the SWORD Statement. This will return a catalog page detailing the archival copies 
+    stored for the dataset identifier by the URN:NBN. While it is certainly _possible_ to include this stage in the process, it is **not necessary**, as DANS 
+    takes custody of the data as soon as it has been published in the Data Station repository.
+
+    **(Also note that at time of writing&mdash;October 2022&mdash;the DANS Data Vault is not yet operational.)**
 
 ### Next steps
 
-#### Creating test data
+#### Studying the example bags
 
-The easy-sword2 service requires deposits to be sent as zipped bags (see [BagIt]). The EASY archive adds some extra requirements.
-These are documented in the [DANS BagIt Profile]. A command line tool called [xmllint] can be used to validate xml files locally.
+After successfully depositing the first example to the demo repository you can start thinking about how to design your SWORD2 client. Depending on your source
+repository system this make take various shapes. In any case your code will need to assemble a bag conforming to [DANS BagIt Profile v1]{:target=_blank}. Some
+examples of such bags are included in the [resources directory]{:target=_blank} of this project.
 
-##### Pre-made examples
+#### Finding libraries and tools
 
-Some examples of bags which meet the specifications of the SWORD depositing interface can be found in the [resources directory].
-These bags are categorized by the flow which they are designed for. You can use these as starting points for you test data or start a
-new bag from scratch (see next section).
+* [bagit-java]{:target=_blank}&mdash;a Java library for working with bags. This is a DANS fork of a project started by Library of Congress, which is no longer
+  maintained by them.
+* [bagit-python]{:target=_blank}&mdash;a Python library and command line tool for working with bags, also by Library of Congress. This is still maintained by
+  them.
+* `brew install bagit` is still available on MacOS to install an older version of [bagit-java]{:target=_blank} which contained a powerful command line
+  interface, but is no longer maintained.
+* [xmllint]{:target=_blank}&mdash;a tool to check that XML files conform to a given XML schema.
 
-##### Creating your own examples
+!!! warning "Abdera project retired"
 
-To upload a dataset it must be properly formatted. Some example bags can be found in the [resources directory], as well as the specifications the bags must
-follow.
-A dataset can be created by performing the following steps. For this you will need the `bagit` command line tool which is only available on MacOS and can be
-installed
-through the `brew` command. See [this blog post](https://patchbay.tech/2018/03/14/getting-started-with-bagit-in-2018/) for a list of other BagIt tools.
+    [easy-sword2-dans-examples]{:target=\_blank} used the [Apache Abdera]{:target=_blank} library to parse Atom Entry and Feed documents. The current example 
+    code has moved away from using this project, because it is has been retired for ten years now. Instead, generic XPath is used to obtain the relevant parts 
+    of the XML documents sent by the server.
 
-1. Run `mkdir my-bag; mkdir my-bag/data; mkdir my-bag/metadata; bagit baginplace my-bag` to create the bag
-2. Place the data files in the `my-bag/data` directory
-3. Create the `my-bag/metadata/dataset.xml` and `my-bag/metadata/files.xml` add the appropriate metadata. See [DANS BagIt Profile] and the pre-made examples for
-   guidance about what constitutes appropriate metadata.
-4. Update the `my-bag/bag-info.txt` to include the Created date: `Created: yyyy-mm-ddThh:mm:ss.000+00:00`
-5. Update the checksums with `bagit makecomplete my-bag my-bag --payloadmanifestalgorithm SHA1`
-6. verify that the bag is valid according to Bagit with `bagit verifyvalid my-bag`
+#### End-point for DANS BagIt Profile validation
+
+All bags that are deposited to a Data Station are validated by [dd-validate-dans-bag]{:target=_blank} to see if they conform to
+[DANS BagIt Profile v1]{:target=_blank}. To facilitate faster development in the demo environment this service can be invoked directly.
+
+<!-- TODO: describe how -->
 
 #### Testing different scenarios
 
-This project contains 4 [Java example programs] which can be used as a guide to writing a custom client to deposit datasets using the SWORD2 protocol.
-The examples take one or more bags as input parameters. These bags may be directories or ZIP files.
-The code copies each bag to the `target`-folder of the project, zips it (if necessary) and sends it to the specified SWORDv2 service.
-The copying step has been built in because in some examples the bag must be modified before it is sent.
+This project contains 4 [Java example programs]{:target=_blank} which can be used as a guide to writing a custom client to deposit datasets using the SWORD2
+protocol. The examples take one or more bags as input parameters. These bags may be directories or ZIP files. The code copies each bag to the `target`-folder of
+the project, zips it (if necessary) and sends it to the specified SWORD2 service. The copying step has been built in because in some examples the bag must be
+modified before it is sent.
 
 1. `SimpleDeposit.java` sends a zipped dataset in a single chunk and reports on the status.
 2. `ContinuedDeposit.java` sends a zipped bag in chunks of configurable size and reports on the status.
@@ -219,59 +235,38 @@ The `Common.java` class contains elements which are used by all the other classe
 
 The project directory contains a `run.sh` script that can be used to invoke the Java programs. For example:
 
-    mvn clean install # Only necessary if the code was not previously built.
-    ./run.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
-    ./run.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
-    ./run.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
-    ./run.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
+```bash
+mvn clean install # Only necessary if the code was not previously built.
+./run.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
+./run.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
+./run.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
+./run.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
+```
 
-### DANS reports
+EXAMPLES
+--------
 
-DANS sends out e-mails concerning the status of the deposits both in the deposit area and the DANS archives.
+* [Java Example programs]{:target=_blank}.
+* Example bags can be found in the [resources directory]{:target=_blank}.
 
-`DOI report for prefix <prefix>`
+BUILDING FROM SOURCE
+--------------------
+Prerequisites:
 
-* `<prefix>-doi-report-<date>.csv`: An overview of all the doi with this prefix in the DANS archives.
+* Java 11 or higher
+* Maven 3.3.3 or higher
 
-`DANS-EASY Error report: status of failed EASY deposits` this e-mail contains two reports about failed deposits:
+Steps:
 
-* `DANS-EASY-report-error-yesterday-<date>.csv`: A deposit-report with all the FAILED / REJECTED / INVALID deposits of the last day.
-* `DANS-EASY-report-error-<date>.csv`: A deposit-report with all the failed deposits that are in the deposit area. In case a `REJECTED` deposit has been resend,
-  the old one is still mentioned here.
-
-`DANS-EASY Report: status of EASY deposits`, An e-mail with reports on all deposits in the deposit area:
-
-* `DANS-EASY-report-full-yesterday-<date>.csv`: A deposit-report containing all the deposits made in the last day, both `ARCHIVED` and otherwise.
-* `DANS-EASY-report-summary-<date>.txt`: A summary of the data that's being held in the deposit area, split into the different Statuses
-* `DANS-EASY-report-summary-yesterday-<date>.txt`: A summary of the data that's being added to the deposit area in the last day, split into the different
-  Statuses.
-
-The deposit-reports are csv files with the following columns:
-
-| column                     | description                                                                               |
-|----------------------------|-------------------------------------------------------------------------------------------|
-| DEPOSITOR                  | the account name of the depositor                                                         |
-| DEPOSIT_ID                 | the UUID under which the deposit is registered at DANS-EASY                               |
-| BAG_NAME                   | the directory name of the bag                                                             |
-| DEPOSIT_STATE              | the state of the deposit, see the `Statuses` for possible values                          |
-| ORIGIN                     | the source of the deposit, either SWORD or an internal source                             |
-| LOCATION                   | the current location of the deposit                                                       |
-| DANS_DOI                   | the DOI that DANS-EASY assigns to the deposit, if any                                     |
-| ORGANIZATIONAL_ID          | the organizational identifier given by the depositor in the bag-info.txt, if any          |
-| DOI_REGISTERED             | whether the DANS_DOI has been registered at Datacite                                      |
-| FEDORA_ID                  | the identifier of the deposit in the web interface.                                       |
-| DATAMANAGER                | the name of the datamanager assigned to the deposit, or `n/a` otherwise                   |
-| DEPOSIT_CREATION_TIMESTAMP | the `Created` timestamp as given in the bag-info.txt                                      |
-| DEPOSIT_UPDATE_TIMESTAMP   | the timestamp of the last update on this deposit during the ingest into the DANS archive  |
-| DESCRIPTION                | a description of the current state of the deposit. To be used together with DEPOSIT_STATE |
-| NBR_OF_CONTINUED_DEPOSITS  | the number of packages received for this deposit so far                                   |
-| STORAGE_IN_BYTES           | the amount of data stored in the deposit area for this deposit                            |
+    git clone https://github.com/DANS-KNAW/dd-dans-sword2-examples.git
+    cd dd-dans-sword2-examples
+    mvn clean install
 
 [Java Example programs]: {{ dd_dans_sword2_examples_base_url }}/tree/master/src/main/java/nl/knaw/dans/sword2examples
 
 [resources directory]: {{ dd_dans_sword2_examples_base_url }}/tree/master/src/main/resources
 
-[BagIt]: https://datatracker.ietf.org/doc/draft-kunze-bagit
+[BagIt]: https://purl.org/net/bagit
 
 [DANS BagIt Profile v1]: {{ dans_bagit_profile }}
 
@@ -279,13 +274,16 @@ The deposit-reports are csv files with the following columns:
 
 [SWORD v2.0 protocol]: http://swordapp.org/sword-v2/
 
-
 [easy-sword2-dans-examples]: https://github.com/DANS-KNAW/easy-sword2-dans-examples
 
+[Data Station Architecture]: https://dans-knaw.github.io/dans-datastation-architecture/#overview
 
-EXAMPLES
---------
+[bagit-java]: https://github.com/DANS-KNAW/bagit-java
 
+[bagit-python]: https://github.com/LibraryOfCongress/bagit-python
 
+[dd-validate-dans-bag]: https://dans-knaw.github.io/dd-validate-dans-bag/
 
+[xmllint]: http://xmlsoft.org/xmllint.html
 
+[Apache Abdera]: https://abdera.apache.org/
