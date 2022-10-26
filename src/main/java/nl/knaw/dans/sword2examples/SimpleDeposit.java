@@ -32,13 +32,12 @@ public class SimpleDeposit {
 
     /**
      * Sends a bag to the easy-sword2 service and tracks its status until it is archived or failure is reported.
-     * 
-     * @param args
-     *        0. collection URL (Col-IRI), 1. EASY user name, 2. EASY password, 3. bag to send (a directory or a zip file)
+     *
+     * @param args 0. collection URL (Col-IRI), 1. EASY user name, 2. EASY password, 3. bag to send (a directory or a zip file)
      */
     public static void main(String[] args) throws Exception {
         if (args.length != 4) {
-            System.err.println("Usage: java nl.knaw.dans.easy.sword2examples.SimpleDeposit <Col-IRI> <EASY uid> <EASY passwd> <bag file/dir>");
+            System.err.printf("Usage: java %s <Col-IRI> <EASY uid> <EASY passwd> <bag file/dir>", SimpleDeposit.class.getName());
             System.exit(1);
         }
 
@@ -62,7 +61,7 @@ public class SimpleDeposit {
         // 1. Set up stream for calculating MD5
         MessageDigest md = MessageDigest.getInstance("MD5");
         try (FileInputStream fis = new FileInputStream(zipFile);
-             DigestInputStream dis = new DigestInputStream(fis, md)) {
+            DigestInputStream dis = new DigestInputStream(fis, md)) {
 
             // 2. Post entire bag to Col-IRI
             CloseableHttpClient http = Common.createHttpClient(colIri.toURI(), uid, pw);

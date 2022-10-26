@@ -27,34 +27,17 @@ if [[ "$1" == "suspend" ]]; then
  shift 1
 fi
 
-PROGRAM=$1
-COL_IRI=$2
-USER=$3
-PASSWORD=$4
+BAG=$1
 JARFILE=$(ls -1 target/*SNAPSHOT.jar)
 
-if (( $# < 5 )); then
- echo "Usage: ./run.sh [suspend] <program> <COL-IRI> <user> <password> [<chunksize>] <bag>..."
+if (( $# < 1 )); then
+ echo "Usage: ./run-validation.sh [suspend] <bag>"
  echo "Where:"
  echo "suspend = suspend execution at the start so as to allow a debugger to attach at port "
- echo "<program> = one of Simple,Continued,SequenceSimple,SequenceContinued"
- echo "<COL-IRI> = the collection IRI to post to"
- echo "<user> = Data Station user account"
- echo "<password> = password for <user>"
- echo "<chunksize> = size in byte of each chunk (only for the Continued variants)"
- echo "<bag> = one bag directory or zip file to send or multiple (only for Sequence variants)"
+ echo "<bag> = one bag directory or zip file to send"
  exit
 fi
 
-
-if [[ "$PROGRAM" =~ ^.*Continued$ ]]; then
-    CHUNKSIZE=$5
-    BAGDIRS=${@:6}
-else
-    CHUNKSIZE=""
-    BAGDIRS=${@:5}
-fi
-
 mvn dependency:copy-dependencies
-java -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.${PROGRAM}Deposit" $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS
+java -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.ValidateBag" $BAG
 

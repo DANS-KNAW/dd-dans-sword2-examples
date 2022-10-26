@@ -25,7 +25,7 @@ public class SequenceContinuedDeposit {
     public static void main(String[] args) throws Exception {
         if (args.length < 4) {
             System.err
-                    .println("Usage: java nl.knaw.dans.easy.sword2examples.SequenceContinuedDeposit <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag dirname>...");
+                    .printf("Usage: %s <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag dirname>...%n", SequenceContinuedDeposit.class.getName());
             System.exit(1);
         }
 

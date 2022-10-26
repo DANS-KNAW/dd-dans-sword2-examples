@@ -41,12 +41,14 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
@@ -58,6 +60,7 @@ import java.util.List;
 
 public class Common {
     static final String BAGIT_URI = "http://purl.org/net/sword/package/BagIt";
+
     /**
      * Assumes the entity is UTF-8 encoded text and reads it into a String.
      *
@@ -66,7 +69,7 @@ public class Common {
      * @throws IOException if an I/O error occurs
      */
     public static String readEntityAsString(HttpEntity entity) throws IOException {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        var bos = new ByteArrayOutputStream();
         IOUtils.copy(entity.getContent(), bos);
         return bos.toString(StandardCharsets.UTF_8);
     }
@@ -148,7 +151,8 @@ public class Common {
                     System.out.println("Complete statement follows:");
                     System.out.println(bodyText);
                     return entries.get(0).getId().toURI();
-                } else {
+                }
+                else if (!"SUBMITTED".equals(state)) {
                     System.out.println("Unknown status: " + state);
                 }
             }
@@ -215,17 +219,22 @@ public class Common {
     }
 
     public static void setBagIsVersionOf(File bagDir, URI versionOfUri) throws Exception {
-        Bag bag =  new Bag();
+        Bag bag = new Bag();
         bag.getMetadata().add("Is-Version-Of", versionOfUri.toASCIIString());
         BagWriter.write(bag, bagDir.toPath());
     }
 
     public static void zipDirectory(File dir, File zipFile) throws Exception {
-        if (zipFile.exists())
-            zipFile.delete();
-        ZipFile zf = new ZipFile(zipFile);
-        ZipParameters parameters = new ZipParameters();
-        zf.addFolder(dir, parameters);
+        if (zipFile.exists()) {
+            if (!zipFile.delete()) {
+                System.err.println("Warning: delete action on zip returned false. ZIP may not have been deleted.");
+            }
+            ;
+        }
+        try (var zf = new ZipFile(zipFile)) {
+            ZipParameters parameters = new ZipParameters();
+            zf.addFolder(dir, parameters);
+        }
     }
 
     /**
@@ -242,20 +251,33 @@ public class Common {
             FileUtils.copyDirectory(bag, dirInTarget);
         }
         else {
-            ZipFile zf = new ZipFile(bag);
-            if (!zf.isValidZipFile()) {
-                System.err.println("ERROR: The submitted bag is not a valid directory or Zipfile");
-                System.exit(1);
-            }
-            else {
-                File zipInTarget = new File("target", bag.getName());
-                FileUtils.deleteQuietly(zipInTarget);
-                dirInTarget = new File("target", ZipUtil.getBaseDirName(bag.toString()));
-                FileUtils.deleteQuietly(dirInTarget);
-                zf.extractAll("target");
+            try (var zf = new ZipFile(bag)) {
+                if (!zf.isValidZipFile()) {
+                    System.err.println("ERROR: The submitted bag is not a valid directory or Zipfile");
+                    System.exit(1);
+                }
+                else {
+                    var zipInTarget = new File("target", bag.getName());
+                    FileUtils.deleteQuietly(zipInTarget);
+                    dirInTarget = new File("target", ZipUtil.getBaseDirName(bag.toString()));
+                    FileUtils.deleteQuietly(dirInTarget);
+                    zf.extractAll("target");
+                }
             }
         }
         return dirInTarget;
+    }
+
+    public static void validateZip(File zippedBag, URI uri) throws Exception {
+        try (CloseableHttpClient httpClient = createHttpClient(uri, "", "")) {
+            var post = RequestBuilder
+                .post(uri)
+                .setHeader("Content-Type", "application/zip")
+                .setEntity(new InputStreamEntity(new FileInputStream(zippedBag))).build();
+            var response = httpClient.execute(post);
+            var responseText = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
+            System.out.println(responseText);
+        }
     }
 }
 

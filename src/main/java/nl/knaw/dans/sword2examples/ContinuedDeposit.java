@@ -30,7 +30,7 @@ import java.security.MessageDigest;
 public class ContinuedDeposit {
     public static void main(String[] args) throws Exception {
         if (args.length != 5) {
-            System.err.println("Usage: java nl.knaw.dans.easy.sword2examples.ContinuedDeposit <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag file/dir>");
+            System.err.printf("Usage: java %s <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag file/dir>", ContinuedDeposit.class.getName());
             System.exit(1);
         }
 
@@ -58,7 +58,7 @@ public class ContinuedDeposit {
         // 2. Post first chunk bag to Col-IRI
         CloseableHttpClient http = Common.createHttpClient(colIri.toURI(), uid, pw);
         CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", colIri.toURI(), "bag.zip.1", "application/octet-stream", http,
-                chunkSize < zipFile.length());
+            chunkSize < zipFile.length());
 
         // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
         String bodyText = Common.readEntityAsString(response.getEntity());
@@ -78,7 +78,7 @@ public class ContinuedDeposit {
         long remaining = zipFile.length() - chunkSize;
         int count = 2;
         while (remaining > 0) {
-            System.out.print(String.format("POST-ing chunk of %d bytes to SE-IRI (remaining: %d) ... ", chunkSize, remaining));
+            System.out.printf("POST-ing chunk of %d bytes to SE-IRI (remaining: %d) ... ", chunkSize, remaining);
             response = Common.sendChunk(dis, chunkSize, "POST", seIri, "bag.zip." + count++, "application/octet-stream", http, remaining > chunkSize);
             remaining -= chunkSize;
             bodyText = Common.readEntityAsString(response.getEntity());
@@ -99,7 +99,7 @@ public class ContinuedDeposit {
         System.out.println("Stat-IRI = " + statIri);
 
         // 5. Check statement every ten seconds (a bit too frantic, but okay for this test). If status changes:
-        // report new status. If status is an error (INVALID, REJECTED, FAILED) or ARCHIVED: exit.
+        // report new status. If status is an error (INVALID, REJECTED, FAILED) or PUBLISHED: exit.
         return Common.trackDeposit(http, statIri.toURI());
     }
 }

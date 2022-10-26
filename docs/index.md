@@ -8,10 +8,11 @@ SYNOPSIS
 
 ```text
 mvn clean install
-./run.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
-./run.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
-./run.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
-./run.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
+./run-deposit.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
+./run-deposit.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
+./run-deposit.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
+./run-deposit.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
+./run-validation 
 ```
 
 DESCRIPTION
@@ -237,10 +238,10 @@ The project directory contains a `run.sh` script that can be used to invoke the 
 
 ```bash
 mvn clean install # Only necessary if the code was not previously built.
-./run.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
-./run.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
-./run.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
-./run.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
+./run-deposit.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
+./run-deposit.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
+./run-deposit.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
+./run-deposit.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
 ```
 
 EXAMPLES
