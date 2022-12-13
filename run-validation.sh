@@ -28,6 +28,9 @@ if [[ "$1" == "suspend" ]]; then
 fi
 
 BAG=$1
+KEYSTORE_FILE=$HOME/.keystore
+KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
+
 JARFILE=$(ls -1 target/*SNAPSHOT.jar)
 
 if (( $# < 1 )); then
@@ -38,6 +41,12 @@ if (( $# < 1 )); then
  exit
 fi
 
+if [[ -f $KEYSTORE_FILE ]]; then
+  KEYSTORE_PROPERTIES="-Djavax.net.ssl.trustStore=$KEYSTORE_FILE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASSWORD"
+else
+  KEYSTORE_PROPERTIES=""
+fi
+
 mvn dependency:copy-dependencies
-java -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.ValidateBag" $BAG
+java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.ValidateBag" $BAG
 
