@@ -48,12 +48,12 @@ The following diagram details this a bit further.
 
 3-5. During this time the Client periodically checks the deposit state through the URL received in step 2.
 If the final state of `PUBLISHED` is reached, the process is concluded successfully. At this point the deposit has created a new dataset (version) in the Data
-Station repository. Other outcomes may be `INVALID` (the bag was [invalid according to the BagIt specs]{:target=_blank})or `REJECTED` (the additional
+Station repository. Other outcomes may be `INVALID` (the bag was [invalid according to the BagIt specs]{:target=_blank}) or `REJECTED` (the additional
 requirements of [DANS BagIt Profile v1]{:target=_blank} were not met). In case the server encountered an unknown error `FAILED` will be returned.
 
 !!! note "DD SWORD2 service description"
 
-    More detailed information about the SWORD2 can be found [on its manual page]{:target=_blank}
+    More detailed information about the SWORD2 can be found [on its manual page]{:target=_blank}.
 
 [on its manual page]: {{ dd_sword2_docs }}
 [invalid according to the BagIt specs]: https://www.rfc-editor.org/rfc/rfc8493#section-3

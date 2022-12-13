@@ -32,6 +32,8 @@ COL_IRI=$2
 USER=$3
 PASSWORD=$4
 JARFILE=$(ls -1 target/*SNAPSHOT.jar)
+KEYSTORE_FILE=$HOME/.keystore
+KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
 
 if (( $# < 5 )); then
  echo "Usage: ./run-deposit.sh [suspend] <program> <COL-IRI> <user> <password> [<chunksize>] <bag>..."
@@ -55,6 +57,13 @@ else
     BAGDIRS=${@:5}
 fi
 
+if [[ -f $KEYSTORE_FILE ]]; then
+  KEYSTORE_PROPERTIES="-Djavax.net.ssl.trustStore=$KEYSTORE_FILE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASSWORD"
+else
+  KEYSTORE_PROPERTIES=""
+fi
+
+
 mvn dependency:copy-dependencies
-java -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.${PROGRAM}Deposit" $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS
+java $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.${PROGRAM}Deposit" $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS
 
