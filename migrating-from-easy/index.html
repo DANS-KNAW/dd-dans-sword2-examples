@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Migrating from EASY - dd-dans-sword2-examples</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Migrating from EASY";
+        var mkdocs_page_input_path = "migrating-from-easy.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> dd-dans-sword2-examples
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Manual</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Migrating from EASY</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#service-url">Service URL</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ddm-schema-changes">DDM schema changes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#new-dans-dataset-metadata-schema-and-uri">New DANS Dataset Metadata schema and URI</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#new-profile-element-ddmpersonaldata">New profile element: ddm:personalData</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exactly-one-license-element-with-xsitypedctermsuri">Exactly one license element with xsi:type="dcterms:URI"</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#final-deposit-state-changed-to-published">Final deposit state changed to PUBLISHED</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">dd-dans-sword2-examples</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li><li>Migrating from EASY</li>
+    <li class="wy-breadcrumbs-aside">
+        <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/edit/master/docs/migrating-from-easy.md"> Edit on DANS-KNAW/dd-dans-sword2-examples</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="migrating-from-easy-to-a-data-station">Migrating from EASY to a Data Station<a class="headerlink" href="#migrating-from-easy-to-a-data-station" title="Permanent link">&para;</a></h1>
+<p>The Data Station SWORD2 service is mostly compatible with the legacy EASY SWORD2 service. However, there are a few required changes to the client code.</p>
+<h2 id="service-url">Service URL<a class="headerlink" href="#service-url" title="Permanent link">&para;</a></h2>
+<p>The service URL has changed from <code>https://easy.dans.knaw.nl/sword2/collection/1</code> to a Data Station specific URL:</p>
+<ul>
+<li><code>https://archaeology.datastations.nl/sword2/collection/1</code> (projected)</li>
+<li><code>https://ssh.datastations.nl/sword2/collection/1</code> (projected)</li>
+</ul>
+<p>Test deposit must be sent to the demo-server, which is hosted at the "demo" subdomain of the Data Station, e.g.,
+<code>https://demo.archaeology.datastations.nl/sword2/collection/1</code>. Since this is a test environment, this server is protected with an
+extra authentication header which is provided to our customers via a different channel.</p>
+<h2 id="ddm-schema-changes">DDM schema changes<a class="headerlink" href="#ddm-schema-changes" title="Permanent link">&para;</a></h2>
+<h3 id="new-dans-dataset-metadata-schema-and-uri">New DANS Dataset Metadata schema and URI<a class="headerlink" href="#new-dans-dataset-metadata-schema-and-uri" title="Permanent link">&para;</a></h3>
+<p>A new version of DANS Dataset Metadata has been introduced. To indicate that it is using the new schema the <code>dataset.xml</code> file in the deposit
+must use the new namespace: <code>http://schemas.dans.knaw.nl/dataset/ddm-v2/</code>. Deposits containing a legacy-version <code>dataset.xml</code> will be rejected.</p>
+<h3 id="new-profile-element-ddmpersonaldata">New profile element: <code>ddm:personalData</code><a class="headerlink" href="#new-profile-element-ddmpersonaldata" title="Permanent link">&para;</a></h3>
+<p>The <code>profile</code> element has a new, required element, that provides a statement about the presence of personal data in the dataset.
+It must be added as the last sub-element of <code>profile</code>. It has one required attribute <code>present</code>, which takes one of the following values:
+<code>Yes</code>, <code>No</code>, <code>Unknown</code>.</p>
+<p>Example:</p>
+<pre><code class="language-xml">
+&lt;ddm:personalData present=&quot;No&quot;/&gt;
+</code></pre>
+<h3 id="exactly-one-license-element-with-xsitypedctermsuri">Exactly one <code>license</code> element with <code>xsi:type="dcterms:URI"</code><a class="headerlink" href="#exactly-one-license-element-with-xsitypedctermsuri" title="Permanent link">&para;</a></h3>
+<p>There must be exactly one element with an <code>xsi:type</code> attribute set to <code>dcterms:URI</code> and an element text containing one of the licenses
+supported by the Data Station. The supported licenses can be retrieved from the Data Station API for example:</p>
+<pre><code class="language-bash">curl https://archaeology.datastations.nl/api/licenses | jq '.data[].uri' 
+</code></pre>
+<p>The use of <a href="https://stedolan.github.io/jq/" target="_blank">jq</a> to extract the URIs from the resulting JSON is optional, of course.</p>
+<h2 id="final-deposit-state-changed-to-published">Final deposit state changed to <code>PUBLISHED</code><a class="headerlink" href="#final-deposit-state-changed-to-published" title="Permanent link">&para;</a></h2>
+<p>The final state of a deposit in EASY was <code>ARCHIVED</code>. This has changed to the state <code>PUBLISHED</code>. The meaning is still that the client can stop
+tracking the deposit and rest assured that archiving in the DANS Data Vault will occur in due course. </p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Manual"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
