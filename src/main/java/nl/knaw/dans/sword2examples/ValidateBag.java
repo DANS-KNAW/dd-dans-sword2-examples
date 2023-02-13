@@ -21,14 +21,19 @@ import java.net.URI;
 public class ValidateBag {
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
-            System.err.printf("Usage: java %s <bag file/dir>", ValidateBag.class.getName());
+        if (args.length != 4) {
+            System.err.printf("Usage: java %s <bag file/dir> <validate-dans-bag-url> <user> <password>", ValidateBag.class.getName());
             System.exit(1);
         }
-        var bag = new File(args[0]);
+        var validateDansBagUrl = new URI(args[0]);
+        var bag = new File(args[1]);
+        var user = args[2];
+        var password = args[3];
+
         var bagInTarget = Common.copyToBagDirectoryInTarget(bag);
         var zippedBagInTarget = new File(bagInTarget.toString() + ".zip");
+        Common.setDataStationUserAccount(bagInTarget, user);
         Common.zipDirectory(bagInTarget, zippedBagInTarget);
-        Common.validateZip(zippedBagInTarget, new URI("https://dar.dans.knaw.nl/validate-dans-bag"));
+        Common.validateZip(zippedBagInTarget, validateDansBagUrl, user, password);
     }
 }

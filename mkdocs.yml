@@ -24,6 +24,7 @@ repo_url: https://github.com/DANS-KNAW/dd-dans-sword2-examples
 nav:
   - Manual: index.md
   - Migrating from EASY: migrating-from-easy.md
+  - Development: dev.md
 
 extra:
   dans_bagit_profile: https://dans-knaw.github.io/dans-bagit-profile/versions/1.0.0/
