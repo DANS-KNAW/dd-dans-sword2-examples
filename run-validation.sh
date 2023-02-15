@@ -20,7 +20,7 @@
 #
 #
 
-DEBUG_PORT=8000
+DEBUG_PORT=8001
 SUSPEND=n
 if [[ "$1" == "suspend" ]]; then
  SUSPEND=y

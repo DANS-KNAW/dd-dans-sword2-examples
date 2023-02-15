@@ -32,6 +32,7 @@ public class ValidateBag {
 
         var bagInTarget = Common.copyToBagDirectoryInTarget(bag);
         var zippedBagInTarget = new File(bagInTarget.toString() + ".zip");
+        // Adding Data-Station-User-Account because we are calling the validator directly. When depositing to the SWORD2 service you don't have to do this, because SWORD2 will take care of it for you.
         Common.setDataStationUserAccount(bagInTarget, user);
         Common.zipDirectory(bagInTarget, zippedBagInTarget);
         Common.validateZip(zippedBagInTarget, validateDansBagUrl, user, password);

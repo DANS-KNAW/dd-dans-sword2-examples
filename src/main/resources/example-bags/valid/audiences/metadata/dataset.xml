@@ -3,8 +3,7 @@
         xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
         xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
         xmlns:dcterms="http://purl.org/dc/terms/"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ddm:profile>
         <dc:title>A bag containing multiple audiences</dc:title>
         <dcterms:description>
@@ -12,9 +11,8 @@
         </dcterms:description>
         <dcx-dai:creatorDetails>
             <dcx-dai:author>
-                <dcx-dai:titles></dcx-dai:titles>
+                <dcx-dai:titles>Dr</dcx-dai:titles>
                 <dcx-dai:initials>I</dcx-dai:initials>
-                <dcx-dai:insertions></dcx-dai:insertions>
                 <dcx-dai:surname>Lastname</dcx-dai:surname>
                 <dcx-dai:organization>
                     <dcx-dai:name xml:lang="en">Example Org</dcx-dai:name>
@@ -29,12 +27,10 @@
         <ddm:audience>D16400</ddm:audience>
         <ddm:audience>D16500</ddm:audience>
         <ddm:audience>E16000</ddm:audience>
-        <ddm:accessRights>NO_ACCESS</ddm:accessRights>
-        <ddm:personalData present="No" />
+        <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
+        <ddm:personalData present="No"/>
     </ddm:profile>
     <ddm:dcmiMetadata>
-        <dcterms:hasVersion>1.1</dcterms:hasVersion>
-        <dcterms:modified>2015-09-08</dcterms:modified>
         <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
         <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
     </ddm:dcmiMetadata>
