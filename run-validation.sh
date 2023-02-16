@@ -20,14 +20,18 @@
 #
 #
 
-DEBUG_PORT=8000
+DEBUG_PORT=8001
 SUSPEND=n
 if [[ "$1" == "suspend" ]]; then
  SUSPEND=y
  shift 1
 fi
 
-BAG=$1
+SERVICE_URL=$1
+BAG=$2
+USER=$3
+PASSWORD=$4
+
 KEYSTORE_FILE=$HOME/.keystore
 KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
 
@@ -48,5 +52,5 @@ else
 fi
 
 mvn dependency:copy-dependencies
-java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.ValidateBag" $BAG
+java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.ValidateBag" $SERVICE_URL $BAG $USER $PASSWORD
 

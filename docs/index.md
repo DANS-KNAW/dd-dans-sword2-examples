@@ -8,11 +8,11 @@ SYNOPSIS
 
 ```text
 mvn clean install
-./run-deposit.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
-./run-deposit.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
-./run-deposit.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
-./run-deposit.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
-./run-validation 
+./run-deposit.sh Simple https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword bag
+./run-deposit.sh Continued https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword chunksize bag
+./run-deposit.sh SequenceSimple https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword bag1 bag2 bag3
+./run-deposit.sh SequenceContinued https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword chunksize bag1 bag2 bag3
+./run-validation.sh https://demo.sword2.<DS>.datastations.nl/validate-dans-bag bag myuser mypassword
 ```
 
 DESCRIPTION

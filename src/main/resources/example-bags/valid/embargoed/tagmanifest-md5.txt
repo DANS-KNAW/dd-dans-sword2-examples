@@ -1,4 +1,3 @@
-452ff0e7e55d01f6ebc87675cb90aaa6  bag-info.txt
 9e5ad981e0d29adc278f6a294b8c2aca  bagit.txt
 4778743da76c3187b2e5ad16a653d112  metadata/dataset.xml
 8d9752f60282ae10a1b6bccca321b3ea  metadata/files.xml

@@ -7,11 +7,11 @@ Service URL
 -----------
 The service URL has changed from `https://easy.dans.knaw.nl/sword2/collection/1` to a Data Station specific URL:
 
-* `https://archaeology.datastations.nl/sword2/collection/1` (projected)
-* `https://ssh.datastations.nl/sword2/collection/1` (projected)
+* `https://sword2.archaeology.datastations.nl/collection/1`
+* `https://sword2.ssh.datastations.nl/collection/1`
 
-Test deposit must be sent to the demo-server, which is hosted at the "demo" subdomain of the Data Station, e.g.,
-`https://demo.archaeology.datastations.nl/sword2/collection/1`. Since this is a test environment, this server is protected with an
+Test deposits must be sent to the demo-server, which is hosted at the "demo" subdomain of the Data Station, e.g.,
+`https://demo.sword2.archaeology.datastations.nl/collection/1`. Since this is a test environment, this server is protected with an
 extra authentication header which is provided to our customers via a different channel.
 
 DDM schema changes
@@ -43,6 +43,7 @@ supported by the Data Station. The supported licenses can be retrieved from the 
 ```bash
 curl https://archaeology.datastations.nl/api/licenses | jq '.data[].uri' 
 ```
+
 The use of [jq](https://stedolan.github.io/jq/){:target=_blank} to extract the URIs from the resulting JSON is optional, of course.
 
 

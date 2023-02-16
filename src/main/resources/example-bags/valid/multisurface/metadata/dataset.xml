@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<ddm:DDM xmlns:ddm="http://easy.dans.knaw.nl/schemas/md/ddm/" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:abr="http://www.den.nl/standaard/166/Archeologisch-Basisregister/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/" xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/" xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/md/ddm/ https://easy.dans.knaw.nl/schemas/md/ddm/ddm.xsd">
+<ddm:DDM xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:abr="http://www.den.nl/standaard/166/Archeologisch-Basisregister/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
+         xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/" xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/md/ddm/ https://easy.dans.knaw.nl/schemas/md/ddm/ddm.xsd">
     <ddm:profile>
         <dc:title>A dataset containing surfaces created with polygons</dc:title>
         <dcterms:description xml:lang="en">A sample dataset that contains multisurface polygons in the ddm to create surfaces</dcterms:description>
@@ -46,7 +49,7 @@
                     </Polygon>
                 </surfaceMember>
             </MultiSurface>
-	</dcx-gml:spatial>
+        </dcx-gml:spatial>
         <ddm:references href="https://easy.dans.knaw.nl/ui/home">EASY front end</ddm:references>
         <dcterms:spatial>Overbetuwe</dcterms:spatial>
         <dc:subject>metaal</dc:subject>
