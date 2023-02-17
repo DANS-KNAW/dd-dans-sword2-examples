@@ -149,7 +149,7 @@ public class Common {
                         System.out.println("WARNING: Found (" + entries.size() + ") entry's; should be ONE and only ONE");
                     }
                     String stateText = states.get(0).getText();
-                    System.out.println("Dataset landing page will be located at: <" + stateText + ">.");
+                    System.out.println("State description: " + stateText + "");
                     System.out.println("Complete statement follows:");
                     System.out.println(bodyText);
                     return entries.get(0).getId().toURI();
