@@ -1,10 +1,13 @@
 Migrating from EASY to a Data Station
 =====================================
 
-The Data Station SWORD2 service is mostly compatible with the legacy EASY SWORD2 service. However, there are a few required changes to the client code.
+The Data Station SWORD2 service is mostly compatible with the legacy EASY SWORD2 service. However, a couple of things have changed that will require a
+change to the client code or configuration. Also, there are some added features. What follows is a list of all the changes. Optional ones are marked as
+such.
 
 Service URL
 -----------
+
 The service URL has changed from `https://easy.dans.knaw.nl/sword2/collection/1` to a Data Station specific URL:
 
 * `https://sword2.archaeology.datastations.nl/collection/1`
@@ -32,12 +35,15 @@ Example:
 
 ```xml
 
-<ddm:personalData present="No"/>
+<ddm:profile>
+    <!-- other profile elements -->
+    <ddm:personalData present="No"/>
+</ddm:profile>
 ```
 
 ### Exactly one `license` element with `xsi:type="dcterms:URI"`
 
-There must be exactly one element with an `xsi:type` attribute set to `dcterms:URI` and an element text containing one of the licenses
+There must be exactly one element with an `xsi:type` attribute set to `dcterms:URI` and an element text containing the URI of one of the licenses
 supported by the Data Station. The supported licenses can be retrieved from the Data Station API for example:
 
 ```bash
@@ -46,9 +52,26 @@ curl https://archaeology.datastations.nl/api/licenses | jq '.data[].uri'
 
 The use of [jq](https://stedolan.github.io/jq/){:target=_blank} to extract the URIs from the resulting JSON is optional, of course.
 
+Note, that in EASY SWORD2 some deviations from the license URI were allowed (for example both `http` and `https` as URI scheme were accepted). In Data Station
+SWORD2 you must provide the license URI identical character by character as in the list of supported licenses.
 
-Final deposit state changed to `PUBLISHED`
-------------------------------------------
+### New element `ddm:datesOfCollection` (optional)
+
+
+
+
+
+Final deposit state changed to `PUBLISHED` (required)
+-----------------------------------------------------
 
 The final state of a deposit in EASY was `ARCHIVED`. This has changed to the state `PUBLISHED`. The meaning is still that the client can stop
-tracking the deposit and rest assured that archiving in the DANS Data Vault will occur in due course. 
+tracking the deposit and rest assured that archiving in the [DANS Data Vault]{:target=_blank} will occur in due course.
+
+
+
+
+
+
+
+
+[DANS Data Vault]: {{ dans_data_vault }}
