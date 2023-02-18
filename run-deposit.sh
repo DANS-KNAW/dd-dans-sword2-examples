@@ -22,12 +22,13 @@
 
 DEBUG_PORT=8000
 SUSPEND=n
-if [[ "$1" == "suspend" ]]; then
+if [[ "$1" == "--suspend" ]]; then
  SUSPEND=y
  shift 1
 fi
 
 PROGRAM=$1
+MAIN_CLASS="nl.knaw.dans.sword2examples.${PROGRAM}Deposit"
 COL_IRI=$2
 USER=$3
 PASSWORD=$4
@@ -36,9 +37,10 @@ KEYSTORE_FILE=$HOME/.keystore
 KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
 
 if (( $# < 5 )); then
- echo "Usage: ./run-deposit.sh [suspend] <program> <COL-IRI> <user> <password> [<chunksize>] <bag>..."
+ echo "Runs one of the test programs to send one or more bags to the SWORD2 service."
+ echo "Usage: ./run-deposit.sh [--suspend] <program> <COL-IRI> <user> <password> [<chunksize>] <bag>..."
  echo "Where:"
- echo "suspend = suspend execution at the start so as to allow a debugger to attach at port "
+ echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port "
  echo "<program> = one of Simple,Continued,SequenceSimple,SequenceContinued"
  echo "<COL-IRI> = the collection IRI to post to"
  echo "<user> = Data Station user account"
@@ -47,7 +49,6 @@ if (( $# < 5 )); then
  echo "<bag> = one bag directory or zip file to send or multiple (only for Sequence variants)"
  exit
 fi
-
 
 if [[ "$PROGRAM" =~ ^.*Continued$ ]]; then
     CHUNKSIZE=$5
@@ -63,7 +64,5 @@ else
   KEYSTORE_PROPERTIES=""
 fi
 
-
 mvn dependency:copy-dependencies
-java $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.${PROGRAM}Deposit" $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS
-
+java $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS

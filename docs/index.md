@@ -1,33 +1,38 @@
 dd-dans-sword2-examples
 =======================
 
-Examples for creating a SWORD2 Java client to deposit dataset to a DANS Data Station
+Examples for creating a SWORD2 Java client to deposit datasets to a DANS Data Station
 
 SYNOPSIS
 --------
 
 ```text
 mvn clean install
-./run-deposit.sh Simple https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword bag
-./run-deposit.sh Continued https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword chunksize bag
-./run-deposit.sh SequenceSimple https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword bag1 bag2 bag3
-./run-deposit.sh SequenceContinued https://demo.sword2.<DS>.datastations.nl/collection/1 myuser mypassword chunksize bag1 bag2 bag3
-./run-validation.sh https://demo.sword2.<DS>.datastations.nl/validate-dans-bag bag myuser mypassword
+./run-validation.sh https://demo.sword2.domain.datastations.nl/validate-dans-bag bag myuser mypassword
+./run-deposit.sh Simple https://demo.sword2.domain.datastations.nl/collection/1 myuser mypassword bag
+./run-deposit.sh Continued https://demo.sword2.domain.datastations.nl/collection/1 myuser mypassword chunksize bag
+./run-deposit.sh SequenceSimple https://demo.sword2.domain.datastations.nl/collection/1 myuser mypassword bag1 bag2 bag3
+./run-deposit.sh SequenceContinued https://demo.sword2.domain.datastations.nl/collection/1 myuser mypassword chunksize bag1 bag2 bag3
 ```
 
 DESCRIPTION
 -----------
-This project contains two important resources for developers who are tasked with the creation of maintenance of a SWORD2 client that deposits datasets to one of
+This project contains two important resources for developers who are tasked with the creation or maintenance of a SWORD2 client that deposits datasets to one of
 the DANS Data Stations (or the DANS Vault Service):
 
-* Java client code
+* Example Java client code 
 * Examples of bags that conform to the [DANS BagIt Profile v1]{:target=_blank} requirements (and&mdash;for illustration&mdash;some that violate some of the
   requirements).
 
-!!! attention "Looking for legacy EASY2 examples?"
+!!! attention "Looking for legacy EASY SWORD2 examples?"
 
     This project contains examples for the SWORD2 interface of the new **DANS Data Stations**. For the _legacy EASY SWORD2 service_ see 
     [easy-sword2-dans-examples]{:target=_blank}. 
+
+!!! attention "Migrating from EASY SWORD2 to Data Station SWORD2"
+
+    If you are an existing customer who is migrating an EASY SWORD2 client to a Data Station SWORD2 client, please read
+    [Migrating from EASY]{:target=_blank} after you have read the current page.   
 
 ### SWORD2 in a nutshell
 
@@ -47,13 +52,14 @@ The following diagram details this a bit further.
 5. Ingest Flow reports back success or failure to SWORD2 Service.
 
 3-5. During this time the Client periodically checks the deposit state through the URL received in step 2.
-If the final state of `PUBLISHED` is reached, the process is concluded successfully. At this point the deposit has created a new dataset (version) in the Data
-Station repository. Other outcomes may be `INVALID` (the bag was [invalid according to the BagIt specs]{:target=_blank}) or `REJECTED` (the additional
-requirements of [DANS BagIt Profile v1]{:target=_blank} were not met). In case the server encountered an unknown error `FAILED` will be returned.
+If the final state of `PUBLISHED` is reached, the process is concluded successfully. At this point the deposit has created a new dataset (or a new version
+of an existing dataset) in the Data Station repository. Other outcomes may be `INVALID` (the bag was [invalid according to the BagIt specs]{:target=_blank}) 
+or `REJECTED` (the additional requirements of [DANS BagIt Profile v1]{:target=_blank} were not met). In case the server encountered an unknown error `FAILED` 
+will be returned.
 
-!!! note "DD SWORD2 service description"
+!!! note "SWORD2 service description"
 
-    More detailed information about the SWORD2 can be found [on its manual page]{:target=_blank}.
+    More detailed information about the SWORD2 Service can be found [on its manual page]{:target=_blank}. 
 
 [on its manual page]: {{ dd_sword2_docs }}
 [invalid according to the BagIt specs]: https://www.rfc-editor.org/rfc/rfc8493#section-3
@@ -92,36 +98,42 @@ The following is a step-by-step instruction on how to run a simple example using
         cd dd-dans-sword2-examples
         mvn clean install
 
-3. Execute the following command from the base directory of you clone of this project:
+3. Execute the following command from the base directory of your clone:
 
-        ./run.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 <user> <password> <bag>
+        ./run-deposit.sh Simple https://demo.<domain>.datastations.nl/sword2/collection/1 <user> <password> <bag>
    Fill in:
 
-    * for `<DS>` the name of the Data Station that you are depositing to, e.g., `archaeology`;
+    * for `<domain>` the name of the Data Station that you are depositing to, one of `archaeology`, `ssh`, `lhms` 
+      or `pts`;
     * for `<user>` your Data Station account name;
     * for `<password>` the password of your Data Station account;
-    * for `<bag>`: any of the bags in `src/main/resources/example-bags`.
+    * for `<bag>`: any of the bags in `src/main/resources/example-bags`, for example 
+      `src/main/resources/example-bags/valid/audiences`.
+
+    This will run the example program `nl.knaw.dans.sword2examples.SimpleDeposit`, which will copy the example bag to the
+    folder `target` (the Maven build folder), zip it and send it to `https://demo.<domain>.datastations.nl/sword2/collection/1`
+    authenticating with the provider username and password using basic auth.
 
 ##### Output analysis
 
-[In the introduction](#sword2-in-a-nutshell) the SWORD2 deposit process is described in 5 stages, the response messages give some indication how far along the
-process is. The output will take the following form, starting with the part of the response representing step 2. The UUID will of course be different.
+[In the introduction](#sword2-in-a-nutshell) the SWORD2 deposit process is described in 5 stages, the response messages give some indication how far the
+process has progressed. The output will take the following form, starting with the part of the response representing step 2. The UUID will of course be different.
 
 ```text
  SUCCESS. Deposit receipt follows:
  <entry xmlns="http://www.w3.org/2005/Atom">
      <generator uri="http://www.swordapp.org/" version="2.0" />
-     <id>https://demo.<DS>.datastations.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
-     <link href="https://demo.<DS>.datastations.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit" />
-     <link href="https://demo.<DS>.datastations.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/add" />
-     <link href="https://demo.<DS>.datastations.nl/sword2/media/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit-media" />
+     <id>https://demo.<domain>.datastations.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
+     <link href="https://demo.<domain>.datastations.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit" />
+     <link href="https://demo.<domain>.datastations.nl/sword2/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/add" />
+     <link href="https://demo.<domain>.datastations.nl/sword2/media/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="edit-media" />
      <packaging xmlns="http://purl.org/net/sword/terms/">http://purl.org/net/sword/package/BagIt</packaging>
-     <link href="https://demo.<DS>.datastations.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/statement" type="application/atom+xml; type=feed" />
+     <link href="https://demo.<domain>.datastations.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="http://purl.org/net/sword/terms/statement" type="application/atom+xml; type=feed" />
      <treatment xmlns="http://purl.org/net/sword/terms/">[1] unpacking [2] verifying integrity [3] storing persistently</treatment>
      <verboseDescription xmlns="http://purl.org/net/sword/terms/">received successfully: bag.zip; MD5: 494dd614e36edf5c929403ed7625b157</verboseDescription>
  </entry>
  Retrieving Statement IRI (Stat-IRI) from deposit receipt ...
- Stat-IRI = https://demo.<DS>.datastations.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4
+ Stat-IRI = https://demo.<domain>.datastations.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4
 ```
 
 As the deposit is being processed by the server the client polls the Stat-IRI to track the status of the deposit. During this stage steps 3 and 4 are performed.
@@ -143,7 +155,7 @@ The 5th and final step of the process is represented by the following response m
  Complete statement follows:
  <feed xmlns="http://www.w3.org/2005/Atom">
      <id>https://demo.<DS>.datastations.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4</id>
-     <link href="https://demo.<DS>.datastations.nl/sword2/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4" rel="self" />
+     <link href="https://demo.<DS>.datastations.nl/sword2/statement/a5bb644a-78a3-4<DS>7ae-907a-0bdf162a0cd4" rel="self" />
      <title type="text">Deposit a5bb644a-78a3-47ae-907a-0bdf162a0cd4</title>
      <author>
          <name>DANS-EASY</name>
@@ -171,12 +183,12 @@ The deposit will go through a number of statuses.
 | `UPLOADED`   | The deposit is in the process of being submitted. It is waiting to be finalized. The data<br/> is completely uploaded. It will automatically move to the next stage and the status will <br/> be updated accordingly.                                 | 
 | `FINALIZING` | The deposit is in the process of being submitted. It is being checked for validity. It will <br/>  automatically move to the next stage and the status will be updated accordingly.                                                                   |
 | `INVALID`    | The deposit is not accepted by the archive as the submitted bag is not valid. <br/>The description will detail what part of the bag is not according to specifications. <br/>The depositor is asked to fix the bag and resubmit the deposit.          |
-| `SUBMITTED`  | The deposit is submitted for processing. `dd-sword2` will not update it anymore <br/> and limit itself to providing a Statement document on request.                                                                                                  |
+| `SUBMITTED`  | The deposit is submitted for processing. At this point the Ingest Flow is processing<br/> the deposit and will update the state when it finishes.                                                                                                     |
 | `FAILED`     | An error occurred while processing the deposit                                                                                                                                                                                                        | 
 | `REJECTED`  | The deposit does not meet the requirements of [DANS BagIt Profile v1]{:target=_blank}. The description<br/> will detail what part of the deposit is not according to specifications. The depositor is<br/> requested to fix and resubmit the deposit. |                         
 | `PUBLISHED` | The deposit is successfully published in the Data Station repository.                                                                                                                                                                                 |                                                                                                                                                                                                      
 
-If an error occurs the deposit will end up INVALID, REJECTED (client error) or FAILED (server error). The text of the `category` element will contain details
+If an error occurs the deposit will end up INVALID, REJECTED (client errors) or FAILED (server error). The text of the `category` element will contain details
 about the error.
 
 !!! note "What happened to ARCHIVED?"
@@ -288,3 +300,5 @@ Steps:
 [xmllint]: http://xmlsoft.org/xmllint.html
 
 [Apache Abdera]: https://abdera.apache.org/
+
+[Migrating from EASY]: ./migrating-from-easy.md

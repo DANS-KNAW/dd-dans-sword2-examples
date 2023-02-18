@@ -21,8 +21,9 @@
 #
 
 DEBUG_PORT=8001
+MAIN_CLASS="nl.knaw.dans.sword2examples.ValidateBag"
 SUSPEND=n
-if [[ "$1" == "suspend" ]]; then
+if [[ "$1" == "--suspend" ]]; then
  SUSPEND=y
  shift 1
 fi
@@ -38,10 +39,14 @@ KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
 JARFILE=$(ls -1 target/*SNAPSHOT.jar)
 
 if (( $# < 1 )); then
- echo "Usage: ./run-validation.sh [suspend] <bag>"
+ echo "Runs the test program $MAIN_CLASS that sends a zipped bag to the validator to verify"
+ echo "if it complies with the DANS BagIt Profile rules."
+ echo "Usage: ./run-validation.sh [--suspend] <VALIDATOR-URL> <user> <password> <bag>"
  echo "Where:"
- echo "suspend = suspend execution at the start so as to allow a debugger to attach at port "
- echo "<bag> = one bag directory or zip file to send"
+ echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port $DEBUG_PORT"
+ echo "<VALIDATOR-URL> = the validator end-point: https://demo.sword2.domain.datastations.nl/validate-dans-bag, where 'domain' is"
+ echo "  one of the domain-specific Data Stations, e.g. 'archaeology' or 'ssh'"
+ echo "<bag> = one bag directory or zip file to validate"
  exit
 fi
 
@@ -52,5 +57,4 @@ else
 fi
 
 mvn dependency:copy-dependencies
-java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" "nl.knaw.dans.sword2examples.ValidateBag" $SERVICE_URL $BAG $USER $PASSWORD
-
+java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $SERVICE_URL $BAG $USER $PASSWORD
