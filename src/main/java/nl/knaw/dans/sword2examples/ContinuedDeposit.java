@@ -65,11 +65,11 @@ public class ContinuedDeposit {
         if (response.getStatusLine().getStatusCode() != 201) {
             System.err.println("FAILED. Status = " + response.getStatusLine());
             System.err.println("Response body follows:");
-            System.err.println(bodyText);
+            Common.printXml(bodyText);
             System.exit(2);
         }
         System.out.println("SUCCESS. Deposit receipt follows:");
-        System.out.println(bodyText);
+        Common.printXml(bodyText);
 
         Entry receipt = Common.parse(bodyText);
         Link seIriLink = receipt.getLink("edit");

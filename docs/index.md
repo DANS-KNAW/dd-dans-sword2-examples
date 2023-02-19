@@ -234,6 +234,11 @@ After successfully depositing the first example to the demo repository you can s
 repository system this make take various shapes. In any case your code will need to assemble a bag conforming to [DANS BagIt Profile v1]{:target=_blank}. Some
 examples of such bags are included in the [resources directory]{:target=_blank} of this project.
 
+#### Mapping rules
+
+The contents of the bags you deposit are mapped to data files and metadata in Dataverse. The mapping rules are documented in the
+[Ingest Flow Mapping Rules]{:target=_blank} Google spreadsheet. If you are a DANS SWORD2 customer access will be granted on request.
+
 #### Finding libraries and tools
 
 * [bagit-java]{:target=_blank}&mdash;a Java library for working with bags. This is a DANS fork of a project started by Library of Congress, which is no longer
@@ -247,39 +252,39 @@ examples of such bags are included in the [resources directory]{:target=_blank} 
 !!! warning "Abdera project retired"
 
     [easy-sword2-dans-examples]{:target=\_blank} used the [Apache Abdera]{:target=_blank} library to parse Atom Entry and Feed documents. The current example 
-    code has moved away from using this project, because it is has been retired for ten years now. Instead, generic XPath is used to obtain the relevant parts 
-    of the XML documents sent by the server.
+    code still uses Abdera, but will remove that in the future, as we do not recommend using an unsupported library.
 
 #### End-point for DANS BagIt Profile validation
 
 All bags that are deposited to a Data Station are validated by [dd-validate-dans-bag]{:target=_blank} to see if they conform to
 [DANS BagIt Profile v1]{:target=_blank}. To facilitate faster development in the demo environment this service can be invoked directly.
+The example program [nl.knaw.dans.sword2examples.ValidateBag] demonstrates how to call this API. A helper script to start this program is
+also provided, see `run-validation.sh`.
 
-<!-- TODO: describe how -->
+!!! warning "DO NOT make calling this API part of your production code!"
+
+    Use of the validation API end-point is entirely optional during testing. The Ingest Flow will call the validation before further processing a deposit, so if
+    it is not valid it *will* be rejected. That having been said, when writing the code that assembles the bag to be deposited, using the validation API end-point
+    may shorten the Edit - Compile - Run cycle. 
 
 #### Testing different scenarios
 
-This project contains 4 [Java example programs]{:target=_blank} which can be used as a guide to writing a custom client to deposit datasets using the SWORD2
+This project contains four [Java example programs]{:target=_blank} which can be used as a guide to writing a custom client to deposit datasets using the SWORD2
 protocol. The examples take one or more bags as input parameters. These bags may be directories or ZIP files. The code copies each bag to the `target`-folder of
 the project, zips it (if necessary) and sends it to the specified SWORD2 service. The copying step has been built in because in some examples the bag must be
-modified before it is sent.
+modified before it is sent; this way we avoid changing the git working directory.
 
 1. `SimpleDeposit.java` sends a zipped dataset in a single chunk and reports on the status.
 2. `ContinuedDeposit.java` sends a zipped bag in chunks of configurable size and reports on the status.
-3. `SequenceSimpleDeposit.java` calls the SimpleDeposit class multiple times to send multiple bags belonging to a sequence.
-4. `SequenceContinuedDeposit.java` calls the ContinuedDeposit class multiple times to send multiple bags belonging to a sequence.
+3. `SequenceSimpleDeposit.java` calls the SimpleDeposit class multiple times to send multiple bags belonging to a sequence, the first bag being a new dataset
+   and subsequent bags being updates (new versions) of this dataset.
+4. `SequenceContinuedDeposit.java` calls the ContinuedDeposit class multiple times to send multiple bags belonging to a sequence, the first bag being a new
+   dataset and subsequent bags being updates (new versions) of this dataset.
 
 The `Common.java` class contains elements which are used by all the other classes. This would include parsing, zipping and sending of files.
 
-The project directory contains a `run.sh` script that can be used to invoke the Java programs. For example:
-
-```bash
-mvn clean install # Only necessary if the code was not previously built.
-./run-deposit.sh Simple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag
-./run-deposit.sh Continued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag
-./run-deposit.sh SequenceSimple https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword bag1 bag2 bag3
-./run-deposit.sh SequenceContinued https://demo.<DS>.datastations.nl/sword2/collection/1 myuser mypassword chunksize bag1 bag2 bag3
-```
+The project root directory contains several helper scripts (`run-*.sh`) that can be used to invoke the Java programs. See [SYNOPSIS](#synopsis). These scripts
+were developed to run in a `bash` or `zsh` shell, but should be easy to adapt for a different shell environment.
 
 EXAMPLES
 --------
@@ -302,7 +307,7 @@ Steps:
 
 [Java Example programs]: {{ dd_dans_sword2_examples_base_url }}/tree/master/src/main/java/nl/knaw/dans/sword2examples
 
-[resources directory]: {{ dd_dans_sword2_examples_base_url }}/tree/master/src/main/resources
+[resources directory]: {{ dd_dans_sword2_examples_base_url }}/tree/master/src/main/resources/example-bags
 
 [BagIt]: https://purl.org/net/bagit
 
@@ -327,3 +332,7 @@ Steps:
 [Apache Abdera]: https://abdera.apache.org/
 
 [Migrating from EASY]: ./migrating-from-easy.md
+
+[nl.knaw.dans.sword2examples.ValidateBag]: https://github.com/DANS-KNAW/dd-dans-sword2-examples/blob/master/src/main/java/nl/knaw/dans/sword2examples/ValidateBag.java
+
+[Ingest Flow Mapping Rules]: {{ ingest_flow_mapping_rules }}

@@ -43,17 +43,24 @@ import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.FileEntity;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.xml.sax.InputSource;
 
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
@@ -151,7 +158,7 @@ public class Common {
                     String stateText = states.get(0).getText();
                     System.out.println("State description: " + stateText + "");
                     System.out.println("Complete statement follows:");
-                    System.out.println(bodyText);
+                    printXml(bodyText);
                     return entries.get(0).getId().toURI();
                 }
                 else if (!"SUBMITTED".equals(state)) {
@@ -287,5 +294,33 @@ public class Common {
             System.out.println(responseText);
         }
     }
+
+    public static void printXml(String xml) {
+        prettyPrintByTransformer(xml, 2, false);
+    }
+
+    // From: https://www.baeldung.com/java-pretty-print-xml
+    private static String prettyPrintByTransformer(String xmlString, int indent, boolean ignoreDeclaration) {
+
+        try {
+            InputSource src = new InputSource(new StringReader(xmlString));
+            org.w3c.dom.Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            transformerFactory.setAttribute("indent-number", indent);
+            Transformer transformer = transformerFactory.newTransformer();
+            transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+            transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, ignoreDeclaration ? "yes" : "no");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            Writer out = new StringWriter();
+            transformer.transform(new DOMSource(document), new StreamResult(out));
+            return out.toString();
+        }
+        catch (Exception e) {
+            throw new RuntimeException("Error occurs when pretty-printing xml:\n" + xmlString, e);
+        }
+    }
+
 }
 

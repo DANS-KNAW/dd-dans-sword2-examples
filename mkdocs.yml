@@ -32,6 +32,7 @@ extra:
   dd_sword2_docs: https://dans-knaw.github.io/dd-sword2/
   dd_dans_sword2_examples_base_url: https://github.com/DANS-KNAW/dd-dans-sword2-examples
   dans_data_vault: https://dans-knaw.github.io/dans-datastation-architecture/#dans-data-vault
+  ingest_flow_mapping_rules: https://docs.google.com/spreadsheets/d/1G5YHSDg3a91nI9NgRjbz11iRFU9qgnNkde6K84j1NWI/edit#gid=107937978
 
 plugins:
   - markdownextradata
