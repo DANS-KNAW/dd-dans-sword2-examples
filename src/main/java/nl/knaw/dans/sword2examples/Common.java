@@ -125,18 +125,15 @@ public class Common {
                     List<Entry> entries = statement.getEntries();
                     System.out.println("SUCCESS. ");
                     if (entries.size() == 1) {
-                        System.out.print("Deposit has been archived at: <" + entries.get(0).getId() + ">. ");
-
                         List<String> dois = getDois(entries.get(0));
                         int numDois = dois.size();
                         switch (numDois) {
                             case 1:
-                                System.out.print(" With DOI: [" + dois.get(0) + "]. ");
+                                System.out.println("Dataset has been published as: <" + dois.get(0) + ">. ");
                                 break;
                             case 0:
                                 System.out.println("WARNING: No DOI found");
                                 break;
-
                             default:
                                 System.out.println("WARNING: More than one DOI found (" + numDois + "): ");
                                 boolean first = true;
@@ -151,6 +148,20 @@ public class Common {
                                 System.out.println();
                                 break;
                         }
+                        List<String> nbns = getNbn(entries.get(0));
+                        int numNbns = nbns.size();
+                        switch (numNbns) {
+                            case 1:
+                                System.out.println("Dataset NBN: <" + nbns.get(0) + ">. ");
+                                break;
+                            case 0:
+                                System.out.println("WARNING: No NBN found");
+                                break;
+                            default:
+                                System.out.println("WARNING: More than one NBN found (" + nbns + "): ");
+                                break;
+                        }
+                        System.out.println("Archival ID for this version of the dataset: " + entries.get(0).getId());
                     }
                     else {
                         System.out.println("WARNING: Found (" + entries.size() + ") entry's; should be ONE and only ONE");
@@ -169,19 +180,31 @@ public class Common {
     }
 
     public static List<String> getDois(Entry entry) {
-        List<String> dois = new ArrayList<String>();
+        List<String> dois = new ArrayList<>();
 
         List<Link> links = entry.getLinks("self");
         for (Link link : links) {
             IRI href = link.getHref();
             if (href.getHost().equals("doi.org")) {
-                String path = href.getPath();
-                String doi = path.substring(1); // skip leading '/'
-                dois.add(doi);
+                dois.add(href.toASCIIString());
             }
         }
         return dois;
     }
+
+    public static List<String> getNbn(Entry entry) {
+        List<String> nbns = new ArrayList<>();
+
+        List<Link> links = entry.getLinks("self");
+        for (Link link : links) {
+            IRI href = link.getHref();
+            if (href.getHost().equals("www.persistent-identifier.nl")) {
+                nbns.add(href.toASCIIString());
+            }
+        }
+        return nbns;
+    }
+
 
     private static byte[] readChunk(InputStream is, int size) throws Exception {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -296,7 +319,10 @@ public class Common {
     }
 
     public static void printXml(String xml) {
-        prettyPrintByTransformer(xml, 2, false);
+        System.out.println("-- XML: START -------");
+        System.out.println(prettyPrintByTransformer(xml, 2, false));
+        System.out.println("-- XML: END ---------");
+        System.out.println();
     }
 
     // From: https://www.baeldung.com/java-pretty-print-xml
