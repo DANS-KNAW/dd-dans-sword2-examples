@@ -161,7 +161,7 @@ public class Common {
                                 System.out.println("WARNING: More than one NBN found (" + nbns + "): ");
                                 break;
                         }
-                        System.out.println("Archival ID for this version of the dataset: " + entries.get(0).getId());
+                        System.out.println("Bag ID for this version of the dataset: " + entries.get(0).getId());
                     }
                     else {
                         System.out.println("WARNING: Found (" + entries.size() + ") entry's; should be ONE and only ONE");

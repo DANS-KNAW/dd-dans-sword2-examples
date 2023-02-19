@@ -152,7 +152,10 @@ The 5th and final step of the process is represented by the following response m
 ```text
 Checking deposit status ... PUBLISHED
 SUCCESS. 
-Deposit has been archived at: <urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560>.  With DOI: [doi:10.5072/DAR/MNGAHF]. State description: The deposit was successfully ingested in the Data Station and will be automatically archived
+Dataset has been published as: <https://doi.org/doi:10.5072/DAR/MNGAHF>. 
+Dataset NBN: <https://www.persistent-identifier.nl?identifier=urn:nbn:nl:ui:13-d4cfb364-c6cc-4242-891a-e9e9673379bc>. 
+Bag ID for this version of the dataset: urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560
+State description: The deposit was successfully ingested in the Data Station and will be automatically archived
 Complete statement follows:
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:sword="http://purl.org/net/sword/terms/" xmlns:ns3="http://purl.org/net/sword/">
@@ -176,9 +179,20 @@ Complete statement follows:
 </feed>
 ```
 
+How to read this output?
+
+* This confirms that the dataset was succesfully published and is resolvable using the DOI URL <https://doi.org/doi:10.5072/DAR/MNGAHF>. (N.B. in the test
+  environment the DOI will not actually resolve.) The DOI can be used to cite the dataset.
+* The dataset has the URN:NBN identifier `urn:nbn:nl:ui:13-d4cfb364-c6cc-4242-891a-e9e9673379bc`. This can be used be the depositor to retrieve a summary from
+  the DANS Data Vault for this dataset. The summary includes information about for which dataset versions a long term preservation copy exists in the Vault.
+  (N.B. At the time of writing &mdash;February 2023&mdash; the DANS Data Vault is not yet operational.)
+* The Bag ID for this **version** of the dataset is `urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560`. The Bag ID serves as a unique identifier for a long term
+  preservation package in the DANS Data Vault.
+
 #### Output for a failed deposit
 
-If you deposit a bag that does not comply with the [BagIt]{:target=_blank} or the [DANS BagIt Profile v1]{:target=_blank} requirements, a state of `REJECTED` will
+If you deposit a bag that does not comply with the [BagIt]{:target=_blank} or the [DANS BagIt Profile v1]{:target=_blank} requirements, a state of `REJECTED`
+will
 be returned. For example, when you use the example bag in `src/main/resources/example-bags/invalid/two-available-dates`, the error will indicate that a second
 `ddm:available` element was found where a `ddm:audience` was expected:
 
@@ -191,7 +205,7 @@ FAILURE. Complete statement follows:
     <link href="https://sword2.dar.dans.knaw.nl/statement/dde565d7-878a-4ae2-a607-0a3f55a22630" rel="self"/>
     <title type="text">Deposit dde565d7-878a-4ae2-a607-0a3f55a22630</title>
     <author>
-        <name>DANS-EASY</name>
+        <name>DANS SWORD2</name>
     </author>
     <updated>2023-02-18T12:15:02.451030+01:00</updated>
     <entry>
