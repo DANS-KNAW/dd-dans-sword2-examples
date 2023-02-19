@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files xmlns:dcterms="http://purl.org/dc/terms/" xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://easy.dans.knaw.nl/schemas/bag/metadata/files/ https://easy.dans.knaw.nl/schemas/bag/metadata/files/files.xsd">
+    <file filepath="data/accessibilities/anonymous.txt">
+        <dcterms:format>text/plain</dcterms:format>
+        <accessibleToRights>ANONYMOUS</accessibleToRights>
+    </file>
+    <file filepath="data/accessibilities/request.txt">
+        <dcterms:format>text/plain</dcterms:format>
+        <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
+    </file>
+</files>

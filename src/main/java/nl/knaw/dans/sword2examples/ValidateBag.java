@@ -26,9 +26,9 @@ public class ValidateBag {
             System.exit(1);
         }
         var validateDansBagUrl = new URI(args[0]);
-        var bag = new File(args[1]);
-        var user = args[2];
-        var password = args[3];
+        var user = args[1];
+        var password = args[2];
+        var bag = new File(args[3]);
 
         var bagInTarget = Common.copyToBagDirectoryInTarget(bag);
         var zippedBagInTarget = new File(bagInTarget.toString() + ".zip");
