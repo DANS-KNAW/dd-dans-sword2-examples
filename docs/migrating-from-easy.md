@@ -87,7 +87,7 @@ original file and directory name are recorded in the file's description metadata
 Organizational identifier (optional)
 ------------------------------------
 
-The client now has the option to provide an organizational identifier. The Depositor Organization most likely assign its own identifier to its datasets.
+The client now has the option to provide an organizational identifier. The Depositor Organization most likely assigns its own identifiers to its datasets.
 It is **highly recommended** to store this identifier with the dataset deposited in the Data Station, so that it can be more easily correlated with the
 information in the client's repository or database. This is done using two elements in `bag-info.txt`: `Has-Organizational-Identifier` and, if available,
 `Has-Organizational-Identifier-Version`. For example:

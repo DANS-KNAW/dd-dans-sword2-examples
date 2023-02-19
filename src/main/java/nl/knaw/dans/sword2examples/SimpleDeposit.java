@@ -72,11 +72,11 @@ public class SimpleDeposit {
             if (response.getStatusLine().getStatusCode() != 201) {
                 System.err.println("FAILED. Status = " + response.getStatusLine());
                 System.err.println("Response body follows:");
-                System.err.println(bodyText);
+                Common.printXml(bodyText);
                 System.exit(2);
             }
             System.out.println("SUCCESS. Deposit receipt follows:");
-            System.out.println(bodyText);
+            Common.printXml(bodyText);
 
             // 4. Get the statement URL. This is the URL from which to retrieve the current status of the deposit.
             System.out.println("Retrieving Statement IRI (Stat-IRI) from deposit receipt ...");
