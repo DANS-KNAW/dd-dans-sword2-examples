@@ -16,6 +16,8 @@
 
 package nl.knaw.dans.sword2examples.api.error;
 
+import nl.knaw.dans.sword2examples.api.statement.Generator;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;

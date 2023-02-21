@@ -120,18 +120,12 @@ public class Common {
 
             Feed statement = parseFeed(bodyText);
             FeedCategory category = statement.getCategory();
-            //            if (states.isEmpty()) {
-            //                System.err.println("ERROR: NO STATE FOUND");
-            //                System.exit(1);
-            //            }
-            //            else if (states.size() > 1) {
-            //                System.err.println("ERROR: FOUND TOO MANY STATES (" + states.size() + "). CAN ONLY HANDLE ONE");
-            //                System.exit(1);
-            //            }
-            //            else {
+
+            if (category == null || category.getTerm() == null) {
+                System.err.println("ERROR: NO STATE FOUND");
+                System.exit(1);
+            }
             String state = category.getTerm();
-            //            String state = states.get(0).getTerm();
-            System.out.println(state);
             if (state.equals("INVALID") || state.equals("REJECTED") || state.equals("FAILED")) {
                 System.err.println("FAILURE. Complete statement follows:");
                 System.err.println(bodyText);
@@ -360,7 +354,7 @@ public class Common {
 
     public static Optional<Link> getLinkByRel(List<Link> links, String rel) {
         return links.stream()
-            .filter(f -> "edit".equals(f.getRel()))
+            .filter(f -> rel.equals(f.getRel()))
             .findFirst();
     }
 
