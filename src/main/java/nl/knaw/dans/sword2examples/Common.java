@@ -94,9 +94,9 @@ public class Common {
         }
     }
 
-    public static nl.knaw.dans.sword2examples.api.entry.Entry parseEntry(String text) {
+    public static Entry parseEntry(String text) {
         try {
-            var context = JAXBContext.newInstance(nl.knaw.dans.sword2examples.api.entry.Entry.class);
+            var context = JAXBContext.newInstance(Entry.class);
             return (Entry) context.createUnmarshaller().unmarshal(new StringReader(text));
         }
         catch (JAXBException e) {
@@ -133,7 +133,6 @@ public class Common {
             }
             else if (state.equals("PUBLISHED")) {
                 List<FeedEntry> entries = statement.getEntries();
-                //                List<Entry> entries = statement.getEntries();
                 System.out.println("SUCCESS. ");
                 if (entries.size() == 1) {
                     List<String> dois = getDois(entries.get(0));

@@ -72,8 +72,7 @@ public class ContinuedDeposit {
         Common.printXml(bodyText);
 
         Entry receipt = Common.parseEntry(bodyText);
-        Link seLink = receipt.getLinks().stream().filter(f -> "edit".equals(f.getRel())).findFirst().orElse(null);
-        assert seLink != null;
+        Link seLink = Common.getLinkByRel(receipt.getLinks(), "edit").orElseThrow();
         URI seIri = seLink.getHref();
 
         long remaining = zipFile.length() - chunkSize;
