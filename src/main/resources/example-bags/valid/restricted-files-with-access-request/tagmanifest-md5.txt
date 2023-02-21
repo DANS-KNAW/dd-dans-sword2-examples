@@ -1,5 +1,5 @@
 d97955ecca6205dd27803121ff3b293f  metadata/dataset.xml
 9e5ad981e0d29adc278f6a294b8c2aca  bagit.txt
 911cbd94d95e70ac4abade8a9669c56e  manifest-sha1.txt
-869aa6fdcf58036b613f9cf1560247f3  metadata/files.xml
+f4f2fafc224ec796a4cd9a1a9a290359  metadata/files.xml
 5515c6ea90cf1c8f8e55cf8b0ec20f83  README.md

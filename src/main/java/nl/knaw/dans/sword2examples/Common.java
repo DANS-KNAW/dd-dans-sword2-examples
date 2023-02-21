@@ -17,6 +17,7 @@ package nl.knaw.dans.sword2examples;
 
 import gov.loc.repository.bagit.domain.Bag;
 import gov.loc.repository.bagit.reader.BagReader;
+import gov.loc.repository.bagit.verify.BagVerifier;
 import gov.loc.repository.bagit.writer.BagWriter;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
@@ -69,6 +70,7 @@ import java.util.List;
 
 public class Common {
     static final String BAGIT_URI = "http://purl.org/net/sword/package/BagIt";
+    private static final BagVerifier bagVerifier = new BagVerifier();
 
     /**
      * Assumes the entity is UTF-8 encoded text and reads it into a String.
@@ -252,12 +254,14 @@ public class Common {
 
     public static void setBagIsVersionOf(File bagDir, URI versionOfUri) throws Exception {
         Bag bag = new BagReader().read(bagDir.toPath());
+        bagVerifier.isValid(bag, false);
         bag.getMetadata().add("Is-Version-Of", versionOfUri.toASCIIString());
         BagWriter.write(bag, bagDir.toPath());
     }
 
     public static void setDataStationUserAccount(File bagDir, String user) throws Exception {
         Bag bag = new BagReader().read(bagDir.toPath());
+        bagVerifier.isValid(bag, false);
         bag.getMetadata().add("Data-Station-User-Account", user);
         BagWriter.write(bag, bagDir.toPath());
     }

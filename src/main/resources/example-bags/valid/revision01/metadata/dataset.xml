@@ -5,9 +5,9 @@
         xmlns:dcterms="http://purl.org/dc/terms/"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ddm:profile>
-        <dc:title>A bag containing multiple audiences</dc:title>
+        <dc:title>A bag to demonstrate revisions - 1</dc:title>
         <dcterms:description>
-            This bag contains multiple ddm:audience entries, each audience is represented by a code for which the classification can be found at https://www.narcis.nl/content/pdf/classification_en.pdf
+            This series of bags demonstrates how to update datasets with new versions
         </dcterms:description>
         <dcx-dai:creatorDetails>
             <dcx-dai:author>

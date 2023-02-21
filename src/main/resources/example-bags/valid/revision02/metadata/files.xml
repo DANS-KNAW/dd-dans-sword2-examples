@@ -3,10 +3,7 @@
     <file filepath="data/file1.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
-    <file filepath="data/file2.txt">
-        <dcterms:format>text/plain</dcterms:format>
-    </file>
-    <file filepath="data/file3.txt">
+    <file filepath="data/file2-renamed.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
 </files>

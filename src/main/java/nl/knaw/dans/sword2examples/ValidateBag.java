@@ -36,5 +36,6 @@ public class ValidateBag {
         Common.setDataStationUserAccount(bagInTarget, user);
         Common.zipDirectory(bagInTarget, zippedBagInTarget);
         Common.validateZip(zippedBagInTarget, validateDansBagUrl, user, password);
+        System.exit(0);
     }
 }

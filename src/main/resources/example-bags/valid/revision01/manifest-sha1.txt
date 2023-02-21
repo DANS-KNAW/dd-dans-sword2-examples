@@ -1,0 +1,3 @@
+912dcd8724d99d2ecef62f089ef1b81032845db8  data/file1.txt
+02f1b44559a4a4e4d213e694fc082f039732ba5d  data/file2.txt
+5f0de8456a3e55bc316fdde3c10f10b35e69ddf3  data/file3.txt
