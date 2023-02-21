@@ -15,8 +15,6 @@
  */
 package nl.knaw.dans.sword2examples;
 
-import org.apache.abdera.i18n.iri.IRI;
-
 import java.io.File;
 import java.net.URI;
 
@@ -29,7 +27,7 @@ public class SequenceSimpleDeposit {
         }
 
         // 0. Read command line arguments
-        final IRI colIri = new IRI(args[0]);
+        final URI colIri = new URI(args[0]);
         final String uid = args[1];
         final String pw = args[2];
 

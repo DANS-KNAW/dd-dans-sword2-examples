@@ -15,9 +15,8 @@
  */
 package nl.knaw.dans.sword2examples;
 
-import org.apache.abdera.i18n.iri.IRI;
-import org.apache.abdera.model.Entry;
-import org.apache.abdera.model.Link;
+import nl.knaw.dans.sword2examples.api.entry.Entry;
+import nl.knaw.dans.sword2examples.api.entry.Link;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -35,18 +34,18 @@ public class ContinuedDeposit {
         }
 
         // 0. Read command line arguments
-        final IRI colIri = new IRI(args[0]);
+        final URI uri = new URI(args[0]);
         final String uid = args[1];
         final String pw = args[2];
         final int chunkSize = Integer.parseInt(args[3]);
         final String bag = args[4];
 
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(new File(bag));
-        depositPackage(bagDirInTarget, colIri, uid, pw, chunkSize);
+        depositPackage(bagDirInTarget, uri, uid, pw, chunkSize);
         System.exit(0);
     }
 
-    public static URI depositPackage(File bagDir, IRI colIri, String uid, String pw, int chunkSize) throws Exception {
+    public static URI depositPackage(File bagDir, URI uri, String uid, String pw, int chunkSize) throws Exception {
         File zipFile = new File(bagDir.getAbsolutePath() + ".zip");
         zipFile.delete();
         Common.zipDirectory(bagDir, zipFile);
@@ -57,8 +56,8 @@ public class ContinuedDeposit {
         DigestInputStream dis = new DigestInputStream(fis, md);
 
         // 2. Post first chunk bag to Col-IRI
-        CloseableHttpClient http = Common.createHttpClient(colIri.toURI(), uid, pw);
-        CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", colIri.toURI(), "bag.zip.1", "application/octet-stream", http,
+        CloseableHttpClient http = Common.createHttpClient(uri, uid, pw);
+        CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", uri, "bag.zip.1", "application/octet-stream", http,
             chunkSize < zipFile.length());
 
         // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
@@ -72,9 +71,10 @@ public class ContinuedDeposit {
         System.out.println("SUCCESS. Deposit receipt follows:");
         Common.printXml(bodyText);
 
-        Entry receipt = Common.parse(bodyText);
-        Link seIriLink = receipt.getLink("edit");
-        URI seIri = seIriLink.getHref().toURI();
+        Entry receipt = Common.parseEntry(bodyText);
+        Link seLink = receipt.getLinks().stream().filter(f -> "edit".equals(f.getRel())).findFirst().orElse(null);
+        assert seLink != null;
+        URI seIri = seLink.getHref();
 
         long remaining = zipFile.length() - chunkSize;
         int count = 2;
@@ -94,13 +94,14 @@ public class ContinuedDeposit {
 
         // 4. Get the statement URL. This is the URL from which to retrieve the current status of the deposit.
         System.out.println("Retrieving Statement IRI (Stat-IRI) from deposit receipt ...");
-        receipt = Common.parse(bodyText);
-        Link statIriLink = receipt.getLink("http://purl.org/net/sword/terms/statement");
-        IRI statIri = statIriLink.getHref();
-        System.out.println("Stat-IRI = " + statIri);
+        receipt = Common.parseEntry(bodyText);
+        URI statUri = Common.getLinkByRel(receipt.getLinks(), "http://purl.org/net/sword/terms/statement")
+            .orElseThrow().getHref();
+
+        System.out.println("Stat-IRI = " + statUri);
 
         // 5. Check statement every ten seconds (a bit too frantic, but okay for this test). If status changes:
         // report new status. If status is an error (INVALID, REJECTED, FAILED) or PUBLISHED: exit.
-        return Common.trackDeposit(http, statIri.toURI());
+        return Common.trackDeposit(http, statUri);
     }
 }
