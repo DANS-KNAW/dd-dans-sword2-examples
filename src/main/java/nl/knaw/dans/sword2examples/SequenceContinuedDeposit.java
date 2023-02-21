@@ -49,5 +49,6 @@ public class SequenceContinuedDeposit {
             Common.setBagIsVersionOf(bagDirInTarget, baseUri);
             ContinuedDeposit.depositPackage(bagDirInTarget, colIri, uid, pw, chunkSize);
         }
+        System.exit(0);
     }
 }

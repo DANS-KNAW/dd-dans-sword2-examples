@@ -47,5 +47,6 @@ public class SequenceSimpleDeposit {
             Common.setBagIsVersionOf(bagDirInTarget, baseUri);
             SimpleDeposit.depositPackage(bagDirInTarget, colIri, uid, pw);
         }
+        System.exit(0);
     }
 }

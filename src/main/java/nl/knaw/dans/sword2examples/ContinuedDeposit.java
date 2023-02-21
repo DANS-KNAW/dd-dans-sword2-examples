@@ -43,6 +43,7 @@ public class ContinuedDeposit {
 
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(new File(bag));
         depositPackage(bagDirInTarget, colIri, uid, pw, chunkSize);
+        System.exit(0);
     }
 
     public static URI depositPackage(File bagDir, IRI colIri, String uid, String pw, int chunkSize) throws Exception {

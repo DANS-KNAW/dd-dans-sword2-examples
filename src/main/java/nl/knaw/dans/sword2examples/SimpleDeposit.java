@@ -49,6 +49,7 @@ public class SimpleDeposit {
 
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(new File(bagFile));
         depositPackage(bagDirInTarget, colIri, uid, pw);
+        System.exit(0);
     }
 
     public static URI depositPackage(File bagDir, IRI colIri, String uid, String pw) throws Exception {
