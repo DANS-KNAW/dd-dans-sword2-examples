@@ -42,14 +42,19 @@
             <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.abdera</groupId>
-            <artifactId>abdera-parser</artifactId>
-            <version>${abdera-parser.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.abdera</groupId>-->
+<!--            <artifactId>abdera-parser</artifactId>-->
+<!--            <version>${abdera-parser.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>nl.knaw.dans</groupId>
             <artifactId>bagit</artifactId>
@@ -66,11 +71,15 @@
             <groupId>net.lingala.zip4j</groupId>
             <artifactId>zip4j</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api -->
         <dependency>
             <groupId>javax.xml.bind</groupId>
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.3</version>
         </dependency>
     </dependencies>
     <repositories>

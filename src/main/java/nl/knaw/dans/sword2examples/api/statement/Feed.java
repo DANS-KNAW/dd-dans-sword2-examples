@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.sword2examples.api.entry;
+package nl.knaw.dans.sword2examples.api.statement;
 
+import nl.knaw.dans.sword2examples.api.entry.Link;
+import nl.knaw.dans.sword2examples.api.error.Generator;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -95,6 +97,14 @@ public class Feed {
     public void setTitle(TextElement title) {
         this.title = title;
     }
+    //
+    //    public OffsetDateTime getUpdated() {
+    //        return updated;
+    //    }
+    //
+    //    public void setUpdated(OffsetDateTime updated) {
+    //        this.updated = updated;
+    //    }
 
     public List<FeedEntry> getEntries() {
         return entries;

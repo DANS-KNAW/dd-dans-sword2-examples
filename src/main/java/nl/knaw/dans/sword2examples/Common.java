@@ -22,10 +22,10 @@ import gov.loc.repository.bagit.writer.BagWriter;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
 import nl.knaw.dans.sword2examples.api.entry.Entry;
-import nl.knaw.dans.sword2examples.api.entry.Feed;
-import nl.knaw.dans.sword2examples.api.entry.FeedCategory;
-import nl.knaw.dans.sword2examples.api.entry.FeedEntry;
 import nl.knaw.dans.sword2examples.api.entry.Link;
+import nl.knaw.dans.sword2examples.api.statement.Feed;
+import nl.knaw.dans.sword2examples.api.statement.FeedCategory;
+import nl.knaw.dans.sword2examples.api.statement.FeedEntry;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -117,6 +117,7 @@ public class Common {
                 System.exit(1);
             }
             bodyText = readEntityAsString(response.getEntity());
+
             Feed statement = parseFeed(bodyText);
             FeedCategory category = statement.getCategory();
             //            if (states.isEmpty()) {

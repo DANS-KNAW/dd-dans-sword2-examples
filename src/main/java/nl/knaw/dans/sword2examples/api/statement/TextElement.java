@@ -13,37 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.sword2examples.api.entry;
+package nl.knaw.dans.sword2examples.api.statement;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlValue;
 
-@XmlRootElement(name = "content")
+@XmlRootElement(name = "title")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class FeedContent {
-
-    @XmlAttribute
-    private String src;
+public class TextElement {
+    @XmlValue
+    private String text;
     @XmlAttribute
     private String type;
 
-    public FeedContent(String src, String type) {
-        this.src = src;
+    public TextElement() {
+
+    }
+    public TextElement(String text, String type) {
+        this.text = text;
         this.type = type;
     }
 
-    public FeedContent() {
-
+    public String getText() {
+        return text;
     }
 
-    public String getSrc() {
-        return src;
-    }
-
-    public void setSrc(String src) {
-        this.src = src;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public String getType() {
@@ -56,8 +55,8 @@ public class FeedContent {
 
     @Override
     public String toString() {
-        return "FeedContent{" +
-            "src='" + src + '\'' +
+        return "TextElement{" +
+            "text='" + text + '\'' +
             ", type='" + type + '\'' +
             '}';
     }

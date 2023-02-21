@@ -13,53 +13,52 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.sword2examples.api.entry;
+package nl.knaw.dans.sword2examples.api.statement;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.net.URI;
 
-@XmlRootElement(name = "generator", namespace = "http://www.w3.org/2005/Atom")
+@XmlRootElement(name = "content")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Generator {
+public class FeedContent {
+
     @XmlAttribute
-    private URI uri;
+    private String src;
     @XmlAttribute
-    private String version;
+    private String type;
 
-    // never forget, always add an empty constructor
-    public Generator() {
+    public FeedContent(String src, String type) {
+        this.src = src;
+        this.type = type;
+    }
+
+    public FeedContent() {
 
     }
 
-    public Generator(URI uri, String version) {
-        this.uri = uri;
-        this.version = version;
+    public String getSrc() {
+        return src;
     }
 
-    public URI getUri() {
-        return uri;
+    public void setSrc(String src) {
+        this.src = src;
     }
 
-    public void setUri(URI uri) {
-        this.uri = uri;
+    public String getType() {
+        return type;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
-        return "Generator{" +
-            "uri=" + uri +
-            ", version='" + version + '\'' +
+        return "FeedContent{" +
+            "src='" + src + '\'' +
+            ", type='" + type + '\'' +
             '}';
     }
 }

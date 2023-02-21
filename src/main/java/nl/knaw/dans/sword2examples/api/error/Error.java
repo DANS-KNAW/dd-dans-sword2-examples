@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nl.knaw.dans.sword2examples.api.entry;
+package nl.knaw.dans.sword2examples.api.error;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;

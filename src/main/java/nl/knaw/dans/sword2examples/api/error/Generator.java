@@ -13,51 +13,53 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.sword2examples.api.entry;
+package nl.knaw.dans.sword2examples.api.error;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlValue;
+import java.net.URI;
 
-@XmlRootElement(name = "title")
+@XmlRootElement(name = "generator", namespace = "http://www.w3.org/2005/Atom")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class TextElement {
-    @XmlValue
-    private String text;
+public class Generator {
     @XmlAttribute
-    private String type;
+    private URI uri;
+    @XmlAttribute
+    private String version;
 
-    public TextElement() {
+    // never forget, always add an empty constructor
+    public Generator() {
 
     }
-    public TextElement(String text, String type) {
-        this.text = text;
-        this.type = type;
+
+    public Generator(URI uri, String version) {
+        this.uri = uri;
+        this.version = version;
     }
 
-    public String getText() {
-        return text;
+    public URI getUri() {
+        return uri;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setUri(URI uri) {
+        this.uri = uri;
     }
 
-    public String getType() {
-        return type;
+    public String getVersion() {
+        return version;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     @Override
     public String toString() {
-        return "TextElement{" +
-            "text='" + text + '\'' +
-            ", type='" + type + '\'' +
+        return "Generator{" +
+            "uri=" + uri +
+            ", version='" + version + '\'' +
             '}';
     }
 }
