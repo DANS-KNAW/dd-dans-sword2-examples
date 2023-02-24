@@ -3,7 +3,9 @@
         xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
         xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
         xmlns:dcterms="http://purl.org/dc/terms/"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/">
+
     <ddm:profile>
         <!-- CIT001 -->
         <dc:title>A bag containing examples for each mapping rule</dc:title>
@@ -103,6 +105,42 @@
                      valueURI="https://data.cultureelerfgoed.nl/term/id/rn/ea77d56e-1475-4e4c-94f5-489bd3d9a3e7"
                      xml:lang="nl">Broader Match: knoop
         </ddm:subject>
+
+        <!-- CIT016 -->
+        <dcterms:language>Old School Latin</dcterms:language>
+
+        <!-- CIT017 -->
+        <dcterms:identifier xsi:type="id-type:ISSN">0317-8471</dcterms:identifier>
+
+        <!-- CIT018 -->
+        <ddm:language encodingScheme="ISO639-1" code="fy">West-Fries</ddm:language>
+        <ddm:language encodingScheme="ISO639-2" code="kal">Groenlands</ddm:language>
+        <ddm:language encodingScheme="ISO639-2" code="baq">Baskisch</ddm:language>
+
+        <!-- CIT019 see profile -->
+
+        <!-- CIT020 -->
+        <dcx-dai:contributorDetails>
+            <dcx-dai:author>
+                <dcx-dai:titles>Prof Dr</dcx-dai:titles>
+                <dcx-dai:initials>CON</dcx-dai:initials>
+                <dcx-dai:insertions>van</dcx-dai:insertions>
+                <dcx-dai:surname>Tributor</dcx-dai:surname>
+                <dcx-dai:role>ProjectMember</dcx-dai:role>
+                <dcx-dai:organization>
+                    <dcx-dai:name xml:lang="en">Contributing Org</dcx-dai:name>
+                </dcx-dai:organization>
+            </dcx-dai:author>
+        </dcx-dai:contributorDetails>
+
+        <!-- CIT021 -->
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org</dcx-dai:name>
+                <dcx-dai:role>Sponsor</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
 
         <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
         <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
