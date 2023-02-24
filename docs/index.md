@@ -265,8 +265,8 @@ The contents of the bags you deposit are mapped to data files and metadata in Da
 
 !!! warning "Abdera project retired"
 
-    [easy-sword2-dans-examples]{:target=\_blank} used the [Apache Abdera]{:target=_blank} library to parse Atom Entry and Feed documents. The current example 
-    code still uses Abdera, but will remove that in the future, as we do not recommend using an unsupported library.
+    [easy-sword2-dans-examples]{:target=\_blank} used the [Apache Abdera]{:target=_blank} library to parse Atom Entry and Feed documents. We have removed that 
+    dependency, because Abdera is no longer maintained and we do not recommend using unmaintained libraries. 
 
 #### End-point for DANS BagIt Profile validation
 
