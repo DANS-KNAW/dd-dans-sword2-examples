@@ -1,0 +1,188 @@
+<ddm:DDM
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
+        xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
+        xmlns:dcterms="http://purl.org/dc/terms/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/">
+
+    <ddm:profile>
+        <!-- CIT001 -->
+        <dc:title>A bag containing examples for each mapping rule</dc:title>
+        <!-- CIT002: see dcmiMetadata -->
+        <!-- CIT003: see bag-info.txt -->
+        <!-- CIT004: see dcmiMetadata -->
+
+        <!-- CIT009 -->
+        <dcterms:description>
+            This bags contains one or more examples of each mapping rule.
+        </dcterms:description>
+        <!-- CIT009 -->
+        <dcterms:description>
+            A second description
+        </dcterms:description>
+        <!-- CIT005 -->
+        <dc:creator>
+            Unformatted Creator
+        </dc:creator>
+        <!-- CIT006 -->
+        <dcx-dai:creatorDetails>
+            <dcx-dai:author>
+                <dcx-dai:titles>Dr</dcx-dai:titles>
+                <dcx-dai:initials>I</dcx-dai:initials>
+                <dcx-dai:surname>Lastname</dcx-dai:surname>
+                <dcx-dai:organization>
+                    <dcx-dai:name xml:lang="en">Example Org</dcx-dai:name>
+                </dcx-dai:organization>
+            </dcx-dai:author>
+        </dcx-dai:creatorDetails>
+        <!-- CIT007 -->
+        <dcx-dai:creatorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Creator Organization</dcx-dai:name>
+            </dcx-dai:organization>
+        </dcx-dai:creatorDetails>
+        <!-- CIT008: contact is created from Dataverse account of depositing user -->
+
+        <!-- CIT019 -->
+        <ddm:created>2015-09-09</ddm:created>
+        <!-- CIT025 -->
+        <ddm:available>2015-09-09</ddm:available>
+        <!-- CIT013 and REL001 -->
+        <ddm:audience>D13400</ddm:audience>
+        <ddm:audience>D16300</ddm:audience>
+        <ddm:audience>D16100</ddm:audience>
+        <ddm:audience>D16200</ddm:audience>
+        <ddm:audience>D16400</ddm:audience>
+        <ddm:audience>D16500</ddm:audience>
+        <ddm:audience>E16000</ddm:audience> <!-- NB CIT013 will map this to the subject 'Other', but drop that because it is not the only subject found -->
+        <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
+        <!-- RIG002 -->
+        <ddm:personalData present="No"/>
+    </ddm:profile>
+    <ddm:dcmiMetadata>
+        <!-- CIT002 -->
+        <dcterms:title>DCTERMS title 1</dcterms:title>
+        <dcterms:title>DCTERMS title 2</dcterms:title>
+        <dcterms:alternative>DCTERMS alt title 1</dcterms:alternative>
+        <dcterms:alternative>DCTERMS alt title 2</dcterms:alternative>
+
+        <!-- CIT004 -->
+        <dcterms:identifier>DCTERMS_ID001</dcterms:identifier>
+        <dcterms:identifier>DCTERMS_ID002</dcterms:identifier>
+        <dcterms:identifier>DCTERMS_ID003</dcterms:identifier>
+
+        <!-- CIT011 -->
+        <dcterms:date>some date</dcterms:date>
+        <dcterms:dateAccepted>some acceptance date</dcterms:dateAccepted>
+        <dcterms:dateCopyrighted>some copyright date</dcterms:dateCopyrighted>
+        <dcterms:dateSubmitted>some submission date</dcterms:dateSubmitted>
+        <dcterms:modified>some modified date</dcterms:modified>
+        <dcterms:issued>some issuing date</dcterms:issued>
+        <dcterms:valid>some validation date</dcterms:valid>
+        <dcterms:coverage>some coverage description</dcterms:coverage>
+
+        <!-- CIT012 -->
+        <dcterms:description>Even more descriptions</dcterms:description>
+
+        <!-- CIT014 -->
+        <dcterms:subject>keyword1</dcterms:subject>
+        <dcterms:subject>keyword2</dcterms:subject>
+
+        <!-- CIT015 -->
+        <ddm:subject schemeURI="https://data.cultureelerfgoed.nl/term/id/pan/PAN"
+                     subjectScheme="PAN thesaurus ideaaltypes"
+                     valueURI="https://data.cultureelerfgoed.nl/term/id/pan/08-01-08"
+                     xml:lang="en">non-military uniform button
+        </ddm:subject>
+        <ddm:subject schemeURI="http://vocab.getty.edu/aat/"
+                     subjectScheme="Art and Architecture Thesaurus"
+                     valueURI="http://vocab.getty.edu/aat/300239261"
+                     xml:lang="en">Broader Match: buttons (fasteners)
+        </ddm:subject>
+        <ddm:subject schemeURI="https://data.cultureelerfgoed.nl/term/id/rn/a4a7933c-e096-4bcf-a921-4f70a78749fe"
+                     subjectScheme="Archeologisch Basis Register"
+                     valueURI="https://data.cultureelerfgoed.nl/term/id/rn/ea77d56e-1475-4e4c-94f5-489bd3d9a3e7"
+                     xml:lang="nl">Broader Match: knoop
+        </ddm:subject>
+
+        <!-- CIT016 -->
+        <dcterms:language>Old School Latin</dcterms:language>
+
+        <!-- CIT017 -->
+        <dcterms:identifier xsi:type="id-type:ISSN">0317-8471</dcterms:identifier>
+
+        <!-- CIT018 -->
+        <ddm:language encodingScheme="ISO639-1" code="fy">West-Fries</ddm:language>
+        <ddm:language encodingScheme="ISO639-2" code="kal">Groenlands</ddm:language>
+        <ddm:language encodingScheme="ISO639-2" code="baq">Baskisch</ddm:language>
+
+        <!-- CIT019 see profile -->
+
+        <!-- CIT020 -->
+        <dcx-dai:contributorDetails>
+            <dcx-dai:author>
+                <dcx-dai:titles>Prof Dr</dcx-dai:titles>
+                <dcx-dai:initials>CON</dcx-dai:initials>
+                <dcx-dai:insertions>van</dcx-dai:insertions>
+                <dcx-dai:surname>Tributor</dcx-dai:surname>
+                <dcx-dai:role>ProjectMember</dcx-dai:role>
+                <dcx-dai:organization>
+                    <dcx-dai:name xml:lang="en">Contributing Org</dcx-dai:name>
+                </dcx-dai:organization>
+            </dcx-dai:author>
+        </dcx-dai:contributorDetails>
+
+        <!-- CIT021 -->
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org</dcx-dai:name>
+                <dcx-dai:role>Sponsor</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <!-- CIT022 -->
+        <!-- Rule under revision -->
+
+        <!-- CIT023 -->
+        <dcterms:identifier xsi:type="id-type:NWO-PROJECTNR">54321</dcterms:identifier>
+
+        <!-- CIT024 -->
+        <dcterms:publisher>D. I. Stributor</dcterms:publisher>
+        <!-- Special values: skipped -->
+        <dcterms:publisher>DANS</dcterms:publisher>
+        <dcterms:publisher>DANS-KNAW</dcterms:publisher>
+        <dcterms:publisher>DANS/KNAW</dcterms:publisher>
+
+        <!-- CIT025 see profile -->
+
+        <!-- CIT026 -->
+        <ddm:datesOfCollection>2015-06-01/2016-12-31</ddm:datesOfCollection>
+
+        <!-- CIT027 -->
+        <ddm:description descriptionType="SeriesInformation">Information about a series</ddm:description>
+
+        <!-- CIT028 --> <!-- RIG003 Any element can add a metadata language -->
+        <dcterms:source xml:lang="ht">Source 1</dcterms:source>
+        <dcterms:source>Source 2</dcterms:source>
+        <dcterms:source>Source 3</dcterms:source>
+
+        <!-- RIG001 -->
+        <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
+
+        <!-- RIG002 see profile -->
+
+        <!-- RIG003 Any element can add a metadata language -->
+        <dcterms:abstract xml:lang="ka">Georgian</dcterms:abstract>
+
+        <!--TRM001 -->
+        <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
+
+
+        <!-- TS006, note that the text must exactly match the vocabulary term, so South-Africa will be handled by TS007 -->
+        <dcterms:spatial>South Africa</dcterms:spatial>
+        <dcterms:spatial>Japan</dcterms:spatial>
+        <!-- TS007, not in the controlled list, so mapped to the free text field -->
+        <dcterms:spatial>Roman Empire</dcterms:spatial>
+    </ddm:dcmiMetadata>
+</ddm:DDM>
