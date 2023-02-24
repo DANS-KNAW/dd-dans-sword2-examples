@@ -162,13 +162,23 @@
         <!-- CIT027 -->
         <ddm:description descriptionType="SeriesInformation">Information about a series</ddm:description>
 
-        <!-- CIT028 -->
-        <dcterms:source>Source 1</dcterms:source>
+        <!-- CIT028 --> <!-- RIG003 Any element can add a metadata language -->
+        <dcterms:source xml:lang="ht">Source 1</dcterms:source>
         <dcterms:source>Source 2</dcterms:source>
         <dcterms:source>Source 3</dcterms:source>
 
-        <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
+        <!-- RIG001 -->
         <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
+
+        <!-- RIG002 see profile -->
+
+        <!-- RIG003 Any element can add a metadata language -->
+        <dcterms:abstract xml:lang="ka">Georgian</dcterms:abstract>
+
+        <!--TRM001 -->
+        <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
+
+
         <!-- TS006, note that the text must exactly match the vocabulary term, so South-Africa will be handled by TS007 -->
         <dcterms:spatial>South Africa</dcterms:spatial>
         <dcterms:spatial>Japan</dcterms:spatial>
