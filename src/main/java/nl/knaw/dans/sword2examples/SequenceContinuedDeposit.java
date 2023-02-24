@@ -15,8 +15,6 @@
  */
 package nl.knaw.dans.sword2examples;
 
-import org.apache.abdera.i18n.iri.IRI;
-
 import java.io.File;
 import java.net.URI;
 
@@ -25,12 +23,12 @@ public class SequenceContinuedDeposit {
     public static void main(String[] args) throws Exception {
         if (args.length < 4) {
             System.err
-                    .printf("Usage: %s <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag dirname>...%n", SequenceContinuedDeposit.class.getName());
+                .printf("Usage: %s <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag dirname>...%n", SequenceContinuedDeposit.class.getName());
             System.exit(1);
         }
 
         // 0. Read command line arguments
-        final IRI colIri = new IRI(args[0]);
+        final URI uri = new URI(args[0]);
         final String uid = args[1];
         final String pw = args[2];
         final int chunkSize = Integer.parseInt(args[3]);
@@ -41,13 +39,13 @@ public class SequenceContinuedDeposit {
         System.out.println("Sending base revision of dataset ...");
         File baseBagDir = new File(bagNames[0]);
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(baseBagDir);
-        URI baseUri = ContinuedDeposit.depositPackage(bagDirInTarget, colIri, uid, pw, chunkSize);
+        URI baseUri = ContinuedDeposit.depositPackage(bagDirInTarget, uri, uid, pw, chunkSize);
 
         for (int i = 1; i < bagNames.length; ++i) {
             File bagDir = new File(bagNames[i]);
             bagDirInTarget = Common.copyToBagDirectoryInTarget(bagDir);
             Common.setBagIsVersionOf(bagDirInTarget, baseUri);
-            ContinuedDeposit.depositPackage(bagDirInTarget, colIri, uid, pw, chunkSize);
+            ContinuedDeposit.depositPackage(bagDirInTarget, uri, uid, pw, chunkSize);
         }
         System.exit(0);
     }

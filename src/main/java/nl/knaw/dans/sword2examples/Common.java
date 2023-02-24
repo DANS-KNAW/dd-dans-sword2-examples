@@ -21,15 +21,11 @@ import gov.loc.repository.bagit.verify.BagVerifier;
 import gov.loc.repository.bagit.writer.BagWriter;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
-import org.apache.abdera.Abdera;
-import org.apache.abdera.i18n.iri.IRI;
-import org.apache.abdera.model.Category;
-import org.apache.abdera.model.Document;
-import org.apache.abdera.model.Element;
-import org.apache.abdera.model.Entry;
-import org.apache.abdera.model.Feed;
-import org.apache.abdera.model.Link;
-import org.apache.abdera.parser.Parser;
+import nl.knaw.dans.sword2examples.api.entry.Entry;
+import nl.knaw.dans.sword2examples.api.entry.Link;
+import nl.knaw.dans.sword2examples.api.statement.Feed;
+import nl.knaw.dans.sword2examples.api.statement.FeedCategory;
+import nl.knaw.dans.sword2examples.api.statement.FeedEntry;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -49,6 +45,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.xml.sax.InputSource;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
@@ -65,8 +63,9 @@ import java.io.Writer;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class Common {
     static final String BAGIT_URI = "http://purl.org/net/sword/package/BagIt";
@@ -85,11 +84,24 @@ public class Common {
         return bos.toString(StandardCharsets.UTF_8);
     }
 
-    public static <T extends Element> T parse(String text) {
-        Abdera abdera = Abdera.getInstance();
-        Parser parser = abdera.getParser();
-        Document<T> receipt = parser.parse(new StringReader(text));
-        return receipt.getRoot();
+    public static Feed parseFeed(String text) {
+        try {
+            var context = JAXBContext.newInstance(Feed.class);
+            return (Feed) context.createUnmarshaller().unmarshal(new StringReader(text));
+        }
+        catch (JAXBException e) {
+            throw new RuntimeException("Unable to parse XML", e);
+        }
+    }
+
+    public static Entry parseEntry(String text) {
+        try {
+            var context = JAXBContext.newInstance(Entry.class);
+            return (Entry) context.createUnmarshaller().unmarshal(new StringReader(text));
+        }
+        catch (JAXBException e) {
+            throw new RuntimeException("Unable to parse XML", e);
+        }
     }
 
     static URI trackDeposit(CloseableHttpClient http, URI statUri) throws Exception {
@@ -105,108 +117,95 @@ public class Common {
                 System.exit(1);
             }
             bodyText = readEntityAsString(response.getEntity());
-            Feed statement = parse(bodyText);
-            List<Category> states = statement.getCategories("http://purl.org/net/sword/terms/state");
-            if (states.isEmpty()) {
+
+            Feed statement = parseFeed(bodyText);
+            FeedCategory category = statement.getCategory();
+
+            if (category == null || category.getTerm() == null) {
                 System.err.println("ERROR: NO STATE FOUND");
                 System.exit(1);
             }
-            else if (states.size() > 1) {
-                System.err.println("ERROR: FOUND TOO MANY STATES (" + states.size() + "). CAN ONLY HANDLE ONE");
-                System.exit(1);
+            String state = category.getTerm();
+            if (state.equals("INVALID") || state.equals("REJECTED") || state.equals("FAILED")) {
+                System.err.println("FAILURE. Complete statement follows:");
+                System.err.println(bodyText);
+                System.exit(3);
             }
-            else {
-                String state = states.get(0).getTerm();
-                System.out.println(state);
-                if (state.equals("INVALID") || state.equals("REJECTED") || state.equals("FAILED")) {
-                    System.err.println("FAILURE. Complete statement follows:");
-                    System.err.println(bodyText);
-                    System.exit(3);
-                }
-                else if (state.equals("PUBLISHED")) {
-                    List<Entry> entries = statement.getEntries();
-                    System.out.println("SUCCESS. ");
-                    if (entries.size() == 1) {
-                        List<String> dois = getDois(entries.get(0));
-                        int numDois = dois.size();
-                        switch (numDois) {
-                            case 1:
-                                System.out.println("Dataset has been published as: <" + dois.get(0) + ">. ");
-                                break;
-                            case 0:
-                                System.out.println("WARNING: No DOI found");
-                                break;
-                            default:
-                                System.out.println("WARNING: More than one DOI found (" + numDois + "): ");
-                                boolean first = true;
-                                for (String doi : dois) {
-                                    if (first)
-                                        first = false;
-                                    else
-                                        System.out.print(", ");
-                                    System.out.print(doi + "");
-
+            else if (state.equals("PUBLISHED")) {
+                List<FeedEntry> entries = statement.getEntries();
+                System.out.println("SUCCESS. ");
+                if (entries.size() == 1) {
+                    List<String> dois = getDois(entries.get(0));
+                    int numDois = dois.size();
+                    switch (numDois) {
+                        case 1:
+                            System.out.println("Dataset has been published as: <" + dois.get(0) + ">. ");
+                            break;
+                        case 0:
+                            System.out.println("WARNING: No DOI found");
+                            break;
+                        default:
+                            System.out.println("WARNING: More than one DOI found (" + numDois + "): ");
+                            boolean first = true;
+                            for (String doi : dois) {
+                                if (first) {
+                                    first = false;
                                 }
-                                System.out.println();
-                                break;
-                        }
-                        List<String> nbns = getNbn(entries.get(0));
-                        int numNbns = nbns.size();
-                        switch (numNbns) {
-                            case 1:
-                                System.out.println("Dataset NBN: <" + nbns.get(0) + ">. ");
-                                break;
-                            case 0:
-                                System.out.println("WARNING: No NBN found");
-                                break;
-                            default:
-                                System.out.println("WARNING: More than one NBN found (" + nbns + "): ");
-                                break;
-                        }
-                        System.out.println("Bag ID for this version of the dataset: " + entries.get(0).getId());
+                                else {
+                                    System.out.print(", ");
+                                }
+                                System.out.print(doi + "");
+
+                            }
+                            System.out.println();
+                            break;
                     }
-                    else {
-                        System.out.println("WARNING: Found (" + entries.size() + ") entry's; should be ONE and only ONE");
+                    List<String> nbns = getNbn(entries.get(0));
+                    int numNbns = nbns.size();
+                    switch (numNbns) {
+                        case 1:
+                            System.out.println("Dataset NBN: <" + nbns.get(0) + ">. ");
+                            break;
+                        case 0:
+                            System.out.println("WARNING: No NBN found");
+                            break;
+                        default:
+                            System.out.println("WARNING: More than one NBN found (" + nbns + "): ");
+                            break;
                     }
-                    String stateText = states.get(0).getText();
-                    System.out.println("State description: " + stateText + "");
-                    System.out.println("Complete statement follows:");
-                    printXml(bodyText);
-                    return entries.get(0).getId().toURI();
+                    System.out.println("Bag ID for this version of the dataset: " + entries.get(0).getId());
                 }
-                else if (!"SUBMITTED".equals(state)) {
-                    System.out.println("Unknown status: " + state);
+                else {
+                    System.out.println("WARNING: Found (" + entries.size() + ") entry's; should be ONE and only ONE");
                 }
+                String stateText = category.getValue();
+                System.out.println("State description: " + stateText + "");
+                System.out.println("Complete statement follows:");
+                printXml(bodyText);
+                return new URI(entries.get(0).getId());
             }
+            else if (!"SUBMITTED".equals(state)) {
+                System.out.println("Unknown status: " + state);
+            }
+            //            }
         }
     }
 
-    public static List<String> getDois(Entry entry) {
-        List<String> dois = new ArrayList<>();
-
-        List<Link> links = entry.getLinks("self");
-        for (Link link : links) {
-            IRI href = link.getHref();
-            if (href.getHost().equals("doi.org")) {
-                dois.add(href.toASCIIString());
-            }
-        }
-        return dois;
+    public static List<String> getDois(FeedEntry entry) {
+        return entry.getLinks().stream()
+            .filter(l -> "self".equals(l.getRel()))
+            .filter(l -> "doi.org".equals(l.getHref().getHost()))
+            .map(l -> l.getHref().toASCIIString())
+            .collect(Collectors.toList());
     }
 
-    public static List<String> getNbn(Entry entry) {
-        List<String> nbns = new ArrayList<>();
-
-        List<Link> links = entry.getLinks("self");
-        for (Link link : links) {
-            IRI href = link.getHref();
-            if (href.getHost().equals("www.persistent-identifier.nl")) {
-                nbns.add(href.toASCIIString());
-            }
-        }
-        return nbns;
+    public static List<String> getNbn(FeedEntry entry) {
+        return entry.getLinks().stream()
+            .filter(l -> "self".equals(l.getRel()))
+            .filter(l -> "www.persistent-identifier.nl".equals(l.getHref().getHost()))
+            .map(l -> l.getHref().toASCIIString())
+            .collect(Collectors.toList());
     }
-
 
     private static byte[] readChunk(InputStream is, int size) throws Exception {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
@@ -350,6 +349,12 @@ public class Common {
         catch (Exception e) {
             throw new RuntimeException("Error occurs when pretty-printing xml:\n" + xmlString, e);
         }
+    }
+
+    public static Optional<Link> getLinkByRel(List<Link> links, String rel) {
+        return links.stream()
+            .filter(f -> rel.equals(f.getRel()))
+            .findFirst();
     }
 
 }
