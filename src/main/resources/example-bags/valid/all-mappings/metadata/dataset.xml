@@ -141,6 +141,31 @@
             </dcx-dai:organization>
         </dcx-dai:contributorDetails>
 
+        <!-- CIT022 -->
+        <!-- Rule under revision -->
+
+        <!-- CIT023 -->
+        <dcterms:identifier xsi:type="id-type:NWO-PROJECTNR">54321</dcterms:identifier>
+
+        <!-- CIT024 -->
+        <dcterms:publisher>D. I. Stributor</dcterms:publisher>
+        <!-- Special values: skipped -->
+        <dcterms:publisher>DANS</dcterms:publisher>
+        <dcterms:publisher>DANS-KNAW</dcterms:publisher>
+        <dcterms:publisher>DANS/KNAW</dcterms:publisher>
+
+        <!-- CIT025 see profile -->
+
+        <!-- CIT026 -->
+        <ddm:datesOfCollection>2015-06-01/2016-12-31</ddm:datesOfCollection>
+
+        <!-- CIT027 -->
+        <ddm:description descriptionType="SeriesInformation">Information about a series</ddm:description>
+
+        <!-- CIT028 -->
+        <dcterms:source>Source 1</dcterms:source>
+        <dcterms:source>Source 2</dcterms:source>
+        <dcterms:source>Source 3</dcterms:source>
 
         <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
         <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
