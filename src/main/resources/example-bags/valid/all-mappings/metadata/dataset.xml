@@ -1,6 +1,7 @@
 <ddm:DDM
         xmlns:dc="http://purl.org/dc/elements/1.1/"
         xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
+        xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/"
         xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
         xmlns:dcterms="http://purl.org/dc/terms/"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -244,13 +245,53 @@
             Midden Romeinse Tijd A
         </ddm:temporal>
 
-        <!--TRM001 -->
-        <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
+        <!-- TS001 -->
+        <dcterms:temporal>Het Romeinse Rijk</dcterms:temporal>
+        <dcterms:temporal>De Oudheid</dcterms:temporal>
+
+        <!-- TS002 -->
+        <dcx-gml:spatial srsName="http://www.opengis.net/def/crs/EPSG/0/28992">
+            <Point xmlns="http://www.opengis.net/gml">
+                <pos>126466 529006</pos>
+            </Point>
+        </dcx-gml:spatial>
+
+        <!-- TS003, defaults to latitude/longitude-->
+        <dcx-gml:spatial>
+            <Point xmlns="http://www.opengis.net/gml">
+                <pos>52.078663 4.288788</pos>
+            </Point>
+        </dcx-gml:spatial>
+
+        <!-- TS004 -->
+        <dcx-gml:spatial>
+            <boundedBy xmlns="http://www.opengis.net/gml">
+                <Envelope srsName="http://www.opengis.net/def/crs/EPSG/0/28992">
+                    <lowerCorner>102000 335000</lowerCorner>
+                    <upperCorner>140000 628000</upperCorner>
+                </Envelope>
+            </boundedBy>
+        </dcx-gml:spatial>
+
+        <!-- TS005, defaults to latitude/longitude -->
+        <dcx-gml:spatial>
+            <boundedBy xmlns="http://www.opengis.net/gml">
+                <Envelope srsName="XXX">
+                    <lowerCorner>51.46343658020442 3.5621054065986075</lowerCorner>
+                    <upperCorner>53.23074335194507 6.563118076315912</upperCorner>
+                </Envelope>
+            </boundedBy>
+        </dcx-gml:spatial>
 
         <!-- TS006, note that the text must exactly match the vocabulary term, so South-Africa will be handled by TS007 -->
         <dcterms:spatial>South Africa</dcterms:spatial>
         <dcterms:spatial>Japan</dcterms:spatial>
+
         <!-- TS007, not in the controlled list, so mapped to the free text field -->
         <dcterms:spatial>Roman Empire</dcterms:spatial>
+
+        <!--TRM001 -->
+        <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
+
     </ddm:dcmiMetadata>
 </ddm:DDM>
