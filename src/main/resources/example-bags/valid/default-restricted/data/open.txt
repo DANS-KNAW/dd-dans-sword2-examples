@@ -1,0 +1,1 @@
+This file will override the default accessibility of RESTRICTED_REQUEST with ANONYMOUS.
