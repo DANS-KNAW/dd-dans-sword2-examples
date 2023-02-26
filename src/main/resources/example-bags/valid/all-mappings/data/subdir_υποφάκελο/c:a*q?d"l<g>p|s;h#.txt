@@ -1,0 +1,10 @@
+Replace forbidden chars with underscore. (Forbidden chars are:
+: (colon)
+* (asterisk)
+? (question mark)
+"" (double quote)
+< (lower than)
+> (greater than)
+| (pipe)
+; (semicolon)
+# (hash)

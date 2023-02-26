@@ -57,6 +57,8 @@
         <ddm:audience>D16400</ddm:audience>
         <ddm:audience>D16500</ddm:audience>
         <ddm:audience>E16000</ddm:audience> <!-- NB CIT013 will map this to the subject 'Other', but drop that because it is not the only subject found -->
+
+        <!-- If changed to NO_ACCESS, demonstrates TRM003 -->
         <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
         <!-- RIG002 -->
         <ddm:personalData present="No"/>
@@ -292,6 +294,11 @@
 
         <!--TRM001 -->
         <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
+
+        <!-- TRM002 see example restricted-files-no-access-request -->
+
+        <!-- TRM005 and TRM006 -->
+        <dcterms:accessRights>Restricted files accessible under the following conditions: ...</dcterms:accessRights>
 
     </ddm:dcmiMetadata>
 </ddm:DDM>
