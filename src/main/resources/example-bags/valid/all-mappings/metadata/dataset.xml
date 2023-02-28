@@ -158,7 +158,8 @@
         <ddm:datesOfCollection>2015-06-01/2016-12-31</ddm:datesOfCollection>
 
         <!-- CIT027 -->
-        <ddm:description descriptionType="SeriesInformation">Information about a series</ddm:description>
+        <ddm:description descriptionType="SeriesInformation">Information about a series: first</ddm:description>
+        <ddm:description descriptionType="SeriesInformation">Information about a series: second</ddm:description>
 
         <!-- CIT028 --> <!-- RIG003 Any element can add a metadata language -->
         <dcterms:source xml:lang="ht">Sous an ayisyen</dcterms:source>
@@ -275,12 +276,22 @@
             </boundedBy>
         </dcx-gml:spatial>
 
-        <!-- TS005, defaults to latitude/longitude -->
+        <!-- TS005 -->
+        <dcx-gml:spatial>
+            <boundedBy xmlns="http://www.opengis.net/gml">
+                <Envelope srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                    <lowerCorner>51.46343658020442 3.5621054065986075</lowerCorner>
+                    <upperCorner>53.23074335194507 6.563118076315912</upperCorner>
+                </Envelope>
+            </boundedBy>
+        </dcx-gml:spatial>
+
+        <!-- Not RD or lat/lon, so should be ignored -->
         <dcx-gml:spatial>
             <boundedBy xmlns="http://www.opengis.net/gml">
                 <Envelope srsName="XXX">
-                    <lowerCorner>51.46343658020442 3.5621054065986075</lowerCorner>
-                    <upperCorner>53.23074335194507 6.563118076315912</upperCorner>
+                    <lowerCorner>1 2</lowerCorner>
+                    <upperCorner>3 4</upperCorner>
                 </Envelope>
             </boundedBy>
         </dcx-gml:spatial>
