@@ -7,7 +7,7 @@
     <ddm:profile>
         <dc:title>A bag to demonstrate revisions - 3</dc:title>
         <dcterms:description>
-            This series of bags demonstrates how to update datasets with new versions
+            An yet another description for version 3
         </dcterms:description>
         <dcx-dai:creatorDetails>
             <dcx-dai:author>
@@ -19,14 +19,9 @@
                 </dcx-dai:organization>
             </dcx-dai:author>
         </dcx-dai:creatorDetails>
-        <ddm:created>2015-09-09</ddm:created>
-        <ddm:available>2015-09-09</ddm:available>
+        <ddm:created>2020-01-01</ddm:created>
+        <ddm:available>2025-01-01</ddm:available>
         <ddm:audience>D16300</ddm:audience>
-        <ddm:audience>D16100</ddm:audience>
-        <ddm:audience>D16200</ddm:audience>
-        <ddm:audience>D16400</ddm:audience>
-        <ddm:audience>D16500</ddm:audience>
-        <ddm:audience>E16000</ddm:audience>
         <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
         <ddm:personalData present="No"/>
     </ddm:profile>
