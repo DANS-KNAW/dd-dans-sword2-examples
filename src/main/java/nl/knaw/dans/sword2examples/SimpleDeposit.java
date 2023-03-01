@@ -63,33 +63,38 @@ public class SimpleDeposit {
             DigestInputStream dis = new DigestInputStream(fis, md)) {
 
             // 2. Post entire bag to Col-IRI
-            CloseableHttpClient http = Common.createHttpClient(uri, uid, pw);
-            CloseableHttpResponse response = Common.sendChunk(dis, (int) zipFile.length(), "POST", uri, "bag.zip", "application/zip", http, false);
+            try (CloseableHttpClient http = Common.createHttpClient(uri, uid, pw)) {
+                var bodyText = "";
+                try (CloseableHttpResponse response = Common.sendChunk(dis, (int) zipFile.length(), "POST", uri, "bag.zip", "application/zip", http, false)) {
 
-            // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
-            String bodyText = Common.readEntityAsString(response.getEntity());
-            if (response.getStatusLine().getStatusCode() != 201) {
-                System.err.println("FAILED. Status = " + response.getStatusLine());
-                System.err.println("Response body follows:");
-                Common.printXml(bodyText);
-                System.exit(2);
+                    // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
+                    bodyText = Common.readEntityAsString(response.getEntity());
+                    if (response.getStatusLine().getStatusCode() != 201) {
+                        System.err.println("FAILED. Status = " + response.getStatusLine());
+                        System.err.println("Response body follows:");
+                        Common.printXml(bodyText);
+                        System.exit(2);
+                    }
+
+                    System.out.println("SUCCESS. Deposit receipt follows:");
+                    Common.printXml(bodyText);
+
+                    // 4. Get the statement URL. This is the URL from which to retrieve the current status of the deposit.
+                    System.out.println("Retrieving Statement IRI (Stat-IRI) from deposit receipt ...");
+
+                    Entry receipt = Common.parseEntry(bodyText);
+                    Link statLink = Common.getLinkByRel(receipt.getLinks(), "http://purl.org/net/sword/terms/statement")
+                        .orElseThrow();
+
+                    URI statUri = statLink.getHref();
+                    System.out.println("Stat-URI = " + statUri);
+
+                    // 5. Check statement every ten seconds (a bit too frantic, but okay for this test). If status changes:
+                    // report new status. If status is an error (INVALID, REJECTED, FAILED) or ARCHIVED: exit.
+                    return Common.trackDeposit(http, statUri);
+                }
             }
-            System.out.println("SUCCESS. Deposit receipt follows:");
-            Common.printXml(bodyText);
 
-            // 4. Get the statement URL. This is the URL from which to retrieve the current status of the deposit.
-            System.out.println("Retrieving Statement IRI (Stat-IRI) from deposit receipt ...");
-
-            Entry receipt = Common.parseEntry(bodyText);
-            Link statLink = Common.getLinkByRel(receipt.getLinks(), "http://purl.org/net/sword/terms/statement")
-                .orElseThrow();
-
-            URI statUri = statLink.getHref();
-            System.out.println("Stat-URI = " + statUri);
-
-            // 5. Check statement every ten seconds (a bit too frantic, but okay for this test). If status changes:
-            // report new status. If status is an error (INVALID, REJECTED, FAILED) or ARCHIVED: exit.
-            return Common.trackDeposit(http, statUri);
         }
     }
 }

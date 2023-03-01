@@ -4,4 +4,4 @@
 912dcd8724d99d2ecef62f089ef1b81032845db8  data/subdir/file1.txt
 02f1b44559a4a4e4d213e694fc082f039732ba5d  data/subdir/file2-renamed.txt
 38346b95fadd5fce5cc512a8e2b101ec0b4bd766  data/subdir/file4.txt
-1 data/subdir/from-sub-dir-to-root.txt
+803c3d2458982137364ef85c50f28d904cf8b25e  data/subdir/from-sub-dir-to-root.txt
