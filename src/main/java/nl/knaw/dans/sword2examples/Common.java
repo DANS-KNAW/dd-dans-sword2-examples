@@ -112,7 +112,7 @@ public class Common {
         while (true) {
             Thread.sleep(numberOfSecondBetweenStatusChecks * 1000);
             System.out.print("Checking deposit status ... ");
-            try (var response = http.execute(addXAuthorizationToRequest(new HttpGet(statUri)))) {
+            try (CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(new HttpGet(statUri)))) {
                 System.out.print("(received response) ... ");
                 if (response.getStatusLine().getStatusCode() != 200) {
                     System.out.println("Stat-IRI returned " + response.getStatusLine().getStatusCode());
