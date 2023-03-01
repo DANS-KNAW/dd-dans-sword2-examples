@@ -9,5 +9,20 @@
     <file filepath="data/file3.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
+    <file filepath="data/file4.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/file1.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/file2.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/file3.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/file4.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
 </files>
 

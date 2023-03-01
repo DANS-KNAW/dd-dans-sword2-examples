@@ -71,6 +71,8 @@ public class Common {
     static final String BAGIT_URI = "http://purl.org/net/sword/package/BagIt";
     private static final BagVerifier bagVerifier = new BagVerifier();
 
+    private static final int numberOfSecondBetweenStatusChecks = 3;
+
     /**
      * Assumes the entity is UTF-8 encoded text and reads it into a String.
      *
@@ -105,18 +107,19 @@ public class Common {
     }
 
     static URI trackDeposit(CloseableHttpClient http, URI statUri) throws Exception {
-        CloseableHttpResponse response;
         String bodyText;
-        System.out.println("Start polling Stat-IRI for the current status of the deposit, waiting 10 seconds before every request ...");
+        System.out.println(String.format("Start polling Stat-IRI for the current status of the deposit, waiting %d seconds before every request ...", numberOfSecondBetweenStatusChecks));
         while (true) {
-            Thread.sleep(10000);
+            Thread.sleep(numberOfSecondBetweenStatusChecks * 1000);
             System.out.print("Checking deposit status ... ");
-            response = http.execute(addXAuthorizationToRequest(new HttpGet(statUri)));
-            if (response.getStatusLine().getStatusCode() != 200) {
-                System.out.println("Stat-IRI returned " + response.getStatusLine().getStatusCode());
-                System.exit(1);
+            try (var response = http.execute(addXAuthorizationToRequest(new HttpGet(statUri)))) {
+                System.out.print("(received response) ... ");
+                if (response.getStatusLine().getStatusCode() != 200) {
+                    System.out.println("Stat-IRI returned " + response.getStatusLine().getStatusCode());
+                    System.exit(1);
+                }
+                bodyText = readEntityAsString(response.getEntity());
             }
-            bodyText = readEntityAsString(response.getEntity());
 
             Feed statement = parseFeed(bodyText);
             FeedCategory category = statement.getCategory();
@@ -184,10 +187,12 @@ public class Common {
                 printXml(bodyText);
                 return new URI(entries.get(0).getId());
             }
-            else if (!"SUBMITTED".equals(state)) {
-                System.out.println("Unknown status: " + state);
+            else {
+                System.out.println(state);
+                if (!"SUBMITTED".equals(state)) {
+                    System.out.println("WARNING: unknown status!");
+                }
             }
-            //            }
         }
     }
 

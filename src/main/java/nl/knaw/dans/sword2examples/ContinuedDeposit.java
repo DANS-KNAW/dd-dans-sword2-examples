@@ -54,53 +54,57 @@ public class ContinuedDeposit {
         FileInputStream fis = new FileInputStream(zipFile);
         MessageDigest md = MessageDigest.getInstance("MD5");
         DigestInputStream dis = new DigestInputStream(fis, md);
+        String bodyText;
 
         // 2. Post first chunk bag to Col-IRI
-        CloseableHttpClient http = Common.createHttpClient(uri, uid, pw);
-        CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", uri, "bag.zip.1", "application/octet-stream", http,
-            chunkSize < zipFile.length());
+        try (CloseableHttpClient http = Common.createHttpClient(uri, uid, pw)) {
+            try (CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", uri, "bag.zip.1", "application/octet-stream", http,
+                chunkSize < zipFile.length())) {
 
-        // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
-        String bodyText = Common.readEntityAsString(response.getEntity());
-        if (response.getStatusLine().getStatusCode() != 201) {
-            System.err.println("FAILED. Status = " + response.getStatusLine());
-            System.err.println("Response body follows:");
-            Common.printXml(bodyText);
-            System.exit(2);
-        }
-        System.out.println("SUCCESS. Deposit receipt follows:");
-        Common.printXml(bodyText);
-
-        Entry receipt = Common.parseEntry(bodyText);
-        Link seLink = Common.getLinkByRel(receipt.getLinks(), "edit").orElseThrow();
-        URI seIri = seLink.getHref();
-
-        long remaining = zipFile.length() - chunkSize;
-        int count = 2;
-        while (remaining > 0) {
-            System.out.printf("POST-ing chunk of %d bytes to SE-IRI (remaining: %d) ... ", chunkSize, remaining);
-            response = Common.sendChunk(dis, chunkSize, "POST", seIri, "bag.zip." + count++, "application/octet-stream", http, remaining > chunkSize);
-            remaining -= chunkSize;
-            bodyText = Common.readEntityAsString(response.getEntity());
-            if (response.getStatusLine().getStatusCode() != 200) {
-                System.err.println("FAILED. Status = " + response.getStatusLine());
-                System.err.println("Response body follows:");
-                System.err.println(bodyText);
-                System.exit(2);
+                // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
+                bodyText = Common.readEntityAsString(response.getEntity());
+                if (response.getStatusLine().getStatusCode() != 201) {
+                    System.err.println("FAILED. Status = " + response.getStatusLine());
+                    System.err.println("Response body follows:");
+                    Common.printXml(bodyText);
+                    System.exit(2);
+                }
+                System.out.println("SUCCESS. Deposit receipt follows:");
             }
-            System.out.println("SUCCESS.");
+            Common.printXml(bodyText);
+
+            Entry receipt = Common.parseEntry(bodyText);
+            Link seLink = Common.getLinkByRel(receipt.getLinks(), "edit").orElseThrow();
+            URI seIri = seLink.getHref();
+
+            long remaining = zipFile.length() - chunkSize;
+            int count = 2;
+            while (remaining > 0) {
+                System.out.printf("POST-ing chunk of %d bytes to SE-IRI (remaining: %d) ... ", chunkSize, remaining);
+                try (CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", seIri, "bag.zip." + count++, "application/octet-stream", http, remaining > chunkSize)) {
+                    remaining -= chunkSize;
+                    bodyText = Common.readEntityAsString(response.getEntity());
+                    if (response.getStatusLine().getStatusCode() != 200) {
+                        System.err.println("FAILED. Status = " + response.getStatusLine());
+                        System.err.println("Response body follows:");
+                        System.err.println(bodyText);
+                        System.exit(2);
+                    }
+                    System.out.println("SUCCESS.");
+                }
+            }
+
+            // 4. Get the statement URL. This is the URL from which to retrieve the current status of the deposit.
+            System.out.println("Retrieving Statement IRI (Stat-IRI) from deposit receipt ...");
+            receipt = Common.parseEntry(bodyText);
+            URI statUri = Common.getLinkByRel(receipt.getLinks(), "http://purl.org/net/sword/terms/statement")
+                .orElseThrow().getHref();
+
+            System.out.println("Stat-IRI = " + statUri);
+
+            // 5. Check statement every few seconds (a bit too frantic, but okay for this test). If status changes:
+            // report new status. If status is an error (INVALID, REJECTED, FAILED) or PUBLISHED: exit.
+            return Common.trackDeposit(http, statUri);
         }
-
-        // 4. Get the statement URL. This is the URL from which to retrieve the current status of the deposit.
-        System.out.println("Retrieving Statement IRI (Stat-IRI) from deposit receipt ...");
-        receipt = Common.parseEntry(bodyText);
-        URI statUri = Common.getLinkByRel(receipt.getLinks(), "http://purl.org/net/sword/terms/statement")
-            .orElseThrow().getHref();
-
-        System.out.println("Stat-IRI = " + statUri);
-
-        // 5. Check statement every ten seconds (a bit too frantic, but okay for this test). If status changes:
-        // report new status. If status is an error (INVALID, REJECTED, FAILED) or PUBLISHED: exit.
-        return Common.trackDeposit(http, statUri);
     }
 }

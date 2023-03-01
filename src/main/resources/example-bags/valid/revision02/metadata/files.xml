@@ -6,5 +6,23 @@
     <file filepath="data/file2-renamed.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
+    <file filepath="data/file4.txt">
+        <dcterms:description>Content of this file has changed</dcterms:description>
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/file1.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/file2-renamed.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/file4.txt">
+        <dcterms:description>Content of this file has changed</dcterms:description>
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/subdir/from-sub-dir-to-root.txt">
+        <dcterms:description>I am in a subdir</dcterms:description>
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
 </files>
 
