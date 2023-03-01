@@ -63,6 +63,7 @@ import java.io.Writer;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -72,6 +73,8 @@ public class Common {
     private static final BagVerifier bagVerifier = new BagVerifier();
 
     private static final int numberOfSecondBetweenStatusChecks = 3;
+
+    private static final List<String> statuses = Arrays.asList("DRAFT", "UPLOADED", "FINALIZING", "SUBMITTED", "INVALID", "REJECTED", "FAILED", "PUBLISHED");
 
     /**
      * Assumes the entity is UTF-8 encoded text and reads it into a String.
@@ -189,7 +192,7 @@ public class Common {
             }
             else {
                 System.out.println(state);
-                if (!"SUBMITTED".equals(state)) {
+                if (!statuses.contains(state)) {
                     System.out.println("WARNING: unknown status!");
                 }
             }
