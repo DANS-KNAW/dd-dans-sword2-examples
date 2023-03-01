@@ -2,3 +2,5 @@
 /target/
 /.venv-mkdocs
 /x-auth-value.txt
+/data
+
