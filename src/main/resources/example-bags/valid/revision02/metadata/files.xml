@@ -20,8 +20,12 @@
         <dcterms:description>Content of this file has changed</dcterms:description>
         <dcterms:format>text/plain</dcterms:format>
     </file>
-    <file filepath="data/subdir/from-sub-dir-to-root.txt">
+    <file filepath="data/subdir/from-subdir-to-root.txt">
         <dcterms:description>I am in a subdir</dcterms:description>
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/from-root-to-subdir.txt">
+        <dcterms:description>I am in the root dir</dcterms:description>
         <dcterms:format>text/plain</dcterms:format>
     </file>
 </files>
