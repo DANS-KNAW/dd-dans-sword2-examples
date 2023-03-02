@@ -8,7 +8,7 @@ SYNOPSIS
 
 ```text
 mvn clean install
-./run-validation.sh https://demo.sword2.domain.datastations.nl/validate-dans-bag bag myuser mypassword
+./run-validation.sh https://demo.sword2.domain.datastations.nl/validate-dans-bag bag
 ./run-deposit.sh Simple https://demo.sword2.domain.datastations.nl/collection/1 myuser mypassword bag
 ./run-deposit.sh Continued https://demo.sword2.domain.datastations.nl/collection/1 myuser mypassword chunksize bag
 ./run-deposit.sh SequenceSimple https://demo.sword2.domain.datastations.nl/collection/1 myuser mypassword bag1 bag2 bag3

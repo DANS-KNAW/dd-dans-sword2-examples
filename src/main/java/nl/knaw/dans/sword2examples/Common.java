@@ -229,6 +229,11 @@ public class Common {
         return HttpClients.custom().setDefaultCredentialsProvider(credsProv).build();
     }
 
+    public static CloseableHttpClient createHttpClient(URI uri) {
+        return HttpClients.custom().build();
+    }
+
+
     public static CloseableHttpResponse sendChunk(DigestInputStream dis, int size, String method, URI uri, String filename, String mimeType,
         CloseableHttpClient http, boolean inProgress) throws Exception {
         // System.out.println(String.format("Sending chunk to %s, filename = %s, chunk size = %d, MIME-Type = %s, In-Progress = %s ... ", uri.toString(),
@@ -263,13 +268,6 @@ public class Common {
         Bag bag = new BagReader().read(bagDir.toPath());
         bagVerifier.isValid(bag, false);
         bag.getMetadata().add("Is-Version-Of", versionOfUri.toASCIIString());
-        BagWriter.write(bag, bagDir.toPath());
-    }
-
-    public static void setDataStationUserAccount(File bagDir, String user) throws Exception {
-        Bag bag = new BagReader().read(bagDir.toPath());
-        bagVerifier.isValid(bag, false);
-        bag.getMetadata().add("Data-Station-User-Account", user);
         BagWriter.write(bag, bagDir.toPath());
     }
 
@@ -317,8 +315,8 @@ public class Common {
         return dirInTarget;
     }
 
-    public static void validateZip(File zippedBag, URI uri, String user, String password) throws Exception {
-        try (CloseableHttpClient httpClient = createHttpClient(uri, user, password)) {
+    public static void validateZip(File zippedBag, URI uri) throws Exception {
+        try (CloseableHttpClient httpClient = createHttpClient(uri)) {
             var post = RequestBuilder
                 .post(uri)
                 .setHeader("Content-Type", "application/zip")

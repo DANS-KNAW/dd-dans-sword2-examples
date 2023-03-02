@@ -30,8 +30,6 @@ fi
 
 SERVICE_URL=$1
 BAG=$2
-USER=$3
-PASSWORD=$4
 
 KEYSTORE_FILE=$HOME/.keystore
 KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
@@ -57,4 +55,4 @@ else
 fi
 
 mvn dependency:copy-dependencies
-java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $SERVICE_URL $BAG $USER $PASSWORD
+java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $SERVICE_URL $BAG

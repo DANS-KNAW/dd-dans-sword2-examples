@@ -21,21 +21,17 @@ import java.net.URI;
 public class ValidateBag {
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 4) {
-            System.err.printf("Usage: java %s <bag file/dir> <validate-dans-bag-url> <user> <password>", ValidateBag.class.getName());
+        if (args.length != 2) {
+            System.err.printf("Usage: java %s <bag file/dir> <validate-dans-bag-url>", ValidateBag.class.getName());
             System.exit(1);
         }
         var validateDansBagUrl = new URI(args[0]);
-        var user = args[1];
-        var password = args[2];
-        var bag = new File(args[3]);
+        var bag = new File(args[1]);
 
         var bagInTarget = Common.copyToBagDirectoryInTarget(bag);
         var zippedBagInTarget = new File(bagInTarget.toString() + ".zip");
-        // Adding Data-Station-User-Account because we are calling the validator directly. When depositing to the SWORD2 service you don't have to do this, because SWORD2 will take care of it for you.
-        Common.setDataStationUserAccount(bagInTarget, user);
         Common.zipDirectory(bagInTarget, zippedBagInTarget);
-        Common.validateZip(zippedBagInTarget, validateDansBagUrl, user, password);
+        Common.validateZip(zippedBagInTarget, validateDansBagUrl);
         System.exit(0);
     }
 }
