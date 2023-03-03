@@ -12,16 +12,16 @@
     <file filepath="data/file4.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
-    <file filepath="data/subdir/file1.txt">
+    <file filepath="data/subdir/fileA.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
-    <file filepath="data/subdir/file2.txt">
+    <file filepath="data/subdir/fileB.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
-    <file filepath="data/subdir/file3.txt">
+    <file filepath="data/subdir/fileC.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
-    <file filepath="data/subdir/file4.txt">
+    <file filepath="data/subdir/fileD.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
 </files>
