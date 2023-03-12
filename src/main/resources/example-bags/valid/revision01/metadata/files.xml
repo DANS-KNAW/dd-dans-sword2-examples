@@ -23,6 +23,7 @@
     </file>
     <file filepath="data/subdir/fileD.txt">
         <dcterms:format>text/plain</dcterms:format>
+        <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
     </file>
 </files>
 

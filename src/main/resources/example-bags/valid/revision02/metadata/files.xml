@@ -19,6 +19,7 @@
     <file filepath="data/subdir/fileD.txt">
         <dcterms:description>Content of this file has changed</dcterms:description>
         <dcterms:format>text/plain</dcterms:format>
+        <accessibleToRights>NONE</accessibleToRights>
     </file>
     <file filepath="data/subdir/from-subdir-to-root.txt">
         <dcterms:description>I am in a subdir</dcterms:description>

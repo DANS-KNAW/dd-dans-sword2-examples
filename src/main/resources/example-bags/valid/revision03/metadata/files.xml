@@ -25,6 +25,7 @@
     <file filepath="data/subdir/fileD.txt">
         <dcterms:description>Content of this file has changed again</dcterms:description>
         <dcterms:format>text/plain</dcterms:format>
+        <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
     </file>
     <file filepath="data/from-subdir-to-root.txt">
         <dcterms:description>I am in the root dir</dcterms:description>
