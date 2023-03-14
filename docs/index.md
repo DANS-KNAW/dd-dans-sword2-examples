@@ -114,6 +114,14 @@ The following is a step-by-step instruction on how to run a simple example using
    folder `target` (the Maven build folder), zip it and send it to `https://demo.<domain>.datastations.nl/sword2/collection/1`
    authenticating with the provider username and password using basic auth.
 
+!!! note "Authenticating with X-Dataverse-key"
+
+    Instead of using username and password you can also authenticate using your API-token (also known as API-key). You can look up you current current 
+    API-token in your account settings in the Data Station user interface. The API-token is specified using the header `X-Dataverse-key`. To pass it to 
+    the example programs using the `run-deposit.sh` script specify instead of your user name the literal string `API_KEY` and instead of your password
+    the API-token.
+
+
 ##### Output analysis
 
 [In the introduction](#sword2-in-a-nutshell) the SWORD2 deposit process is described in 5 stages, the response messages give some indication how far the
