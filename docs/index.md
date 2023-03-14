@@ -121,6 +121,9 @@ The following is a step-by-step instruction on how to run a simple example using
     the example programs using the `run-deposit.sh` script specify instead of your user name the literal string `API_KEY` and instead of your password
     the API-token.
 
+    _Note that using the API-token is the **only** way to authenticate if your Data Station account is using an external identity provider such as 
+    SURFconext or Google._
+
 
 ##### Output analysis
 
