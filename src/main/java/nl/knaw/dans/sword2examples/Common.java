@@ -43,6 +43,7 @@ import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicHeader;
 import org.xml.sax.InputSource;
 
 import javax.xml.bind.JAXBContext;
@@ -64,6 +65,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -229,10 +231,13 @@ public class Common {
         return HttpClients.custom().setDefaultCredentialsProvider(credsProv).build();
     }
 
+    public static CloseableHttpClient createHttpClient(URI uri, String apiToken) {
+        return HttpClients.custom().setDefaultHeaders(Collections.singletonList(new BasicHeader("X-Dataverse-key", apiToken))).build();
+    }
+
     public static CloseableHttpClient createHttpClient(URI uri) {
         return HttpClients.custom().build();
     }
-
 
     public static CloseableHttpResponse sendChunk(DigestInputStream dis, int size, String method, URI uri, String filename, String mimeType,
         CloseableHttpClient http, boolean inProgress) throws Exception {

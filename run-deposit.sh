@@ -43,8 +43,8 @@ if (( $# < 5 )); then
  echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port "
  echo "<program> = one of Simple,Continued,SequenceSimple,SequenceContinued"
  echo "<COL-IRI> = the collection IRI to post to"
- echo "<user> = Data Station user account"
- echo "<password> = password for <user>"
+ echo "<user> = Data Station user account OR the string 'API_KEY'"
+ echo "<password> = password for <user> OR the user's API key if the string 'API_KEY' was passed as user name"
  echo "<chunksize> = size in byte of each chunk (only for the Continued variants)"
  echo "<bag> = one bag directory or zip file to send or multiple (only for Sequence variants)"
  exit

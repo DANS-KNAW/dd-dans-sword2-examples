@@ -39,7 +39,7 @@ JARFILE=$(ls -1 target/*SNAPSHOT.jar)
 if (( $# < 1 )); then
  echo "Runs the test program $MAIN_CLASS that sends a zipped bag to the validator to verify"
  echo "if it complies with the DANS BagIt Profile rules."
- echo "Usage: ./run-validation.sh [--suspend] <VALIDATOR-URL> <user> <password> <bag>"
+ echo "Usage: ./run-validation.sh [--suspend] <VALIDATOR-URL> <bag>"
  echo "Where:"
  echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port $DEBUG_PORT"
  echo "<VALIDATOR-URL> = the validator end-point: https://demo.sword2.domain.datastations.nl/validate-dans-bag, where 'domain' is"
