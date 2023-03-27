@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:dcterms="http://purl.org/dc/terms/">
+    <file filepath="data/fileA.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/fileB.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/originals/file1.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/published/file1.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/originals/multimove1.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+    <file filepath="data/originals/multimove2.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
+</files>
+

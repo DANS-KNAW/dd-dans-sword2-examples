@@ -1,0 +1,5 @@
+bab7f043476871d95d07ed4ff68f6fedcdb02e1c  data/fileA.txt
+2e45679b4d00e060ec3b902b26b9b8d7d066f11e  data/fileB.txt
+094267d7468ffd012e3099bd5e1d74b18dafa720  data/published/file1.txt
+586107a041307e1adf01c734dead95fac3fc8f80  data/published/multimove1.txt
+586107a041307e1adf01c734dead95fac3fc8f80  data/published/multimove2.txt
