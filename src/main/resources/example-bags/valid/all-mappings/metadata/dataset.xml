@@ -111,7 +111,7 @@
         <dcterms:identifier xsi:type="id-type:ISSN">0317-8471</dcterms:identifier>
 
         <!-- CIT018 -->
-        <ddm:language encodingScheme="ISO639-3" code="fy">West-Fries</ddm:language>
+        <ddm:language encodingScheme="ISO639-3" code="fry">West-Fries</ddm:language>
         <ddm:language encodingScheme="ISO639-2" code="kal">Groenlands</ddm:language>
         <ddm:language encodingScheme="ISO639-2" code="baq">Baskisch</ddm:language>
 
