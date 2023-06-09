@@ -3,6 +3,7 @@
         xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
         xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
         xmlns:dcterms="http://purl.org/dc/terms/"
+        xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ddm:profile>
         <dc:title>A bag containing multiple audiences transferred with SHA-256 checksums</dc:title>
@@ -32,5 +33,8 @@
     <ddm:dcmiMetadata>
         <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
         <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
+        <!-- TODO: provide mapping rule -->
+        <!-- Note, a DOI is required for VaaS, but not for the Data Stations -->
+        <dcterms:identifier xsi:type="id-type:DOI">10.17026/dans-z6y-5y2e</dcterms:identifier>
     </ddm:dcmiMetadata>
 </ddm:DDM>

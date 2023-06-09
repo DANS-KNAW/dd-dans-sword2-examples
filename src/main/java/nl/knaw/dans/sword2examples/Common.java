@@ -136,37 +136,40 @@ public class Common {
             String state = category.getTerm();
             if (state.equals("INVALID") || state.equals("REJECTED") || state.equals("FAILED")) {
                 System.err.println("FAILURE. Complete statement follows:");
-                System.err.println(bodyText);
+                System.err.println("-- XML: START --");
+                System.err.println(prettyPrintByTransformer(bodyText, 2, false));
+                System.err.println("-- XML: END --");
                 System.exit(3);
             }
-            else if (state.equals("PUBLISHED")) {
+            else if (state.equals("PUBLISHED") || state.equals("ACCEPTED")) {
                 List<FeedEntry> entries = statement.getEntries();
                 System.out.println("SUCCESS. ");
                 if (entries.size() == 1) {
-                    List<String> dois = getDois(entries.get(0));
-                    int numDois = dois.size();
-                    switch (numDois) {
-                        case 1:
-                            System.out.println("Dataset has been published as: <" + dois.get(0) + ">. ");
-                            break;
-                        case 0:
-                            System.out.println("WARNING: No DOI found");
-                            break;
-                        default:
-                            System.out.println("WARNING: More than one DOI found (" + numDois + "): ");
-                            boolean first = true;
-                            for (String doi : dois) {
-                                if (first) {
-                                    first = false;
-                                }
-                                else {
-                                    System.out.print(", ");
-                                }
-                                System.out.print(doi + "");
+                    if (state.equals("PUBLISHED")) {
+                        List<String> dois = getDois(entries.get(0));
+                        int numDois = dois.size();
+                        switch (numDois) {
+                            case 1:
+                                System.out.println("Dataset has been published as: <" + dois.get(0) + ">. ");
+                                break;
+                            case 0:
+                                System.out.println("WARNING: No DOI found");
+                                break;
+                            default:
+                                System.out.println("WARNING: More than one DOI found (" + numDois + "): ");
+                                boolean first = true;
+                                for (String doi : dois) {
+                                    if (first) {
+                                        first = false;
+                                    } else {
+                                        System.out.print(", ");
+                                    }
+                                    System.out.print(doi + "");
 
-                            }
-                            System.out.println();
-                            break;
+                                }
+                                System.out.println();
+                                break;
+                        }
                     }
                     List<String> nbns = getNbn(entries.get(0));
                     int numNbns = nbns.size();
