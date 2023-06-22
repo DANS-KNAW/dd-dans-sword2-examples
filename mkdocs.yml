@@ -25,6 +25,7 @@ nav:
   - Manual: index.md
   - Migrating from EASY: migrating-from-easy.md
   - Development: dev.md
+  - ⇒ DANS Data Station Architecture: arch.md
 
 extra:
   dans_bagit_profile: https://dans-knaw.github.io/dans-bagit-profile/versions/1.0.0/

@@ -32,6 +32,8 @@
                 <dcx-dai:titles>Dr</dcx-dai:titles>
                 <dcx-dai:initials>I</dcx-dai:initials>
                 <dcx-dai:surname>Lastname</dcx-dai:surname>
+                <dcx-dai:ISNI>0000 0001 2281 955X</dcx-dai:ISNI>
+                <dcx-dai:ORCID>https://orcid.org/0000-0001-9183-9538</dcx-dai:ORCID>
                 <dcx-dai:organization>
                     <dcx-dai:name xml:lang="en">Example Org</dcx-dai:name>
                 </dcx-dai:organization>
@@ -41,6 +43,7 @@
         <dcx-dai:creatorDetails>
             <dcx-dai:organization>
                 <dcx-dai:name xml:lang="en">Creator Organization</dcx-dai:name>
+                <dcx-dai:identifier scheme="VIAF" value="http://viaf.org/viaf/75121530"/>
             </dcx-dai:organization>
         </dcx-dai:creatorDetails>
         <!-- CIT008: contact is created from Dataverse account of depositing user -->
@@ -310,6 +313,11 @@
 
         <!-- TRM005 and TRM006 -->
         <dcterms:accessRights>Restricted files accessible under the following conditions: ...</dcterms:accessRights>
+
+
+        <!-- TODO: provide mapping rule -->
+        <!-- Note, a DOI is required for VaaS, but not for the Data Stations -->
+        <dcterms:identifier xsi:type="id-type:DOI">10.17026/dans-z6y-5y2e</dcterms:identifier>
 
     </ddm:dcmiMetadata>
 </ddm:DDM>
