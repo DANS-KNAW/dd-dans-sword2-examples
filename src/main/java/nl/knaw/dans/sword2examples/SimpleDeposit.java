@@ -63,7 +63,7 @@ public class SimpleDeposit {
             DigestInputStream dis = new DigestInputStream(fis, md)) {
 
             // 2. Post entire bag to Col-IRI
-            try (CloseableHttpClient http = "API_KEY".equals(uid) ? Common.createHttpClient(uri, pw) : Common.createHttpClient(uri, uid, pw)) {
+            try (CloseableHttpClient http = "API_KEY".equals(uid) ? Common.createHttpClient(pw) : Common.createHttpClient(uri, uid, pw)) {
                 var bodyText = "";
                 try (CloseableHttpResponse response = Common.sendChunk(dis, (int) zipFile.length(), "POST", uri, "bag.zip", "application/zip", http, false)) {
 

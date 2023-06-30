@@ -57,7 +57,7 @@ public class ContinuedDeposit {
         String bodyText;
 
         // 2. Post first chunk bag to Col-IRI
-        try (CloseableHttpClient http = "API_KEY".equals(uid) ? Common.createHttpClient(uri, pw) : Common.createHttpClient(uri, uid, pw)) {
+        try (CloseableHttpClient http = "API_KEY".equals(uid) ? Common.createHttpClient(pw) : Common.createHttpClient(uri, uid, pw)) {
             try (CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", uri, "bag.zip.1", "application/octet-stream", http,
                 chunkSize < zipFile.length())) {
 

@@ -229,16 +229,18 @@ public class Common {
     }
 
     public static CloseableHttpClient createHttpClient(URI uri, String uid, String pw) {
+        System.out.println("Using Basic-Auth: " + uid + ":" + pw);
         BasicCredentialsProvider credsProv = new BasicCredentialsProvider();
         credsProv.setCredentials(new AuthScope(uri.getHost(), uri.getPort()), new UsernamePasswordCredentials(uid, pw));
         return HttpClients.custom().setDefaultCredentialsProvider(credsProv).build();
     }
 
-    public static CloseableHttpClient createHttpClient(URI uri, String apiToken) {
+    public static CloseableHttpClient createHttpClient(String apiToken) {
+        System.out.println("Using API-Token: " + apiToken);
         return HttpClients.custom().setDefaultHeaders(Collections.singletonList(new BasicHeader("X-Dataverse-key", apiToken))).build();
     }
 
-    public static CloseableHttpClient createHttpClient(URI uri) {
+    public static CloseableHttpClient createHttpClient() {
         return HttpClients.custom().build();
     }
 
@@ -324,7 +326,7 @@ public class Common {
     }
 
     public static void validateZip(File zippedBag, URI uri) throws Exception {
-        try (CloseableHttpClient httpClient = createHttpClient(uri)) {
+        try (CloseableHttpClient httpClient = createHttpClient()) {
             var post = RequestBuilder
                 .post(uri)
                 .setHeader("Content-Type", "application/zip")
