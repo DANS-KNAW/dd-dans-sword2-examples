@@ -314,9 +314,7 @@
         <!-- TRM005 and TRM006 -->
         <dcterms:accessRights>Restricted files accessible under the following conditions: ...</dcterms:accessRights>
 
-
-        <!-- TODO: provide mapping rule -->
-        <!-- Note, a DOI is required for VaaS, but not for the Data Stations -->
+        <!-- VLT005A -->
         <dcterms:identifier xsi:type="id-type:DOI">10.17026/dans-z6y-5y2e</dcterms:identifier>
 
     </ddm:dcmiMetadata>

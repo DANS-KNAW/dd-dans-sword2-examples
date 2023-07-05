@@ -17,8 +17,7 @@ The service URL has changed from `https://easy.dans.knaw.nl/sword2/collection/1`
 
 Test deposits must be sent to the demo-server, which is hosted at the "demo" subdomain of the Data Station, e.g.,
 `https://demo.sword2.archaeology.datastations.nl/collection/1`. Since this is a test environment, this server is
-protected with an
-extra authentication header which is provided to our customers via a different channel.
+protected with an extra authentication header which is provided to our customers via a different channel.
 
 DDM schema changes
 ------------------
@@ -26,17 +25,14 @@ DDM schema changes
 ### New DANS Dataset Metadata schema and URI
 
 A new version of DANS Dataset Metadata has been introduced. To indicate that it is using the new schema
-the `dataset.xml` file in the deposit
-must use the new namespace: `http://schemas.dans.knaw.nl/dataset/ddm-v2/`. Deposits containing a
-legacy-version `dataset.xml` will be rejected.
+the `dataset.xml` file in the deposit must use the new namespace: `http://schemas.dans.knaw.nl/dataset/ddm-v2/`.
+Deposits containing a legacy-version `dataset.xml` will be rejected.
 
 ### New profile element: `ddm:personalData`
 
 The `profile` element has a new, required element, that provides a statement about the presence of personal data in the
-dataset.
-It must be added as the last sub-element of `profile`. It has one required attribute `present`, which takes one of the
-following values:
-`Yes`, `No`, `Unknown`.
+dataset. It must be added as the last sub-element of `profile`. It has one required attribute `present`, which takes one
+of the following values: `Yes`, `No`, `Unknown`.
 
 Example:
 
@@ -70,14 +66,14 @@ the list of supported licenses.
 
 #### Supported licenses **(VaaS)**
 
-The Vault as a Service only requires a license to be specified. It does not have a list of supported licenses.
+The Vault as a Service only requires a license to be specified. It does not have a list of supported licenses, so any
+license URI is accepted.
 
 ### New element `ddm:datesOfCollection` (optional)
 
 The `ddm:dcmiMetadata` section of DDM supports a new element `ddm:datesOfCollection` that allows you to specify the
-start and end dates for the date
-of collection. This will then be mapped to the Dataverse Citation Metadata field "Date of Collection" which is a
-structured field with Start and End subfields.
+start and end dates for the date of collection. This will then be mapped to the Dataverse Citation Metadata field "Date
+of Collection" which is a structured field with Start and End subfields.
 
 In `ddm:datesOfCollection` the start and end dates must be entered in the element text, separated by a slash. The dates
 must be formatted as YYYY-MM-DD
@@ -102,20 +98,17 @@ Dataverse has specific rules about what characters it allows in file names and d
 * directory names: **only the following allowed**: alphanumeric characters from ASCII, `_`, `-`, `.`, `\`, ` ` (space)
 
 All forbidden characters are replaced with an underscore by Ingest Flow, so it is not necessary for the client to change
-any file or directory names. The
-original file and directory name are recorded in the file's description metadata in Dataverse,
-e.g. `original_filepath: path/with/strænge/<chars>`
+any file or directory names. The original file and directory name are recorded in the file's description metadata in
+Dataverse, e.g. `original_filepath: path/with/strænge/<chars>`
 
 Organizational identifier (optional)
 ------------------------------------
 
 The client now has the option to provide an organizational identifier. The Depositor Organization most likely assign its
-own identifier to its datasets.
-It is **highly recommended** to store this identifier with the dataset deposited in the Data Station, so that it can be
-more easily correlated with the
-information in the client's repository or database. This is done using two elements
-in `bag-info.txt`: `Has-Organizational-Identifier` and, if available,
-`Has-Organizational-Identifier-Version`. For example:
+own identifier to its datasets. It is **highly recommended** to store this identifier with the dataset deposited in the
+Data Station, so that it can be more easily correlated with the information in the client's repository or database. This
+is done using two elements in `bag-info.txt`: `Has-Organizational-Identifier` and, if
+available, `Has-Organizational-Identifier-Version`. For example:
 
 ```text
 Has-Organizational-Identifier: REPO1:1234
@@ -123,10 +116,8 @@ Has-Organizational-Identifier-Version: 1
 ```
 
 `REPO1` is an organization specific prefix that must be agreed on with DANS beforehand. In this case `1234` would be the
-unique identifier that the REPO1
-organization uses to reference the corresponding dataset. The version has no constraints and can be left out, if no such
-information is kept by the
-Depositor Organization.
+unique identifier that the REPO1 organization uses to reference the corresponding dataset. The version has no
+constraints and can be left out, if no such information is kept by the Depositor Organization.
 
 See also [DANS BagIt Profile, Section 4]{:target=_blank}.
 

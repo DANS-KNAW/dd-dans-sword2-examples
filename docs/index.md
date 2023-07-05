@@ -1,7 +1,7 @@
 dd-dans-sword2-examples
 =======================
 
-Examples for creating a SWORD2 Java client to deposit datasets to a DANS Data Station
+Examples for creating a SWORD2 Java client to deposit datasets to a DANS Data Station or the DANS Vault as a Service.
 
 SYNOPSIS
 --------
@@ -22,13 +22,12 @@ client that deposits datasets to one of the DANS Data Stations or the Vault as a
 
 * Example Java client code
 * Examples of bags that conform to the [DANS BagIt Profile v1]{:target=_blank} requirements (and&mdash;for
-  illustration&mdash;some that violate some of the
-  requirements).
+  illustration&mdash;some that violate some of the requirements).
 
 !!! attention "Looking for legacy EASY SWORD2 examples?"
 
-    This project contains examples for the SWORD2 interface of the new **DANS Data Stations**. For the _legacy EASY SWORD2 service_ see 
-    [easy-sword2-dans-examples]{:target=_blank}. 
+    This project contains examples for the SWORD2 interface of the new **DANS Data Stations**. For the 
+    _legacy EASY SWORD2 service_ see [easy-sword2-dans-examples]{:target=_blank}. 
 
 !!! attention "Migrating from EASY SWORD2 to Data Station SWORD2"
 
@@ -37,15 +36,15 @@ client that deposits datasets to one of the DANS Data Stations or the Vault as a
 
 !!! note "Data Station vs Vault as a Service"
 
-    Clients can deposit to either a Data Station or the Vault as a Service (Vaas). The protocol is largely the same. The differences
-    are highlighted in the text with the notes **(VaaS)** and **(Data Station)**.
+    Clients can deposit to either a Data Station or the Vault as a Service (Vaas). The protocol is largely the same. 
+    The differences are highlighted in the text with the notes **(VaaS)** and **(Data Station)**.
 
 ### SWORD2 in a nutshell
 
 Depositing to the DANS Archive via SWORD2 is basically a two-phase process:
 
 1. Submitting a deposit for ingest.
-2. Tracking the state of the deposit as it goes through the ingest-flow, until it reaches PUBLISHED status.
+2. Tracking the state of the deposit as it goes through the ingest-flow, until it reaches PUBLISHED or ACCEPTED status.
 
 The following diagram details this a bit further.
 
@@ -77,8 +76,9 @@ The following is a step-by-step instruction on how to run a simple example using
 
 !!! note "Agreement"
 
-    Before you can get access to the demo server, there must be a formal agreement between your organization and DANS. The following assumes that this agreement 
-    is in place. If it is not, please contact the Data Station Manager of the [Data Station](http://dans.knaw.nl){:target=_blank} that you want to deposit to.
+    Before you can get access to the demo server, there must be a formal agreement between your organization and DANS. 
+    The following assumes that this agreement is in place. If it is not, please contact the Data Station Manager of the 
+    [Data Station](http://dans.knaw.nl){:target=_blank} that you want to deposit to.
 
 1. From your Data Station Manager at DANS request access to the demo Data Station server. The Data Station Manager will
    provide the information necessary to connect.
@@ -87,9 +87,10 @@ The following is a step-by-step instruction on how to run a simple example using
 
 !!! note "Configuring which notifications to receive"
 
-    The Data Station repository (Dataverse) generates [notifications]{:target=\_blank} for many events. Most of these can be muted. Log in via the user interface
-    and open the account menu on the top right. Click on the _Notifications_ item. The _Notifications_ tab of your _Account_ page will now be opened. Expand the 
-    header _Notification settings_ and uncheck the notification types you do not wish to receive.
+    The Data Station repository (Dataverse) generates [notifications]{:target=\_blank} for many events. Most of these 
+    can be muted. Log in via the user interface and open the account menu on the top right. Click on the 
+    _Notifications_ item. The _Notifications_ tab of your _Account_ page will now be opened. Expand the header 
+    _Notification settings_ and uncheck the notification types you do not wish to receive.
 
 [notifications]: https://guides.dataverse.org/en/latest/user/account.html#notifications
 
@@ -105,7 +106,7 @@ The following is a step-by-step instruction on how to run a simple example using
 
 3. Execute the following command from the base directory of your clone:
 
-        ./run-deposit.sh Simple https://demo.<domain>.datastations.nl/sword2/collection/1 <user> <password> <bag>
+        ./run-deposit.sh Simple https://demo.sword2.<domain>.datastations.nl/collection/1 <user> <password> <bag>
    Fill in:
 
     * for `<domain>` the name of the Data Station that you are depositing to, one of `archaeology`, `ssh`, `lhms`
@@ -117,18 +118,19 @@ The following is a step-by-step instruction on how to run a simple example using
 
    This will run the example program `nl.knaw.dans.sword2examples.SimpleDeposit`, which will copy the example bag to the
    folder `target` (the Maven build folder), zip it and send it
-   to `https://demo.<domain>.datastations.nl/sword2/collection/1`
+   to `https://demo.sword2.<domain>.datastations.nl/collection/1`
    authenticating with the provider username and password using basic auth.
 
 !!! note "Authenticating with X-Dataverse-key **(Data Station only)**"
 
-    Instead of using username and password you can also authenticate using your API-token (also known as API-key). You can look up you current current 
-    API-token in your account settings in the Data Station user interface. The API-token is specified using the header `X-Dataverse-key`. To pass it to 
-    the example programs using the `run-deposit.sh` script specify instead of your user name the literal string `API_KEY` and instead of your password
+    Instead of using username and password you can also authenticate using your API-token (also known as API-key). You 
+    can look up your current current API-token in your account settings in the Data Station user interface. The 
+    API-token is specified using the header `X-Dataverse-key`. To pass it to the example programs using the 
+    `run-deposit.sh` script specify instead of your user name the literal string `API_KEY` and instead of your password
     the API-token.
 
-    _Note that using the API-token is the **only** way to authenticate if your Data Station account is using an external identity provider such as 
-    SURFconext or Google._
+    _Note that using the API-token is the **only** way to authenticate if your Data Station account is using an external 
+    identity provider such as SURFconext or Google._
 
 ##### Output analysis
 
@@ -153,8 +155,8 @@ of the response representing step 2. The UUID will of course be different.
  Stat-IRI = https://demo.sword2.<domain>.datastations.nl/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4
 ```
 
-As the deposit is being processed by the server the client polls the Stat-IRI to track the status of the deposit. During
-this stage steps 3 and 4 are performed.
+As the deposit is being processed by the server the client polls the Stat-IRI (SWORD2 Statement URI) to track the status
+of the deposit. During this stage steps 3 and 4 are performed.
 
 ```text
  Start polling Stat-IRI for the current status of the deposit, waiting 10 seconds before every request ...
@@ -198,7 +200,7 @@ Complete statement follows:
 
 How to read this output?
 
-* This confirms that the dataset was succesfully published and is resolvable using the DOI
+* This confirms that the dataset was successfully published and is resolvable using the DOI
   URL <https://doi.org/doi:10.5072/DAR/MNGAHF>. (N.B. in the test environment the DOI will not actually resolve.) The
   DOI can be used to cite the dataset.
 * The dataset has the URN:NBN identifier `urn:nbn:nl:ui:13-d4cfb364-c6cc-4242-891a-e9e9673379bc`. This can be used be
@@ -253,8 +255,8 @@ The deposit will go through a number of statuses.
 | `SUBMITTED`  | The deposit is submitted for processing. At this point the Ingest Flow is processing<br/> the deposit and will update the state when it finishes.                                                                                                     |
 | `FAILED`     | An error occurred while processing the deposit                                                                                                                                                                                                        | 
 | `REJECTED`   | The deposit does not meet the requirements of [DANS BagIt Profile v1]{:target=_blank}. The description<br/> will detail what part of the deposit is not according to specifications. The depositor is<br/> requested to fix and resubmit the deposit. |                         
-| `PUBLISHED`  | The deposit is successfully published in the Data Station repository.                                                                                                                                                                                 |
-| `ACCEPTED`   | The deposit has been accepted for preservation in the DANS Data Vault.                                                                                                                                                                                |
+| `PUBLISHED`  | The deposit is successfully published in the Data Station repository **(Data Station)**.                                                                                                                                                              |
+| `ACCEPTED`   | The deposit has been accepted for preservation in the DANS Data Vault **(VaaS)**.                                                                                                                                                                     |
 
 If an error occurs the deposit will end up INVALID, REJECTED (client errors) or FAILED (server error). The text of
 the `category` element will contain details about the error.
@@ -264,61 +266,56 @@ the `category` element will contain details about the error.
 #### Studying the example bags
 
 After successfully depositing the first example to the demo repository you can start thinking about how to design your
-SWORD2 client. Depending on your source
-repository system this make take various shapes. In any case your code will need to assemble a bag conforming
-to [DANS BagIt Profile v1]{:target=_blank}. Some
-examples of such bags are included in the [resources directory]{:target=_blank} of this project.
+SWORD2 client. Depending on your source repository system this make take various shapes. In any case your code will need
+to assemble a bag conforming to [DANS BagIt Profile v1]{:target=_blank}. Some examples of such bags are included in
+the [resources directory]{:target=_blank} of this project.
 
 #### Mapping rules
 
 The contents of the bags you deposit are mapped to data files and metadata in Dataverse. The mapping rules are
-documented in the
-[Ingest Flow Mapping Rules]{:target=_blank} Google spreadsheet. If you are a DANS SWORD2 customer access will be granted
-on request.
+documented
+in the [Ingest Flow Mapping Rules]{:target=_blank} Google spreadsheet. If you are a DANS SWORD2 customer access will be
+granted on request.
 
 #### Finding libraries and tools
 
 * [bagit-java]{:target=_blank}&mdash;a Java library for working with bags. This is a DANS fork of a project started by
-  Library of Congress, which is no longer
-  maintained by them.
+  Library of Congress, which is no longer maintained by them.
 * [bagit-python]{:target=_blank}&mdash;a Python library and command line tool for working with bags, also by Library of
-  Congress. This is still maintained by
-  them.
+  Congress. This is still maintained by them.
 * `brew install bagit` is still available on MacOS to install an older version of [bagit-java]{:target=_blank} which
-  contained a powerful command line
-  interface, but is no longer maintained.
+  contained a powerful command line interface, but is no longer maintained.
 * [xmllint]{:target=_blank}&mdash;a tool to check that XML files conform to a given XML schema.
 
 !!! warning "Abdera project retired"
 
-    [easy-sword2-dans-examples]{:target=\_blank} used the [Apache Abdera]{:target=_blank} library to parse Atom Entry and Feed documents. We have removed that 
-    dependency, because Abdera is no longer maintained and we do not recommend using unmaintained libraries. 
+    [easy-sword2-dans-examples]{:target=\_blank} used the [Apache Abdera]{:target=_blank} library to parse Atom Entry 
+    and Feed documents. We have removed that dependency, because Abdera is no longer maintained and we do not recommend 
+    using unmaintained libraries. 
 
 #### End-point for DANS BagIt Profile validation
 
 All bags that are deposited to a Data Station are validated by [dd-validate-dans-bag]{:target=_blank} to see if they
-conform to
-[DANS BagIt Profile v1]{:target=_blank}. To facilitate faster development in the demo environment this service can be
-invoked directly.
-The example program [nl.knaw.dans.sword2examples.ValidateBag] demonstrates how to call this API. A helper script to
-start this program is
-also provided, see `run-validation.sh`.
+conform to [DANS BagIt Profile v1]{:target=_blank}. To facilitate faster development in the demo environment this
+service
+can be invoked directly. The example program [nl.knaw.dans.sword2examples.ValidateBag] demonstrates how to call this
+API.
+A helper script to start this program is also provided, see `run-validation.sh`.
 
 !!! warning "DO NOT make calling this API part of your production code!"
 
-    Use of the validation API end-point is entirely optional during testing. The Ingest Flow will call the validation before further processing a deposit, so if
-    it is not valid it *will* be rejected. That having been said, when writing the code that assembles the bag to be deposited, using the validation API end-point
-    may shorten the Edit - Compile - Run cycle. 
+    Use of the validation API end-point is entirely optional during testing. The Ingest Flow will call the validation 
+    before further processing a deposit, so if it is not valid it *will* be rejected. That having been said, when 
+    writing the code that assembles the bag to be deposited, using the validation API end-point may shorten the 
+    Edit - Compile - Run cycle.
 
 #### Testing different scenarios
 
 This project contains four [Java example programs]{:target=_blank} which can be used as a guide to writing a custom
-client to deposit datasets using the SWORD2
-protocol. The examples take one or more bags as input parameters. These bags may be directories or ZIP files. The code
-copies each bag to the `target`-folder of
-the project, zips it (if necessary) and sends it to the specified SWORD2 service. The copying step has been built in
-because in some examples the bag must be
-modified before it is sent; this way we avoid changing the git working directory.
+client to deposit datasets using the SWORD2 protocol. The examples take one or more bags as input parameters. These bags
+may be directories or ZIP files. The code copies each bag to the `target`-folder of the project, zips it (if necessary)
+and sends it to the specified SWORD2 service. The copying step has been built in because in some examples the bag must
+be modified before it is sent; this way we avoid changing the git working directory.
 
 1. `SimpleDeposit.java` sends a zipped dataset in a single chunk and reports on the status.
 2. `ContinuedDeposit.java` sends a zipped bag in chunks of configurable size and reports on the status.
@@ -333,8 +330,8 @@ The `Common.java` class contains elements which are used by all the other classe
 and sending of files.
 
 The project root directory contains several helper scripts (`run-*.sh`) that can be used to invoke the Java programs.
-See [SYNOPSIS](#synopsis). These scripts
-were developed to run in a `bash` or `zsh` shell, but should be easy to adapt for a different shell environment.
+See [SYNOPSIS](#synopsis). These scripts were developed to run in a `bash` or `zsh` shell, but should be easy to adapt
+for a different shell environment.
 
 EXAMPLES
 --------
