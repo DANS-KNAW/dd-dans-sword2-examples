@@ -22,7 +22,7 @@ public class ValidateBag {
 
     public static void main(String[] args) throws Exception {
         if (args.length != 2) {
-            System.err.printf("Usage: java %s <bag file/dir> <validate-dans-bag-url>", ValidateBag.class.getName());
+            System.err.printf("Usage: java %s <validate-dans-bag-url> <bag file/dir>", ValidateBag.class.getName());
             System.exit(1);
         }
         var validateDansBagUrl = new URI(args[0]);

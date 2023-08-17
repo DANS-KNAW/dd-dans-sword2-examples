@@ -1,0 +1,6 @@
+# zipped because some of the forbidden chars are also not allowed by some file systems, see https://stackoverflow.com/questions/1976007
+forbidden-chars-in-filepath
+# Ignore all other ZIP files
+*.zip
+# But not this one
+!forbidden-chars-in-filepath.zip
