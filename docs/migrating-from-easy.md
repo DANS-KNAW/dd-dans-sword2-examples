@@ -1,5 +1,5 @@
-Migrating from EASY to a Data Station
-=====================================
+Migrating from EASY to a Data Station or Vault as a Service
+===========================================================
 
 The Data Station SWORD2 service is mostly compatible with the legacy EASY SWORD2 service. However, a couple of things
 have changed that will require a
