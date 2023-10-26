@@ -26,6 +26,9 @@
         <dc:creator>
             Unformatted Creator
         </dc:creator>
+        <dcterms:creator>
+            Another Unformatted Creator
+        </dcterms:creator>
         <!-- CIT006 -->
         <dcx-dai:creatorDetails>
             <dcx-dai:author>
@@ -69,17 +72,18 @@
     <ddm:dcmiMetadata>
         <!-- CIT002 -->
         <dcterms:title>DCTERMS title 1</dcterms:title>
-        <dcterms:title>DCTERMS title 2</dcterms:title>
+        <dc:title>DC title 2</dc:title>
         <dcterms:alternative>DCTERMS alt title 1</dcterms:alternative>
         <dcterms:alternative>DCTERMS alt title 2</dcterms:alternative>
 
         <!-- CIT004 -->
         <dcterms:identifier>DCTERMS_ID001</dcterms:identifier>
-        <dcterms:identifier>DCTERMS_ID002</dcterms:identifier>
+        <dc:identifier>DC_ID002</dc:identifier>
         <dcterms:identifier>DCTERMS_ID003</dcterms:identifier>
 
         <!-- CIT011 -->
         <dcterms:date>some date</dcterms:date>
+        <dc:date>some other date</dc:date>
         <dcterms:dateAccepted>some acceptance date</dcterms:dateAccepted>
         <dcterms:dateCopyrighted>some copyright date</dcterms:dateCopyrighted>
         <dcterms:dateSubmitted>some submission date</dcterms:dateSubmitted>
@@ -87,9 +91,11 @@
         <dcterms:issued>some issuing date</dcterms:issued>
         <dcterms:valid>some validation date</dcterms:valid>
         <dcterms:coverage>some coverage description</dcterms:coverage>
+        <dc:coverage>some other coverage description</dc:coverage>
 
         <!-- CIT012 -->
         <dcterms:description>Even more descriptions</dcterms:description>
+        <dc:description>And yet more</dc:description>
 
         <!-- CIT014 -->
         <dcterms:subject>keyword1</dcterms:subject>
@@ -109,9 +115,11 @@
 
         <!-- CIT016 -->
         <dcterms:language>Old School Latin</dcterms:language>
+        <dc:language>Ithkuil</dc:language>
 
         <!-- CIT017 -->
         <dcterms:identifier xsi:type="id-type:ISSN">0317-8471</dcterms:identifier>
+        <dc:identifier xsi:type="id-type:ISBN">123456789X</dc:identifier>
 
         <!-- CIT018 -->
         <ddm:language encodingScheme="ISO639-1" code="fy">West-Fries</ddm:language>
@@ -137,8 +145,135 @@
         <!-- CIT021 -->
         <dcx-dai:contributorDetails>
             <dcx-dai:organization>
-                <dcx-dai:name xml:lang="en">Contributing Org</dcx-dai:name>
+                <dcx-dai:name xml:lang="en">Contributing Org - DataCollector</dcx-dai:name>
+                <dcx-dai:role>DataCollector</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - DataCurator</dcx-dai:name>
+                <dcx-dai:role>DataCurator</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - DataManager</dcx-dai:name>
+                <dcx-dai:role>DataManager</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - Editor</dcx-dai:name>
+                <dcx-dai:role>Editor</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - HostingInstitution</dcx-dai:name>
+                <dcx-dai:role>HostingInstitution</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - ProjectLeader</dcx-dai:name>
+                <dcx-dai:role>ProjectLeader</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - ProjectManager</dcx-dai:name>
+                <dcx-dai:role>ProjectManager</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - ProjectMember</dcx-dai:name>
+                <dcx-dai:role>ProjectMember</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - RelatedPerson</dcx-dai:name>
+                <dcx-dai:role>RelatedPerson</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - ResearchGroup</dcx-dai:name>
+                <dcx-dai:role>ResearchGroup</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - Researcher</dcx-dai:name>
+                <dcx-dai:role>Researcher</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - Sponsor</dcx-dai:name>
                 <dcx-dai:role>Sponsor</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - Supervisor</dcx-dai:name>
+                <dcx-dai:role>Supervisor</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - WorkPackageLeader</dcx-dai:name>
+                <dcx-dai:role>WorkPackageLeader</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <!-- The following are mapped to Other -->
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - Producer</dcx-dai:name>
+                <dcx-dai:role>Producer</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - Other</dcx-dai:name>
+                <dcx-dai:role>Other</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - RegistrationAuthority</dcx-dai:name>
+                <dcx-dai:role>RegistrationAuthority</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - RegistrationAgency</dcx-dai:name>
+                <dcx-dai:role>RegistrationAgency</dcx-dai:role>
+            </dcx-dai:organization>
+        </dcx-dai:contributorDetails>
+
+        <dcx-dai:contributorDetails>
+            <dcx-dai:organization>
+                <dcx-dai:name xml:lang="en">Contributing Org - ContactPerson</dcx-dai:name>
+                <dcx-dai:role>ContactPerson</dcx-dai:role>
             </dcx-dai:organization>
         </dcx-dai:contributorDetails>
 
@@ -150,9 +285,10 @@
 
         <!-- CIT024 -->
         <dcterms:publisher>D. I. Stributor</dcterms:publisher>
+        <dc:publisher>P. Ublisher</dc:publisher>
         <!-- Special values: skipped -->
         <dcterms:publisher>DANS</dcterms:publisher>
-        <dcterms:publisher>DANS-KNAW</dcterms:publisher>
+        <dc:publisher>DANS-KNAW</dc:publisher>
         <dcterms:publisher>DANS/KNAW</dcterms:publisher>
 
         <!-- CIT025 see profile -->
@@ -166,7 +302,7 @@
 
         <!-- CIT028 --> <!-- RIG003 Any element can add a metadata language -->
         <dcterms:source xml:lang="ht">Sous an ayisyen</dcterms:source>
-        <dcterms:source>Source 2</dcterms:source>
+        <dc:source>Source 2</dc:source>
         <dcterms:source>Source 3</dcterms:source>
 
         <!-- RIG001 -->

@@ -1,12 +1,11 @@
 <ddm:DDM
-        xmlns:dc="http://purl.org/dc/elements/1.1/"
         xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
         xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
         xmlns:dcterms="http://purl.org/dc/terms/"
         xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <ddm:profile>
-        <dc:title>A bag containing multiple audiences</dc:title>
+        <dcterms:title>A bag containing multiple audiences</dcterms:title>
         <dcterms:description>
             This bag contains multiple ddm:audience entries, each audience is represented by a code for which the classification can be found at https://www.narcis.nl/content/pdf/classification_en.pdf
         </dcterms:description>
