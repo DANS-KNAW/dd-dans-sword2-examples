@@ -23,7 +23,9 @@ public class SequenceContinuedDeposit {
     public static void main(String[] args) throws Exception {
         if (args.length < 4) {
             System.err
-                .printf("Usage: %s <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag dirname>...%n", SequenceContinuedDeposit.class.getName());
+                .printf("Usage: %s <Col-IRI> <user> <passwd> <chunk size> <bag dirname>...%n", SequenceContinuedDeposit.class.getName());
+            System.err
+                .printf("Usage: %s <Col-IRI> API_KEY <apikey> <chunk size> <bag dirname>...%n", SequenceContinuedDeposit.class.getName());
             System.exit(1);
         }
 

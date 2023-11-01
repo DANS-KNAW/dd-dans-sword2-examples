@@ -27,9 +27,17 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 
 public class ContinuedDeposit {
+
+    /**
+     * Sends a bag to the SWORD2 service and tracks its status until it is published or accepted, or failure is reported. The bag is sent in chunks. If the
+     * bag is an update of an existing dataset, the sword token of the existing dataset must be provided as a urn:uuid value.
+     *
+     * @param args 0. collection URL (Col-IRI), 1. username OR "API_KEY", 2. password OR the API key, 3. chunk size in bytes to use 4. bag to send (a directory or a zip file), 4. sword token (optional)
+     */
     public static void main(String[] args) throws Exception {
-        if (args.length != 5) {
-            System.err.printf("Usage: java %s <Col-IRI> <EASY uid> <EASY passwd> <chunk size> <bag file/dir>", ContinuedDeposit.class.getName());
+        if (args.length < 5 || args.length > 6) {
+            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <chunk size> <bag file/dir> [<sword token>]", ContinuedDeposit.class.getName());
+            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <chunk size> <bag file/dir> [<sword token>]", ContinuedDeposit.class.getName());
             System.exit(1);
         }
 
@@ -39,8 +47,12 @@ public class ContinuedDeposit {
         final String pw = args[2];
         final int chunkSize = Integer.parseInt(args[3]);
         final String bag = args[4];
+        final URI swordToken = args.length > 5 ? new URI(args[5]) : null;
 
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(new File(bag));
+        if (swordToken != null) {
+            Common.setBagIsVersionOf(bagDirInTarget, swordToken);
+        }
         depositPackage(bagDirInTarget, uri, uid, pw, chunkSize);
         System.exit(0);
     }

@@ -29,13 +29,15 @@ import java.security.MessageDigest;
 public class SimpleDeposit {
 
     /**
-     * Sends a bag to the easy-sword2 service and tracks its status until it is archived or failure is reported.
+     * Sends a bag to the SWORD2 service and tracks its status until it is published or accepted, or failure is reported. The bag is sent in one chunk. If the
+     * bag is an update of an existing dataset, the sword token of the existing dataset must be provided as a urn:uuid value.
      *
-     * @param args 0. collection URL (Col-IRI), 1. EASY user name, 2. EASY password, 3. bag to send (a directory or a zip file)
+     * @param args 0. collection URL (Col-IRI), 1. username OR "API_KEY", 2. password OR the API key, 3. bag to send (a directory or a zip file), 4. sword token (optional)
      */
     public static void main(String[] args) throws Exception {
-        if (args.length != 4) {
-            System.err.printf("Usage: java %s <Col-IRI> <EASY uid> <EASY passwd> <bag file/dir>", SimpleDeposit.class.getName());
+        if (args.length < 4 || args.length > 5) {
+            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <bag file/dir> [<swordtoken>]", SimpleDeposit.class.getName());
+            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <bag file/dir> [<swordtoken>]", SimpleDeposit.class.getName());
             System.exit(1);
         }
 
@@ -44,8 +46,12 @@ public class SimpleDeposit {
         final String uid = args[1];
         final String pw = args[2];
         final String bagFile = args[3];
+        final URI swordToken = args.length > 4 ? new URI(args[4]) : null;
 
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(new File(bagFile));
+        if (swordToken != null) {
+            Common.setBagIsVersionOf(bagDirInTarget, swordToken);
+        }
         depositPackage(bagDirInTarget, colIri, uid, pw);
         System.exit(0);
     }

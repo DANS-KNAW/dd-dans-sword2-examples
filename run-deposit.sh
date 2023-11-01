@@ -39,6 +39,7 @@ KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
 if (( $# < 5 )); then
  echo "Runs one of the test programs to send one or more bags to the SWORD2 service."
  echo "Usage: ./run-deposit.sh [--suspend] <program> <COL-IRI> <user> <password> [<chunksize>] <bag>..."
+ echo "Usage: ./run-deposit.sh [--suspend] <program> <COL-IRI> <user> <password> <bag> [<sword token>]"
  echo "Where:"
  echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port "
  echo "<program> = one of Simple,Continued,SequenceSimple,SequenceContinued"
@@ -47,15 +48,18 @@ if (( $# < 5 )); then
  echo "<password> = password for <user> OR the user's API key if the string 'API_KEY' was passed as user name"
  echo "<chunksize> = size in byte of each chunk (only for the Continued variants)"
  echo "<bag> = one bag directory or zip file to send or multiple (only for Sequence variants)"
+ echo "<sword token> = the SWORD2 token to use if the bag is an update of an existing dataset (only for Simple variants)"
  exit
 fi
 
 if [[ "$PROGRAM" =~ ^.*Continued$ ]]; then
     CHUNKSIZE=$5
     BAGDIRS=${@:6}
+    SWORD_TOKEN=""
 else
     CHUNKSIZE=""
-    BAGDIRS=${@:5}
+    BAGDIRS=$5
+    SWORD_TOKEN=$6
 fi
 
 if [[ -f $KEYSTORE_FILE ]]; then
@@ -65,4 +69,4 @@ else
 fi
 
 mvn dependency:copy-dependencies
-java $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS
+java $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS $SWORD_TOKEN
