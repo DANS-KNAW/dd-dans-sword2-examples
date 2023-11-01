@@ -130,7 +130,7 @@ The final state of a deposit in EASY was `ARCHIVED`. This has changed to the sta
 assured that archiving in the [DANS Data Vault]{:target=_blank} will occur in due course.
 
 Original metadata is stored as `original-metadata.zip` **(Data Station only)**
--------------------------------------------------------- ----------------------
+------------------------------------------------------------------------------
 
 The DDM schema allows you to include any DCTERMS element you wish in the section `ddm:dcmiMetadata` section. However,
 not everything is mapped to Dataverse metadata. To ensure that the originally deposited metadata is not lost, it is
