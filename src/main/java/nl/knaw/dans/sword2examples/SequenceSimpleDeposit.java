@@ -22,7 +22,8 @@ public class SequenceSimpleDeposit {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 4) {
-            System.err.printf("Usage: java %s <Col-IRI> <EASY uid> <EASY passwd> <bag dirname>...", SequenceSimpleDeposit.class.getName());
+            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <bag dirname>...", SequenceSimpleDeposit.class.getName());
+            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <bag dirname>...", SequenceSimpleDeposit.class.getName());
             System.exit(1);
         }
 
