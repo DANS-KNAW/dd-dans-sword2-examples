@@ -46,6 +46,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.xml.sax.InputSource;
 
+import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -295,7 +296,7 @@ public class Common {
     }
 
     /**
-     * Copies bag to the folder "target" and extracts it, if it is a zipfile. Existing sub-directory of the same name will be overwritten.
+     * Copies bag to the folder "target" and extracts it, if it is a zipfile. Existing subdirectory of the same name will be overwritten.
      *
      * @param bag the bag file or folder
      * @return a bag directory under the "target" folder
@@ -353,6 +354,11 @@ public class Common {
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             transformerFactory.setAttribute("indent-number", indent);
+
+            // To protect from XXE attacks (XML External Entity)
+            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, ignoreDeclaration ? "yes" : "no");
