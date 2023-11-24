@@ -32,9 +32,8 @@ MAIN_CLASS="nl.knaw.dans.sword2examples.${PROGRAM}Deposit"
 COL_IRI=$2
 USER=$3
 PASSWORD=$4
+
 JARFILE=$(ls -1 target/*SNAPSHOT.jar)
-KEYSTORE_FILE=$HOME/.keystore
-KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
 
 if (( $# < 5 )); then
  echo "Runs one of the test programs to send one or more bags to the SWORD2 service."
@@ -62,11 +61,11 @@ else
     SWORD_TOKEN=$6
 fi
 
-if [[ -f $KEYSTORE_FILE ]]; then
-  KEYSTORE_PROPERTIES="-Djavax.net.ssl.trustStore=$KEYSTORE_FILE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASSWORD"
-else
-  KEYSTORE_PROPERTIES=""
+CP_SEP=":"
+# If windows use ";" as path separator
+if [[ "$OSTYPE" == "msys" ]]; then
+  CP_SEP=";"
 fi
 
 mvn dependency:copy-dependencies
-java $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS $SWORD_TOKEN
+java -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*$CP_SEP$JARFILE" $MAIN_CLASS $COL_IRI $USER $PASSWORD $CHUNKSIZE $BAGDIRS $SWORD_TOKEN

@@ -31,9 +31,6 @@ fi
 SERVICE_URL=$1
 BAG=$2
 
-KEYSTORE_FILE=$HOME/.keystore
-KEYSTORE_PASSWORD=${KEYSTORE_PASSWORD:-changeit}
-
 JARFILE=$(ls -1 target/*SNAPSHOT.jar)
 
 if (( $# < 1 )); then
@@ -48,11 +45,11 @@ if (( $# < 1 )); then
  exit
 fi
 
-if [[ -f $KEYSTORE_FILE ]]; then
-  KEYSTORE_PROPERTIES="-Djavax.net.ssl.trustStore=$KEYSTORE_FILE -Djavax.net.ssl.trustStorePassword=$KEYSTORE_PASSWORD"
-else
-  KEYSTORE_PROPERTIES=""
+CP_SEP=":"
+# If windows use ";" as path separator
+if [[ "$OSTYPE" == "msys" ]]; then
+  CP_SEP=";"
 fi
 
 mvn dependency:copy-dependencies
-java  $KEYSTORE_PROPERTIES -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*:$JARFILE" $MAIN_CLASS $SERVICE_URL $BAG
+java  -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*$CP_SEP$JARFILE" $MAIN_CLASS $SERVICE_URL $BAG
