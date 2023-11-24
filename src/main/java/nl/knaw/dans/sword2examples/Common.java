@@ -270,7 +270,7 @@ public class Common {
     private static HttpUriRequest addXAuthorizationToRequest(HttpUriRequest request) throws Exception {
         File autValueFile = new File("x-auth-value.txt");
         if (autValueFile.exists()) {
-            request.addHeader("X-Authorization", FileUtils.readFileToString(autValueFile).trim());
+            request.addHeader("X-Authorization", FileUtils.readFileToString(autValueFile, StandardCharsets.UTF_8).trim());
         }
         return request;
     }

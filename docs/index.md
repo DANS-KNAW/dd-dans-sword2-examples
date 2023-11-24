@@ -96,9 +96,17 @@ The following is a step-by-step instruction on how to run a simple example using
     [Data Station](http://dans.knaw.nl){:target=_blank} that you want to deposit to.
 
 1. From your Data Station Manager at DANS request access to the demo Data Station server. The Data Station Manager will
-   provide the information necessary to connect.
+   provide the information necessary to connect (see note about the `X-Authorization` header below).
 2. Create an account in the demo Data Station **(Data Station only)**.
 3. From your Data Station Manager at DANS request the account to be enabled for SWORD2 deposits **(Data Station only)**.
+
+!!! note "X-Authorization header"
+
+    In order to keep web crawlers from accessing the demo server, the demo server requires the `X-Authorization` header.
+    **This is in addition to the authentication required by the SWORD2 server.** The value of the `X-Authorization` is
+    provided by the Data Station Manager. It is the same for all users of the demo server. Put the value in a file 
+    called `x-auth-value.txt` in the root of your clone of this project. The method `Common.addXAuthorizationToRequest()`
+    will read the value from this file and add it to the request.
 
 !!! note "Configuring which notifications to receive"
 
