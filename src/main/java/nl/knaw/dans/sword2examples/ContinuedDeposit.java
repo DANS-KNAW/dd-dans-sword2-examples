@@ -36,8 +36,8 @@ public class ContinuedDeposit {
      */
     public static void main(String[] args) throws Exception {
         if (args.length < 5 || args.length > 6) {
-            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <chunk size> <bag file/dir> [<sword token>]", ContinuedDeposit.class.getName());
-            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <chunk size> <bag file/dir> [<sword token>]", ContinuedDeposit.class.getName());
+            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <chunk size> <bag file/dir> [<sword token>]%n", ContinuedDeposit.class.getName());
+            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <chunk size> <bag file/dir> [<sword token>]%n", ContinuedDeposit.class.getName());
             System.exit(1);
         }
 

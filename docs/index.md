@@ -12,21 +12,21 @@ mvn clean install
 # Validate a bag
 ./run-validation.sh https://demo.sword2.domain.datastations.nl/validate-dans-bag bag
 # Deposit a bag in one chunk
-./run-deposit.sh Simple https://demo.sword2.domain.datastations.nl/collection/1 myuser \
+./run-simple-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 myuser \
    mypassword bag
 # Deposit an update to a dataset in one chunk using the SWORD token of the targeted dataset
-./run-deposit.sh Simple https://demo.sword2.domain.datastations.nl/collection/1 myuser \
+./run-simple-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 myuser \
    mypassword bag urn:uuid:5c90d501-0bdf-4183-a96d-25fa6dea5489
 # Deposit a bag in chunks of configurable size
-./run-deposit.sh Continued https://demo.sword2.domain.datastations.nl/collection/1 myuser \
+./run-continued-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 myuser \
    mypassword chunksize bag
 # Deposit a sequence of bags, the first one being a new dataset, the others being updates to 
 # this dataset, each in one chunk
-./run-deposit.sh SequenceSimple https://demo.sword2.domain.datastations.nl/collection/1 
+./run-sequence-simple-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 
    myuser mypassword bag1 bag2 bag3
 # Deposit a sequence of bags, the first one being a new dataset, the others being updates to 
 # this dataset, each in chunks of configurable size
-./run-deposit.sh SequenceContinued https://demo.sword2.domain.datastations.nl/collection/1 \
+./run-sequence-continued-deposit.sh SequenceContinued https://demo.sword2.domain.datastations.nl/collection/1 \
    myuser mypassword chunksize bag1 bag2 bag3
 ```
 

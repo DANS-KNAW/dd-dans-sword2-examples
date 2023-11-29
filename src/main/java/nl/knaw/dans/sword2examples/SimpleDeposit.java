@@ -36,8 +36,8 @@ public class SimpleDeposit {
      */
     public static void main(String[] args) throws Exception {
         if (args.length < 4 || args.length > 5) {
-            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <bag file/dir> [<swordtoken>]", SimpleDeposit.class.getName());
-            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <bag file/dir> [<swordtoken>]", SimpleDeposit.class.getName());
+            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <bag file/dir> [<swordtoken>]%n", SimpleDeposit.class.getName());
+            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <bag file/dir> [<swordtoken>]%n", SimpleDeposit.class.getName());
             System.exit(1);
         }
 
