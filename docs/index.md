@@ -129,7 +129,7 @@ The following is a step-by-step instruction on how to run a simple example using
 
 3. Execute the following command from the base directory of your clone:
 
-        ./run-deposit.sh Simple https://demo.sword2.<domain>.datastations.nl/collection/1 <user> <password> <bag>
+        ./run-simple-deposit.sh https://demo.sword2.<domain>.datastations.nl/collection/1 <user> <password> <bag>
    Fill in:
 
     * for `<domain>` the name of the Data Station that you are depositing to, one of `archaeology`, `ssh`, `lhms`
@@ -149,7 +149,7 @@ The following is a step-by-step instruction on how to run a simple example using
     Instead of using username and password you can also authenticate using your API-token (also known as API-key). You 
     can look up your current current API-token in your account settings in the Data Station user interface. The 
     API-token is specified using the header `X-Dataverse-key`. To pass it to the example programs using the 
-    `run-deposit.sh` script specify instead of your user name the literal string `API_KEY` and instead of your password
+    `run-*-deposit.sh` scripts specify instead of your user name the literal string `API_KEY` and instead of your password
     the API-token.
 
     _Note that using the API-token is the **only** way to authenticate if your Data Station account is using an external 

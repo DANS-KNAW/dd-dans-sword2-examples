@@ -24,7 +24,6 @@ repo_url: https://github.com/DANS-KNAW/dd-dans-sword2-examples
 nav:
   - Manual: index.md
   - Migrating from EASY: migrating-from-easy.md
-  - Development: dev.md
   - ⇒ DANS Data Station Architecture: arch.md
 
 extra:
