@@ -92,9 +92,10 @@ public class ContinuedDeposit {
             long remaining = zipFile.length() - chunkSize;
             int count = 2;
             while (remaining > 0) {
-                System.out.printf("POST-ing chunk of %d bytes to SE-IRI (remaining: %d) ... ", chunkSize, remaining);
-                try (CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", seIri, "bag.zip." + count++, "application/octet-stream", http, remaining > chunkSize)) {
-                    remaining -= chunkSize;
+                int currentChunkSize = (int) Math.min(remaining, chunkSize);
+                remaining -= currentChunkSize;
+                System.out.printf("POST-ing chunk of %d bytes to SE-IRI (remaining: %d) ... ", currentChunkSize, remaining);
+                try (CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", seIri, "bag.zip." + count++, "application/octet-stream", http, remaining > 0)) {
                     bodyText = Common.readEntityAsString(response.getEntity());
                     if (response.getStatusLine().getStatusCode() != 200) {
                         System.err.println("FAILED. Status = " + response.getStatusLine());
