@@ -7,6 +7,12 @@ change to the client code or configuration. Also, there are some added features.
 changes. Optional ones are marked as
 such.
 
+!!! note "Data Station vs Vault as a Service"
+
+    Clients can deposit to either a Data Station or the Vault as a Service (Vaas). The protocol is largely the same. 
+    The differences are highlighted in the text with the notes **(VaaS)** and **(Data Station)**.
+
+
 Service URL
 -----------
 
@@ -14,6 +20,8 @@ The service URL has changed from `https://easy.dans.knaw.nl/sword2/collection/1`
 
 * `https://sword2.archaeology.datastations.nl/collection/1`
 * `https://sword2.ssh.datastations.nl/collection/1`
+* `https://sword2.lifesciences.datastations.nl/collection/1`
+* `https://sword2.phys-techsciences.datastations.nl/collection/1`
 
 Test deposits must be sent to the demo-server, which is hosted at the "demo" subdomain of the Data Station, e.g.,
 `https://demo.sword2.archaeology.datastations.nl/collection/1`. Since this is a test environment, this server is
@@ -88,6 +96,38 @@ Example:
     <!-- other elements -->
 </ddm:dcmiMetadata>
 ```
+
+### New element `ddm:language` (optional)
+
+The `ddm:dcmiMetadata` section of DDM supports a new element `ddm:language` that allows you to specify the language of the
+dataset in the attribute `code`. This will then be mapped to the Dataverse Citation Metadata field "Language". The supported
+encoding schemes are `ISO639-1` and `ISO639-2`; which one is used must be specified in the attribute `encodingScheme`. For
+the list of supported codes see the wikipedia page on [ISO 639]{:target=_blank}.
+
+Note, that the element text can be specified, but is not checked against the code, nor is it mapped to any Dataverse field.
+
+Example:
+
+```xml
+
+<ddm:dcmiMetadata>
+    <!-- other elements -->
+    <ddm:language encodingScheme="ISO639-1" code="fy">West-Fries</ddm:language>
+    <ddm:language encodingScheme="ISO639-2" code="kal">Groenlands</ddm:language>
+    <ddm:language encodingScheme="ISO639-2" code="baq">Baskisch</ddm:language>
+    <!-- other elements -->
+</ddm:dcmiMetadata>  
+```
+
+!!! warn "dc:language not mapped (Data Station)"
+
+    In EASY SWORD2 the element `dc:language` was mapped to the EASY metadata field "Language" for a very limited set of
+    languages. This is no longer the case. If you want to specify the language of the dataset, you must use the new
+    element `ddm:language`.
+
+[ISO 639]: https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes
+
+
 
 File and directory names are sanitized (no action required) **(Data Station only)**
 ----------------------------------------------------------------------------------
