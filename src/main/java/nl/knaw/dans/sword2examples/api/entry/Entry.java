@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement(name = "entry")
+@XmlRootElement(name = "entry", namespace = "http://www.w3.org/2005/Atom")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Entry {
 

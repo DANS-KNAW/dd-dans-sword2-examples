@@ -45,16 +45,21 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicHeader;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -93,20 +98,43 @@ public class Common {
         return bos.toString(StandardCharsets.UTF_8);
     }
 
-    public static Feed parseFeed(String text) {
+    private static Source setXMLTextToSecureXMLSource(String xmlText) {
         try {
+            SAXParserFactory saxParserFactory = SAXParserFactory.newInstance();
+////            saxParserFactory.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+//            saxParserFactory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+//            saxParserFactory.setNamespaceAware(false);
+////            saxParserFactory.setFeature("http://xml.org/sax/features/external-general-entities", false);
+////            saxParserFactory.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+////            saxParserFactory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+//            saxParserFactory.setXIncludeAware(false);
+//
+            XMLReader reader = saxParserFactory.newSAXParser().getXMLReader();
+            Source xmlSource =  new SAXSource(reader, new InputSource(new StringReader(xmlText)));
+//            Source xmlSource = new StreamSource(new StringReader(xmlText));
+            return xmlSource;
+        } catch ( ParserConfigurationException | SAXException e) {
+            throw new RuntimeException("Insecure XML entity",e);
+//        } catch (SAXException e) {
+//            throw new RuntimeException(e);
+        }
+    }
+
+    public static Feed parseFeed(String xmlText) {
+        try {
+            System.out.println(xmlText);
             var context = JAXBContext.newInstance(Feed.class);
-            return (Feed) context.createUnmarshaller().unmarshal(new StringReader(text));
+            return (Feed) context.createUnmarshaller().unmarshal(setXMLTextToSecureXMLSource(xmlText)/*new StringReader(xmlText)*/);
         }
         catch (JAXBException e) {
             throw new RuntimeException("Unable to parse XML", e);
         }
     }
 
-    public static Entry parseEntry(String text) {
+    public static Entry parseEntry(String xmlText) {
         try {
             var context = JAXBContext.newInstance(Entry.class);
-            return (Entry) context.createUnmarshaller().unmarshal(new StringReader(text));
+            return (Entry) context.createUnmarshaller().unmarshal(/*setXMLTextToSecureXMLSource(xmlText)*/ new StringReader(xmlText));
         }
         catch (JAXBException e) {
             throw new RuntimeException("Unable to parse XML", e);

@@ -16,9 +16,9 @@
 
 @XmlSchema(namespace = "http://www.w3.org/2005/Atom",
         elementFormDefault = XmlNsForm.QUALIFIED,
-        xmlns = {@XmlNs(prefix = "",
-                namespaceURI = "http://www.w3.org/2005/Atom"), @XmlNs(prefix = "sword",
-                namespaceURI = "http://purl.org/net/sword/terms/")})
+        xmlns = {@XmlNs(prefix = "entry", namespaceURI = "http://www.w3.org/2005/Atom"),
+                @XmlNs(prefix = "", namespaceURI = "http://www.w3.org/2005/Atom"),
+                @XmlNs(prefix = "sword", namespaceURI = "http://purl.org/net/sword/terms/")})
 package nl.knaw.dans.sword2examples.api.entry;
 
 import javax.xml.bind.annotation.XmlNs;

@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.util.ArrayList;
 import java.util.List;
 
-@XmlRootElement(name = "entry")
+@XmlRootElement(name = "feedentry")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class FeedEntry {
 
