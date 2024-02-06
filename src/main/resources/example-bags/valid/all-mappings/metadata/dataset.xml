@@ -371,12 +371,36 @@
             houtwinning
         </ddm:subject>
 
+        <ddm:subject
+                subjectScheme="ABR Complextypen"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/e9546020-4b28-4819-b0c2-29e7c864c5c0"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/rn/60bc20cd-0010-48ea-8d6f-42d333bfb39d">
+            vaartuig, houten huid en houten spanten
+        </ddm:subject>
+
         <!-- AR007 -->
         <ddm:subject
                 subjectScheme="ABR Artefacten"
                 schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/22cbb070-6542-48f0-8afe-7d98d398cc0b"
                 valueURI="https://data.cultureelerfgoed.nl/term/id/abr/5bd97bc0-697c-4128-b7b2-d2324bc4a2e1">
             rammelaar
+        </ddm:subject>
+
+        <!-- Legacy term URI will be converted to new term URI-->
+        <ddm:subject
+                subjectScheme="ABR Artefacten"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/22cbb070-6542-48f0-8afe-7d98d398cc0b"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/rn/84bccabd-a463-4fda-8a7c-60390699436b">
+            aambeeld
+        </ddm:subject>
+
+        <!-- AR007A -->
+        <!-- Legacy subjectScheme/schemeURI for overall ABR will be taken as artifact -->
+        <ddm:subject
+                subjectScheme="Archeologisch Basis Register"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/rn/a4a7933c-e096-4bcf-a921-4f70a78749fe"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/rn/88d17503-7f04-4310-843d-e9e6005a163b">
+            beitel
         </ddm:subject>
 
         <!-- AR008 -->
