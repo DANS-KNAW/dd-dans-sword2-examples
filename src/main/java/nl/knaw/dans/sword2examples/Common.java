@@ -49,19 +49,13 @@ import org.xml.sax.InputSource;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
@@ -92,14 +86,30 @@ public class Common {
         return bos.toString(StandardCharsets.UTF_8);
     }
 
-    public static Feed parseFeed(String text) {
+    public static Feed parseFeed(String xmlText) {
         try {
-            var context = JAXBContext.newInstance(Feed.class);
-            return (Feed) context.createUnmarshaller().unmarshal(new StringReader(text));
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbf.setExpandEntityReferences(false);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            org.w3c.dom.Document document = db.parse(new InputSource(new StringReader(xmlText)));
+
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            Writer out = new StringWriter();
+            transformer.transform(new DOMSource(document), new StreamResult(out));
+
+            JAXBContext context = JAXBContext.newInstance(Feed.class);
+            Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
+
+            return(Feed) jaxbUnmarshaller.unmarshal(new StringReader(out.toString()));
+
+        }  catch (Exception e) {
+            throw new RuntimeException("Error occurs when pretty-printing xml:\n" + xmlText, e);
         }
-        catch (JAXBException e) {
-            throw new RuntimeException("Unable to parse XML", e);
-        }
+
+
     }
 
     public static Entry parseEntry(String text) {
