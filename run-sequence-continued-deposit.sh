@@ -17,7 +17,7 @@
 
 if (( $# < 5 )); then
  echo "Runs the test program SequenceContinuedDeposit."
- echo "Usage: ./run-continued-deposit.sh [--suspend] <COL-IRI> <user> <password> <chunksize> <bag>..."
+ echo "Usage: ./run-sequence-continued-deposit.sh [--suspend] <COL-IRI> <user> <password> <chunksize> <bag>..."
  echo "Where:"
  echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port $DEBUG_PORT."
  echo "<COL-IRI> = the collection IRI to post to"
