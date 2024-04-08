@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-if (( $# < 5 )); then
+if (( $# < 5 )) || (( $# > 7 )); then
  echo "Runs the test program ContinuedDeposit."
  echo "Usage: ./run-continued-deposit.sh [--suspend] <COL-IRI> <user> <password> <chunksize> <bag> [<sword token>]"
  echo "Where:"

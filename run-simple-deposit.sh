@@ -15,9 +15,9 @@
 # limitations under the License.
 #
 
-if (( $# < 4 )); then
+if (( $# < 4 )) || (( $# > 6 )); then
  echo "Runs the test program SimpleDeposit."
- echo "Usage: ./run-continued-deposit.sh [--suspend] <COL-IRI> <user> <password> <bag> [<sword token>]"
+ echo "Usage: ./run-simple-deposit.sh [--suspend] <COL-IRI> <user> <password> <bag> [<sword token>]"
  echo "Where:"
  echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port $DEBUG_PORT."
  echo "<COL-IRI> = the collection IRI to post to"
