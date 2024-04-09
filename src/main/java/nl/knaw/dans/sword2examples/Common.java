@@ -104,7 +104,7 @@ public class Common {
             Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
 
             return(Feed) jaxbUnmarshaller.unmarshal(new StringReader(transformToSecureXmlText(xmlText)));
-        }  catch (JAXBException e) {
+        } catch (JAXBException e) {
             throw new RuntimeException("Unable to parse xml text",  e);
         }
 
