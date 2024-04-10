@@ -113,7 +113,7 @@ public class Common {
 
     public static Entry parseEntry(String xmlText) {
         try {
-             var context = JAXBContext.newInstance(Entry.class);
+            var context = JAXBContext.newInstance(Entry.class);
             Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
             return (Entry) jaxbUnmarshaller.unmarshal(new StringReader(transformToSecureXmlText(xmlText)));
         }
