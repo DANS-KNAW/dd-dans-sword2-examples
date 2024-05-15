@@ -49,19 +49,13 @@ import org.xml.sax.InputSource;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
+import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.DigestInputStream;
@@ -92,29 +86,45 @@ public class Common {
         return bos.toString(StandardCharsets.UTF_8);
     }
 
-    public static Feed parseFeed(String text) {
+    public static String transformToSecureXmlText(String rawXmlString) {
         try {
-            var context = JAXBContext.newInstance(Feed.class);
-            return (Feed) context.createUnmarshaller().unmarshal(new StringReader(text));
-        }
-        catch (JAXBException e) {
-            throw new RuntimeException("Unable to parse XML", e);
+            TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+
+            Writer out = new StringWriter();
+            transformer.transform(new DOMSource(resolveXmlTextToSecureDoc(rawXmlString)), new StreamResult(out));
+            return out.toString();
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to parse xml text",  e);
         }
     }
+    public static Feed parseFeed(String xmlText) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(Feed.class);
+            Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
 
-    public static Entry parseEntry(String text) {
+            return(Feed) jaxbUnmarshaller.unmarshal(new StringReader(transformToSecureXmlText(xmlText)));
+        } catch (JAXBException e) {
+            throw new RuntimeException("Unable to parse xml text",  e);
+        }
+
+
+    }
+
+    public static Entry parseEntry(String xmlText) {
         try {
             var context = JAXBContext.newInstance(Entry.class);
-            return (Entry) context.createUnmarshaller().unmarshal(new StringReader(text));
+            Unmarshaller jaxbUnmarshaller = context.createUnmarshaller();
+            return (Entry) jaxbUnmarshaller.unmarshal(new StringReader(transformToSecureXmlText(xmlText)));
         }
         catch (JAXBException e) {
-            throw new RuntimeException("Unable to parse XML", e);
+            throw new RuntimeException("Unable to parse xml text", e);
         }
     }
 
     static URI trackDeposit(CloseableHttpClient http, URI statUri) throws Exception {
         String bodyText;
-        System.out.println(String.format("Start polling Stat-IRI for the current status of the deposit, waiting %d seconds before every request ...", numberOfSecondBetweenStatusChecks));
+        System.out.printf("Start polling Stat-IRI for the current status of the deposit, waiting %d seconds before every request ...%n", numberOfSecondBetweenStatusChecks);
         while (true) {
             Thread.sleep(numberOfSecondBetweenStatusChecks * 1000);
             System.out.print("Checking deposit status ... ");
@@ -287,7 +297,6 @@ public class Common {
             if (!zipFile.delete()) {
                 System.err.println("Warning: delete action on zip returned false. ZIP may not have been deleted.");
             }
-            ;
         }
         try (var zf = new ZipFile(zipFile)) {
             ZipParameters parameters = new ZipParameters();
@@ -345,19 +354,27 @@ public class Common {
         System.out.println();
     }
 
+
+    private static org.w3c.dom.Document resolveXmlTextToSecureDoc(String xmlText) {
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbf.setExpandEntityReferences(false);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            org.w3c.dom.Document document = db.parse(new InputSource(new StringReader(xmlText)));
+            return document;
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to parse xml text:\n" + xmlText, e);
+        }
+
+    }
+
     // From: https://www.baeldung.com/java-pretty-print-xml
     private static String prettyPrintByTransformer(String xmlString, int indent, boolean ignoreDeclaration) {
-
         try {
-            InputSource src = new InputSource(new StringReader(xmlString));
-            org.w3c.dom.Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);
-
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             transformerFactory.setAttribute("indent-number", indent);
-
-            // To protect from XXE attacks (XML External Entity)
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
-            transformerFactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
 
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
@@ -365,10 +382,10 @@ public class Common {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
             Writer out = new StringWriter();
-            transformer.transform(new DOMSource(document), new StreamResult(out));
+            transformer.transform(new DOMSource(resolveXmlTextToSecureDoc(xmlString)), new StreamResult(out));
             return out.toString();
-        }
-        catch (Exception e) {
+
+        }  catch (Exception e) {
             throw new RuntimeException("Error occurs when pretty-printing xml:\n" + xmlString, e);
         }
     }
