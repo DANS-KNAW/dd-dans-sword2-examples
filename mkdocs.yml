@@ -27,8 +27,8 @@ nav:
   - ⇒ DANS Data Station Architecture: arch.md
 
 extra:
-  dans_bagit_profile: https://dans-knaw.github.io/dans-bagit-profile/versions/1.0.0/
-  dans_bag_profile_section_4: https://dans-knaw.github.io/dans-bagit-profile/versions/1.0.0/#4-deposit-data-station-context-requirements
+  dans_bagit_profile: https://dans-knaw.github.io/dans-bagit-profile/versions/1.1.0/
+  dans_bag_profile_section_4: https://dans-knaw.github.io/dans-bagit-profile/versions/1.1.0/#4-deposit-data-station-context-requirements
   dd_sword2_docs: https://dans-knaw.github.io/dd-sword2/
   dd_dans_sword2_examples_base_url: https://github.com/DANS-KNAW/dd-dans-sword2-examples
   dans_data_vault: https://dans-knaw.github.io/dans-datastation-architecture/#dans-data-vault
