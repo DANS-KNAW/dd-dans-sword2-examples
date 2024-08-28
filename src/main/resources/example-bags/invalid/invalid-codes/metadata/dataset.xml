@@ -1,0 +1,149 @@
+<ddm:DDM
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
+        xmlns:dcx-dai="http://easy.dans.knaw.nl/schemas/dcx/dai/"
+        xmlns:dcx-gml="http://easy.dans.knaw.nl/schemas/dcx/gml/"
+        xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
+        xmlns:dcterms="http://purl.org/dc/terms/"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/">
+
+    <ddm:profile>
+        <dc:title>A bag containing invalid vocab codes</dc:title>
+        <dcterms:description>
+            Some of the codes specified for ABR are invalid
+        </dcterms:description>
+        <dcx-dai:creatorDetails>
+            <dcx-dai:author>
+                <dcx-dai:titles>Dr</dcx-dai:titles>
+                <dcx-dai:initials>I</dcx-dai:initials>
+                <dcx-dai:surname>Lastname</dcx-dai:surname>
+                <dcx-dai:ISNI>0000 0001 2281 955X</dcx-dai:ISNI>
+                <dcx-dai:ORCID>https://orcid.org/0000-0001-9183-9538</dcx-dai:ORCID>
+                <dcx-dai:organization>
+                    <dcx-dai:name xml:lang="en">Example Org</dcx-dai:name>
+                </dcx-dai:organization>
+            </dcx-dai:author>
+        </dcx-dai:creatorDetails>
+        <ddm:created>2024-08-28</ddm:created>
+        <ddm:available>2024-08-28</ddm:available>
+        <ddm:audience>D13400</ddm:audience>
+        <ddm:audience>D16300</ddm:audience>
+        <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
+        <ddm:personalData present="No"/>
+    </ddm:profile>
+    <ddm:dcmiMetadata>
+        <dcterms:rightsHolder>I Lastname</dcterms:rightsHolder>
+        <dcterms:abstract xml:lang="ka">Georgian</dcterms:abstract>
+
+
+        <!-- REL001 see profile -->
+
+        <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
+        <ddm:reportNumber
+                subjectScheme="ABR Rapporten"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/7a99aaba-c1e7-49a4-9dd8-d295dbcc870e"
+                valueCode="CECI.N.EST.PAS.UN.RAPPORT"
+                reportNo="123-A">
+            Not a report
+        </ddm:reportNumber>
+
+        <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
+        <ddm:acquisitionMethod
+                subjectScheme="ABR verwervingswijzen"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/554ca1ec-3ed8-42d3-ae4b-47bcb848b238"
+                valueCode="NOT.A.VALID.AQC.METHOD">
+            Not a valid acquisition method
+        </ddm:acquisitionMethod>
+
+    <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
+        <ddm:subject
+                subjectScheme="ABR Complextypen"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/e9546020-4b28-4819-b0c2-29e7c864c5c0"
+                valueCode="INVAL.COMPLEX.TYPE">
+            Not a valid complex type
+        </ddm:subject>
+
+        <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
+        <ddm:subject
+                subjectScheme="ABR Artefacten"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/22cbb070-6542-48f0-8afe-7d98d398cc0b"
+                valueCode="OBJECT.INVALID">
+            Not a valid artifact
+        </ddm:subject>
+
+        <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
+        <ddm:temporal
+                subjectScheme="ABR Periodes"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/9b688754-1315-484b-9c89-8817e87c1e84"
+                valueCode="MIDDLE.EARTH.3RD.AGE">
+            Not a valid period
+        </ddm:temporal>
+
+        <!-- TS001 -->
+        <dcterms:temporal>Het Romeinse Rijk</dcterms:temporal>
+        <dcterms:temporal>De Oudheid</dcterms:temporal>
+
+        <!-- TS002 -->
+        <dcx-gml:spatial srsName="http://www.opengis.net/def/crs/EPSG/0/28992">
+            <Point xmlns="http://www.opengis.net/gml">
+                <pos>126466 529006</pos>
+            </Point>
+        </dcx-gml:spatial>
+
+        <!-- TS003, defaults to latitude/longitude-->
+        <dcx-gml:spatial>
+            <Point xmlns="http://www.opengis.net/gml">
+                <pos>52.078663 4.288788</pos>
+            </Point>
+        </dcx-gml:spatial>
+
+        <!-- TS004 -->
+        <dcx-gml:spatial>
+            <boundedBy xmlns="http://www.opengis.net/gml">
+                <Envelope srsName="http://www.opengis.net/def/crs/EPSG/0/28992">
+                    <lowerCorner>102000 335000</lowerCorner>
+                    <upperCorner>140000 628000</upperCorner>
+                </Envelope>
+            </boundedBy>
+        </dcx-gml:spatial>
+
+        <!-- TS005 -->
+        <dcx-gml:spatial>
+            <boundedBy xmlns="http://www.opengis.net/gml">
+                <Envelope srsName="http://www.opengis.net/def/crs/EPSG/0/4326">
+                    <lowerCorner>51.46343658020442 3.5621054065986075</lowerCorner>
+                    <upperCorner>53.23074335194507 6.563118076315912</upperCorner>
+                </Envelope>
+            </boundedBy>
+        </dcx-gml:spatial>
+
+        <!-- Not RD or lat/lon, so should be ignored -->
+        <dcx-gml:spatial>
+            <boundedBy xmlns="http://www.opengis.net/gml">
+                <Envelope srsName="XXX">
+                    <lowerCorner>1 2</lowerCorner>
+                    <upperCorner>3 4</upperCorner>
+                </Envelope>
+            </boundedBy>
+        </dcx-gml:spatial>
+
+        <!-- TS006, note that the text must exactly match the vocabulary term, so South-Africa will be handled by TS007 -->
+        <dcterms:spatial>South Africa</dcterms:spatial>
+        <dcterms:spatial>Japan</dcterms:spatial>
+
+        <!-- TS007, not in the controlled list, so mapped to the free text field -->
+        <dcterms:spatial>Roman Empire</dcterms:spatial>
+
+        <!--TRM001 -->
+        <dcterms:license xsi:type="dcterms:URI">http://opensource.org/licenses/MIT</dcterms:license>
+
+        <!-- TRM002 see example restricted-files-no-access-request -->
+
+        <!-- TRM005 and TRM006 -->
+        <dcterms:accessRights>Restricted files accessible under the following conditions: ...</dcterms:accessRights>
+
+        <!-- VLT005A -->
+        <dcterms:identifier xsi:type="id-type:DOI">10.17026/dans-z6y-5y2e</dcterms:identifier>
+
+    </ddm:dcmiMetadata>
+</ddm:DDM>
