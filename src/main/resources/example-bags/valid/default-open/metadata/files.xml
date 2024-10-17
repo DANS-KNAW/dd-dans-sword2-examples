@@ -3,6 +3,9 @@
     <file filepath="data/open.txt">
         <!-- Follows default accessibleToRights -->
     </file>
+    <file filepath="data/toolsfairy-sample3.m4a">
+        <!-- Follows default accessibleToRights -->
+    </file>
     <file filepath="data/restricted.txt">
         <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
     </file>
