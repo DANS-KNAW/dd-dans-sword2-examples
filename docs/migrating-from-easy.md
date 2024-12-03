@@ -23,6 +23,12 @@ The service URL has changed from `https://easy.dans.knaw.nl/sword2/collection/1`
 * `https://sword2.lifesciences.datastations.nl/collection/1`
 * `https://sword2.phys-techsciences.datastations.nl/collection/1`
 
+For the Vault as a Service the URL is:
+
+* `https://sword2.vault.datastations.nl/collection/<client_name>`
+
+The client_name is provided by DANS and is unique for each client.
+
 Test deposits must be sent to the demo-server, which is hosted at the "demo" subdomain of the Data Station, e.g.,
 `https://demo.sword2.archaeology.datastations.nl/collection/1`. Since this is a test environment, this server is
 protected with an extra authentication header which is provided to our customers via a different channel.
