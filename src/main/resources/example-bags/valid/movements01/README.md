@@ -22,5 +22,5 @@ Movements02
     * `fileB.txt` is not changed
 * Both `multimove1.txt` and `multimove2.txt` are moved from the folder `original` to `published`. Since both have the same
   checksum, it is not possible for the service to determine which is moved where. (It could theoretically use the label for that,
-  but it is not hat sophisticated.) Therefore, it will implement this as:
+  but it is not that sophisticated.) Therefore, it will implement this as:
     * Remove both files from `original` and add both files to `published`.
