@@ -10,6 +10,8 @@ Revision01 has a file (fileD) with accessibleToRights set to RESTRICTED_REQUEST.
 dataset has File Access Requests enabled. No Terms of Access are filled in. They could be filled in but are
 not mandatory, as they can be negotiated via a request.
 
+License is set to MIT.
+
 Revision02
 ----------
 In revision 02 fileD has been further restricted to accessibleToRights NONE. This means that access can no longer be
@@ -22,7 +24,11 @@ An alternative way to close the dataset for file access requests is to set ddm:a
 In revision02 the available date is set to 2025. If, by the time you are reading this, this is still in the future, this would
 embargo any files added to the new version, either as new files or as replacements for existing files.
 
+License is set to CC0 1.0.
+
 Revision03
 ----------
 In revision 03 fileD has been reset to RESTRICTED_REQUEST. As explained in the previous section, this does 
 NOT enable file access request for the dataset again, because this is a dataset-level attribute.
+
+License is set to CC-BY-NC-SA 3.0.
