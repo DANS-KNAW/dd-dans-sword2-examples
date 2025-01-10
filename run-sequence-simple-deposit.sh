@@ -15,18 +15,6 @@
 # limitations under the License.
 #
 
-if (( $# < 4 )); then
- echo "Runs the test program SequenceSimpleDeposit."
- echo "Usage: ./run-sequence-simple-deposit.sh [--suspend] <COL-IRI> <user> <password> <bag>..."
- echo "Where:"
- echo "--suspend = suspend execution at the start so as to allow a debugger to attach at port $DEBUG_PORT."
- echo "<COL-IRI> = the collection IRI to post to"
- echo "<user> = Data Station user account OR the string 'API_KEY'"
- echo "<password> = password for <user> OR the user's API key if the string 'API_KEY' was passed as user name"
- echo "<bag>... = one or more bag directories or zip files to send in sequence"
- exit
-fi
-
 DEBUG_PORT=8000
 SUSPEND=n
 if [[ "$1" == "--suspend" ]]; then
@@ -35,10 +23,7 @@ if [[ "$1" == "--suspend" ]]; then
 fi
 
 MAIN_CLASS="nl.knaw.dans.sword2examples.SequenceSimpleDeposit"
-COL_IRI=$1
-USER=$2
-PASSWORD=$3
-BAGS=${*:4}
+ARGS=$@
 
 JARFILE=$(ls -1 target/*SNAPSHOT.jar)
 
@@ -49,4 +34,5 @@ if [[ "$OSTYPE" == "msys" ]]; then
 fi
 
 mvn dependency:copy-dependencies
-java -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*$CP_SEP$JARFILE" $MAIN_CLASS $COL_IRI $USER $PASSWORD $BAGS
+set -x
+java -agentlib:jdwp=transport=dt_socket,server=y,address=$DEBUG_PORT,suspend=$SUSPEND -cp "target/dependency/*$CP_SEP$JARFILE" $MAIN_CLASS $ARGS

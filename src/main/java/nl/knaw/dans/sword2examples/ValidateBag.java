@@ -15,18 +15,37 @@
  */
 package nl.knaw.dans.sword2examples;
 
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
+
 import java.io.File;
 import java.net.URI;
 
 public class ValidateBag {
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 2) {
-            System.err.printf("Usage: java %s <validate-dans-bag-url> <bag file/dir>", ValidateBag.class.getName());
-            System.exit(1);
+        ArgumentParser parser = ArgumentParsers.newFor("ValidateBag").build()
+            .defaultHelp(true)
+            .description("Validate a DANS bag.");
+        parser.addArgument("validateDansBagUrl")
+            .help("URL to validate the DANS bag");
+        parser.addArgument("bag")
+            .help("Bag file or directory");
+
+        Namespace ns;
+        try {
+            ns = parser.parseArgs(args);
         }
-        var validateDansBagUrl = new URI(args[0]);
-        var bag = new File(args[1]);
+        catch (ArgumentParserException e) {
+            parser.handleError(e);
+            System.exit(1);
+            return;
+        }
+
+        var validateDansBagUrl = new URI(ns.getString("validateDansBagUrl"));
+        var bag = new File(ns.getString("bag"));
 
         var bagInTarget = Common.copyToBagDirectoryInTarget(bag);
         var zippedBagInTarget = new File(bagInTarget.toString() + ".zip");

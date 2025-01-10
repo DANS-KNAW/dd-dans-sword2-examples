@@ -15,8 +15,13 @@
  */
 package nl.knaw.dans.sword2examples;
 
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
 import nl.knaw.dans.sword2examples.api.entry.Entry;
 import nl.knaw.dans.sword2examples.api.entry.Link;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -26,42 +31,79 @@ import java.net.URI;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 
+import static net.sourceforge.argparse4j.impl.Arguments.storeTrue;
+
 public class ContinuedDeposit {
 
     /**
-     * Sends a bag to the SWORD2 service and tracks its status until it is published or accepted, or failure is reported. The bag is sent in chunks. If the
-     * bag is an update of an existing dataset, the sword token of the existing dataset must be provided as a urn:uuid value.
+     * Sends a bag to the SWORD2 service and tracks its status until it is published or accepted, or failure is reported. The bag is sent in chunks. If the bag is an update of an existing dataset, the
+     * sword token of the existing dataset must be provided as a urn:uuid value.
      *
-     * @param args 0. collection URL (Col-IRI), 1. username OR "API_KEY", 2. password OR the API key, 3. chunk size in bytes to use 4. bag to send (a directory or a zip file), 4. sword token (optional)
+     * @param args 0. collection URL (Col-IRI), 1. username OR "API_KEY", 2. password OR the API key, 3. chunk size in bytes to use 4. bag to send (a directory or a zip file), 4. sword token
+     *             (optional)
      */
     public static void main(String[] args) throws Exception {
-        if (args.length < 5 || args.length > 6) {
-            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <chunk size> <bag file/dir> [<sword token>]%n", ContinuedDeposit.class.getName());
-            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <chunk size> <bag file/dir> [<sword token>]%n", ContinuedDeposit.class.getName());
+        ArgumentParser parser = ArgumentParsers.newFor("ContinuedDeposit").build()
+            .defaultHelp(true)
+            .description("Send a bag to the SWORD2 service in chunks.");
+        parser.addArgument("colIri")
+            .help("Collection URL (Col-IRI)");
+        parser.addArgument("user")
+            .help("Username or the string 'API_KEY' if password is an API key");
+        parser.addArgument("password")
+            .help("Password or API key");
+        parser.addArgument("chunkSize")
+            .type(Integer.class)
+            .help("Chunk size in bytes");
+        parser.addArgument("bag")
+            .help("Bag file or directory");
+        parser.addArgument("swordToken")
+            .nargs("?")
+            .help("Sword token (optional)");
+        parser.addArgument("--bag-is-zip", "-z")
+            .dest("bagIsZip")
+            .action(storeTrue())
+            .help("The bag is already a zip file, do not re-zip it");
+
+        Namespace ns;
+        try {
+            ns = parser.parseArgs(args);
+        } catch (ArgumentParserException e) {
+            parser.handleError(e);
             System.exit(1);
+            return;
         }
 
-        // 0. Read command line arguments
-        final URI uri = new URI(args[0]);
-        final String uid = args[1];
-        final String pw = args[2];
-        final int chunkSize = Integer.parseInt(args[3]);
-        final String bag = args[4];
-        final URI swordToken = args.length > 5 ? new URI(args[5]) : null;
+        final URI uri = new URI(ns.getString("colIri"));
+        final String uid = ns.getString("user");
+        final String pw = ns.getString("password");
+        final int chunkSize = ns.getInt("chunkSize");
+        final String bag = ns.getString("bag");
+        final URI swordToken = ns.getString("swordToken") != null ? new URI(ns.getString("swordToken")) : null;
+        final boolean sendBagAsIs = ns.getBoolean("bagIsZip");
+
+        if (sendBagAsIs) {
+            depositZipPackage(new File(bag), uri, uid, pw, chunkSize);
+            System.exit(0);
+        }
 
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(new File(bag));
         if (swordToken != null) {
             Common.setBagIsVersionOf(bagDirInTarget, swordToken);
         }
-        depositPackage(bagDirInTarget, uri, uid, pw, chunkSize);
+        depositBagDir(bagDirInTarget, uri, uid, pw, chunkSize);
         System.exit(0);
     }
 
-    public static URI depositPackage(File bagDir, URI uri, String uid, String pw, int chunkSize) throws Exception {
+    public static URI depositBagDir(File bagDir, URI uri, String uid, String pw, int chunkSize) throws Exception {
         File zipFile = new File(bagDir.getAbsolutePath() + ".zip");
         zipFile.delete();
         Common.zipDirectory(bagDir, zipFile);
 
+        return depositZipPackage(zipFile, uri, uid, pw, chunkSize);
+    }
+
+    public static URI depositZipPackage(File zipFile, URI uri, String uid, String pw, int chunkSize) throws Exception {
         // 1. Set up stream for calculating MD5
         FileInputStream fis = new FileInputStream(zipFile);
         MessageDigest md = MessageDigest.getInstance("MD5");

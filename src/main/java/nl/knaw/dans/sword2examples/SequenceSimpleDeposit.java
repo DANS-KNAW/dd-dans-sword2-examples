@@ -15,36 +15,55 @@
  */
 package nl.knaw.dans.sword2examples;
 
+import net.sourceforge.argparse4j.ArgumentParsers;
+import net.sourceforge.argparse4j.inf.ArgumentParser;
+import net.sourceforge.argparse4j.inf.ArgumentParserException;
+import net.sourceforge.argparse4j.inf.Namespace;
+
 import java.io.File;
 import java.net.URI;
 
 public class SequenceSimpleDeposit {
 
     public static void main(String[] args) throws Exception {
-        if (args.length < 4) {
-            System.err.printf("Usage 1: java %s <Col-IRI> <user> <passwd> <bag dirname>...%n", SequenceSimpleDeposit.class.getName());
-            System.err.printf("Usage 2: java %s <Col-IRI> API_KEY <apikey> <bag dirname>...%n", SequenceSimpleDeposit.class.getName());
+        ArgumentParser parser = ArgumentParsers.newFor("SequenceSimpleDeposit").build()
+            .defaultHelp(true)
+            .description("Send multiple bags to the SWORD2 service in sequence.");
+        parser.addArgument("colIri")
+            .help("Collection URL (Col-IRI)");
+        parser.addArgument("user")
+            .help("Username or the string 'API_KEY' if password is an API key");
+        parser.addArgument("password")
+            .help("Password or API key");
+        parser.addArgument("bags")
+            .nargs("+")
+            .help("Bag directories");
+
+        Namespace ns;
+        try {
+            ns = parser.parseArgs(args);
+        }
+        catch (ArgumentParserException e) {
+            parser.handleError(e);
             System.exit(1);
+            return;
         }
 
-        // 0. Read command line arguments
-        final URI colIri = new URI(args[0]);
-        final String uid = args[1];
-        final String pw = args[2];
-
-        final String[] bagNames = new String[args.length - 3];
-        System.arraycopy(args, 3, bagNames, 0, bagNames.length);
+        final URI colIri = new URI(ns.getString("colIri"));
+        final String uid = ns.getString("user");
+        final String pw = ns.getString("password");
+        final String[] bagNames = ns.getList("bags").toArray(new String[0]);
 
         System.out.println("Sending base revision of dataset ...");
         File baseBagDir = new File(bagNames[0]);
         File bagDirInTarget = Common.copyToBagDirectoryInTarget(baseBagDir);
-        URI baseUri = SimpleDeposit.depositPackage(bagDirInTarget, colIri, uid, pw);
+        URI baseUri = SimpleDeposit.depositBagDir(bagDirInTarget, colIri, uid, pw);
 
         for (int i = 1; i < bagNames.length; ++i) {
             File bagDir = new File(bagNames[i]);
             bagDirInTarget = Common.copyToBagDirectoryInTarget(bagDir);
             Common.setBagIsVersionOf(bagDirInTarget, baseUri);
-            SimpleDeposit.depositPackage(bagDirInTarget, colIri, uid, pw);
+            SimpleDeposit.depositBagDir(bagDirInTarget, colIri, uid, pw);
         }
         System.exit(0);
     }
