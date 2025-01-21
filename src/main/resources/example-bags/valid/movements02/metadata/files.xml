@@ -15,4 +15,7 @@
     <file filepath="data/published/multimove2.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
+    <file filepath="data/verboten%/*auch_verboten*.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
 </files>

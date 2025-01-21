@@ -3,3 +3,4 @@ bab7f043476871d95d07ed4ff68f6fedcdb02e1c  data/fileA.txt
 094267d7468ffd012e3099bd5e1d74b18dafa720  data/published/file1.txt
 586107a041307e1adf01c734dead95fac3fc8f80  data/published/multimove1.txt
 586107a041307e1adf01c734dead95fac3fc8f80  data/published/multimove2.txt
+2180b99d684943933a0f8f6c821f3e1da42a09c5  data/verboten%/*auch_verboten*.txt

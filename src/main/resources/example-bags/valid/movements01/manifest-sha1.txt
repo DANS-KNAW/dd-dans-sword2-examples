@@ -4,3 +4,4 @@
 094267d7468ffd012e3099bd5e1d74b18dafa720  data/originals/file1.txt
 586107a041307e1adf01c734dead95fac3fc8f80  data/originals/multimove1.txt
 586107a041307e1adf01c734dead95fac3fc8f80  data/originals/multimove2.txt
+2180b99d684943933a0f8f6c821f3e1da42a09c5  data/forbidden%/*also_forbidden*.txt

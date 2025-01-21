@@ -18,5 +18,8 @@
     <file filepath="data/originals/multimove2.txt">
         <dcterms:format>text/plain</dcterms:format>
     </file>
+    <file filepath="data/forbidden%/*also_forbidden*.txt">
+        <dcterms:format>text/plain</dcterms:format>
+    </file>
 </files>
 
