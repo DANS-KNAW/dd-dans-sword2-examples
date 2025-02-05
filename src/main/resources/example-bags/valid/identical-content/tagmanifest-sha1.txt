@@ -2,4 +2,4 @@
 1f608d21a63b2eb7192f87d09ab51bed1822b69e  metadata/files.xml
 e2924b081506bac23f5fffe650ad1848a1c8ac1d  bagit.txt
 bfa542113d3bbb96225d59dd2c68531629460633  manifest-sha1.txt
-632ca6209bab5e94c59d125f913387c49fd5c5f8  README.md
+c6f8ea13aa1bbec26539ff927cf4fc07cfac4b2a  README.md

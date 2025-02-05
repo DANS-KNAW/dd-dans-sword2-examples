@@ -1,3 +1,4 @@
+#!/bin/env bash
 #
 # Copyright (C) 2022 DANS - Data Archiving and Networked Services (info@dans.knaw.nl)
 #
