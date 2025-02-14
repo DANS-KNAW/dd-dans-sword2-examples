@@ -116,6 +116,7 @@
         <!-- CIT016 -->
         <dcterms:language>Old School Latin</dcterms:language>
         <dc:language>Ithkuil</dc:language>
+        <ddm:language code="grc" encodingScheme="ISO639-2">Ancient Greek</ddm:language><!-- Not mapped to ISO639-1 -->
 
         <!-- CIT017 -->
         <dcterms:identifier xsi:type="id-type:ISSN">0317-8471</dcterms:identifier>
