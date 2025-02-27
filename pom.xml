@@ -25,12 +25,12 @@
     </parent>
     <artifactId>dd-dans-sword2-examples</artifactId>
     <name>DD DANS SWORD2 Examples</name>
-    <version>1.0.4</version>
+    <version>1.0.5-SNAPSHOT</version>
     <inceptionYear>2022</inceptionYear>
 
     <scm>
         <developerConnection>scm:git:ssh://github.com/DANS-KNAW/${project.artifactId}</developerConnection>
-        <tag>v1.0.4</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <dependencies>
