@@ -1,4 +1,4 @@
 42ce77c98aa0b4c42f0422d95e622050e5ab7f8d manifest-sha1.txt
 e2924b081506bac23f5fffe650ad1848a1c8ac1d bagit.txt
 d594d6b69ad05d0b5f5d9d533e10f4baba405878 metadata/dataset.xml
-24b520e80fbc6dbad56a1149470af3638a8d0e7c metadata/files.xml
+76f4d0be36b1d405b0bfddcca10a934e4a1d10d8 metadata/files.xml

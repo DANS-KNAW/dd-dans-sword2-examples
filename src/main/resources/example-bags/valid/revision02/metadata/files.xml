@@ -2,6 +2,8 @@
 <files xmlns="http://easy.dans.knaw.nl/schemas/bag/metadata/files/" xmlns:dcterms="http://purl.org/dc/terms/">
     <file filepath="data/file1.txt">
         <dcterms:format>text/plain</dcterms:format>
+        <accessibleToRights>RESTRICTED_REQUEST</accessibleToRights>
+        <dcterms:description>This file is restricted only in version 2</dcterms:description>
     </file>
     <file filepath="data/file2-renamed.txt">
         <dcterms:format>text/plain</dcterms:format>
