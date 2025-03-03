@@ -379,8 +379,8 @@
         <ddm:acquisitionMethod
                 subjectScheme="ABR verwervingswijzen"
                 schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/554ca1ec-3ed8-42d3-ae4b-47bcb848b238"
-                valueCode="LUC">
-            luchtfoto/remote sensing
+                valueCode="ICO">
+            indirect: collectiebeschrijving
         </ddm:acquisitionMethod>
 
 
