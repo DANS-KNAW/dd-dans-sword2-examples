@@ -312,7 +312,7 @@
         <!-- RIG002 see profile -->
 
         <!-- RIG003 Any element can add a metadata language -->
-        <dcterms:abstract xml:lang="ka">Georgian</dcterms:abstract>
+        <dcterms:abstract xml:lang="ko">Korean</dcterms:abstract>
 
 
         <!-- REL001 see profile -->
