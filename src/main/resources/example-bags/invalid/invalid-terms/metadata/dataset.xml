@@ -5,7 +5,7 @@
         xmlns:ddm="http://schemas.dans.knaw.nl/dataset/ddm-v2/"
         xmlns:dcterms="http://purl.org/dc/terms/"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/">
+        xmlns:id-type="http://easy.dans.knaw.nl/schemas/vocab/identifier-type/" xmlns:dd="http://purl.org/dc/elements/1.1/">
 
     <ddm:profile>
         <dc:title>A bag containing invalid vocab terms</dc:title>
@@ -116,6 +116,14 @@
                 valueURI="https://data.cultureelerfgoed.nl/term/id/rn/MADE-UP-ARTIFACT">
             Not a valid artifact
         </ddm:subject>
+
+        <ddm:subject schemeURI="http://vocab.getty.edu/aat/"
+                     subjectScheme="Art and Architecture Thesaurus"
+                     valueURI="http://vocab.getty.edu/aat/XXXXXXXX"
+                     xml:lang="en">
+            Not a valid AAT term
+        </ddm:subject>
+
 
         <!-- AR008 -->
         <!-- Preferred: selection by term URI -->
