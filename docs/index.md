@@ -26,7 +26,7 @@ mvn clean install
    myuser mypassword bag1 bag2 bag3
 # Deposit a sequence of bags, the first one being a new dataset, the others being updates to 
 # this dataset, each in chunks of configurable size
-./run-sequence-continued-deposit.sh SequenceContinued https://demo.sword2.domain.datastations.nl/collection/1 \
+./run-sequence-continued-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 \
    myuser mypassword chunksize bag1 bag2 bag3
 ```
 
