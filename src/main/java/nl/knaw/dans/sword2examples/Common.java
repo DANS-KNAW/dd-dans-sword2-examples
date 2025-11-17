@@ -349,7 +349,13 @@ public class Common {
 
     public static void printXml(String xml) {
         System.out.println("-- XML: START -------");
-        System.out.println(prettyPrintByTransformer(xml, 2, false));
+        try {
+            var output = prettyPrintByTransformer(xml, 2, false);
+            System.out.println(output);
+        }
+        catch (Exception e) {
+            System.out.println(xml);
+        }
         System.out.println("-- XML: END ---------");
         System.out.println();
     }
