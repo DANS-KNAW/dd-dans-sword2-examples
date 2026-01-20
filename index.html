@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>dd-dans-sword2-examples</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Manual";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> dd-dans-sword2-examples
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Manual</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#synopsis">SYNOPSIS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#description">DESCRIPTION</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#sword2-in-a-nutshell">SWORD2 in a nutshell</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting started</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#getting-access-to-the-demo-server">Getting access to the demo server</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#depositing-your-first-dataset">Depositing your first dataset</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#output-for-a-failed-deposit">Output for a failed deposit</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#next-steps">Next steps</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#studying-the-example-bags">Studying the example bags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#mapping-rules">Mapping rules</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#finding-libraries-and-tools">Finding libraries and tools</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#end-point-for-dans-bagit-profile-validation">End-point for DANS BagIt Profile validation</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#testing-different-scenarios">Testing different scenarios</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">EXAMPLES</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#building-from-source">BUILDING FROM SOURCE</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="migrating-from-easy/">Migrating from EASY</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="arch/">⇒ DANS Data Station Architecture</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">dd-dans-sword2-examples</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Manual</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/edit/master/docs/index.md">Edit on DANS-KNAW/dd-dans-sword2-examples</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="dd-dans-sword2-examples">dd-dans-sword2-examples<a class="headerlink" href="#dd-dans-sword2-examples" title="Permanent link">&para;</a></h1>
+<p>Examples for creating a SWORD2 Java client to deposit datasets to a DANS Data Station or the DANS Vault as a Service.</p>
+<h2 id="synopsis">SYNOPSIS<a class="headerlink" href="#synopsis" title="Permanent link">&para;</a></h2>
+<pre><code class="language-bash"># Build the code
+mvn clean install
+# Validate a bag
+./run-validation.sh https://demo.sword2.domain.datastations.nl/validate-dans-bag bag
+# Deposit a bag in one chunk
+./run-simple-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 myuser \
+   mypassword bag
+# Deposit an update to a dataset in one chunk using the SWORD token of the targeted dataset
+./run-simple-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 myuser \
+   mypassword bag urn:uuid:5c90d501-0bdf-4183-a96d-25fa6dea5489
+# Deposit a bag in chunks of configurable size
+./run-continued-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 myuser \
+   mypassword chunksize bag
+# Deposit a sequence of bags, the first one being a new dataset, the others being updates to 
+# this dataset, each in one chunk
+./run-sequence-simple-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 
+   myuser mypassword bag1 bag2 bag3
+# Deposit a sequence of bags, the first one being a new dataset, the others being updates to 
+# this dataset, each in chunks of configurable size
+./run-sequence-continued-deposit.sh https://demo.sword2.domain.datastations.nl/collection/1 \
+   myuser mypassword chunksize bag1 bag2 bag3
+</code></pre>
+<h2 id="description">DESCRIPTION<a class="headerlink" href="#description" title="Permanent link">&para;</a></h2>
+<p>This project contains two important resources for developers who are tasked with the creation or maintenance of a SWORD2
+client that deposits datasets to one of the DANS Data Stations or the Vault as a Service:</p>
+<ul>
+<li>Example Java client code</li>
+<li>Examples of bags that conform to the <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/" target="_blank">DANS BagIt Profile v1</a> requirements (and&mdash;for
+  illustration&mdash;some that violate some of the requirements).</li>
+</ul>
+<div class="admonition attention">
+<p class="admonition-title">Looking for legacy EASY SWORD2 examples?</p>
+<p>This project contains examples for the SWORD2 interface of the new <strong>DANS Data Stations</strong>. For the 
+<em>legacy EASY SWORD2 service</em> see <a href="https://github.com/DANS-KNAW/easy-sword2-dans-examples" target="_blank">easy-sword2-dans-examples</a>. </p>
+</div>
+<div class="admonition attention">
+<p class="admonition-title">Migrating from EASY SWORD2 to Data Station SWORD2</p>
+<p>If you are an existing customer who is migrating an EASY SWORD2 client to a Data Station SWORD2 client, please read
+<a href="migrating-from-easy/" target="_blank">Migrating from EASY</a> after you have read the current page.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Data Station vs Vault as a Service</p>
+<p>Clients can deposit to either a Data Station or the Vault as a Service (Vaas). The protocol is largely the same. 
+The differences are highlighted in the text with the notes <strong>(VaaS)</strong> and <strong>(Data Station)</strong>.</p>
+</div>
+<h3 id="sword2-in-a-nutshell">SWORD2 in a nutshell<a class="headerlink" href="#sword2-in-a-nutshell" title="Permanent link">&para;</a></h3>
+<p>Depositing to the DANS Archive via SWORD2 is basically a two-phase process:</p>
+<ol>
+<li>Submitting a deposit for ingest.</li>
+<li>Tracking the state of the deposit as it goes through the ingest-flow, until it reaches PUBLISHED or ACCEPTED status.</li>
+</ol>
+<p>The following diagram details this a bit further.</p>
+<p><img alt="SWORD diagram" src="img/sword2-summary.png" /></p>
+<ol>
+<li>Client creates a deposit package (conforming to <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/" target="_blank">DANS BagIt Profile v1</a>).</li>
+<li>Client sends deposit package to SWORD2 Service, getting back a URL to track the deposit's state.</li>
+<li>SWORD2 Service unzips and validates deposit.</li>
+<li>Ingest Flow performs checks and transformations and creates a dataset in the Data Station Repository
+   <strong>(Data Station)</strong> or submits an archival package directly to the DANS Data Vault <strong>(VaaS)</strong>.</li>
+<li>Ingest Flow reports back success or failure to SWORD2 Service.</li>
+</ol>
+<p>3-5. During this time the Client periodically checks the deposit state through the URL received in step 2. If the final
+state of <code>PUBLISHED</code> <strong>(Data Station)</strong> / <code>ACCEPTED</code> <strong>(VaaS)</strong> is reached, the process is concluded successfully. At
+this point the deposit has published a new dataset (or a new version of an existing dataset) in the Data Station
+repository <strong>(Data Station only)</strong> and submitted an archival package to the DANS Data Vault for processing.</p>
+<p>Other outcomes may be <code>INVALID</code> (the bag was <a href="https://www.rfc-editor.org/rfc/rfc8493#section-3" target="_blank">invalid according to the BagIt specs</a>)
+or <code>REJECTED</code> (the additional requirements of <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/" target="_blank">DANS BagIt Profile v1</a> were not met). In case the server
+encountered an unknown error <code>FAILED</code> will be returned.</p>
+<h3 id="getting-started">Getting started<a class="headerlink" href="#getting-started" title="Permanent link">&para;</a></h3>
+<p>The following is a step-by-step instruction on how to run a simple example using the Data Station's demo server.</p>
+<h4 id="getting-access-to-the-demo-server">Getting access to the demo server<a class="headerlink" href="#getting-access-to-the-demo-server" title="Permanent link">&para;</a></h4>
+<div class="admonition note">
+<p class="admonition-title">Agreement</p>
+<p>Before you can get access to the demo server, there must be a formal agreement between your organization and DANS. 
+The following assumes that this agreement is in place. If it is not, please contact the Data Station Manager of the 
+<a href="http://dans.knaw.nl" target="_blank">Data Station</a> that you want to deposit to.</p>
+</div>
+<ol>
+<li>From your Data Station Manager at DANS request access to the demo Data Station server. The Data Station Manager will
+   provide the information necessary to connect (see note about the <code>X-Authorization</code> header below).</li>
+<li>Create an account in the demo Data Station <strong>(Data Station only)</strong>.</li>
+<li>From your Data Station Manager at DANS request the account to be enabled for SWORD2 deposits <strong>(Data Station only)</strong>.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">X-Authorization header</p>
+<p>In order to keep web crawlers from accessing the demo server, the demo server requires the <code>X-Authorization</code> header.
+<strong>This is in addition to the authentication required by the SWORD2 server.</strong> The value of the <code>X-Authorization</code> is
+provided by the Data Station Manager. It is the same for all users of the demo server. Put the value in a file 
+called <code>x-auth-value.txt</code> in the root of your clone of this project. The method <code>Common.addXAuthorizationToRequest()</code>
+will read the value from this file and add it to the request.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Configuring which notifications to receive</p>
+<p>The Data Station repository (Dataverse) generates <a href="https://guides.dataverse.org/en/latest/user/account.html#notifications" target="_blank">notifications</a> for many events. Most of these 
+can be muted. Log in via the user interface and open the account menu on the top right. Click on the 
+<em>Notifications</em> item. The <em>Notifications</em> tab of your <em>Account</em> page will now be opened. Expand the header 
+<em>Notification settings</em> and uncheck the notification types you do not wish to receive.</p>
+</div>
+<h4 id="depositing-your-first-dataset">Depositing your first dataset<a class="headerlink" href="#depositing-your-first-dataset" title="Permanent link">&para;</a></h4>
+<h5 id="running-the-simpledeposit-example">Running the SimpleDeposit example<a class="headerlink" href="#running-the-simpledeposit-example" title="Permanent link">&para;</a></h5>
+<ol>
+<li>
+<p>Clone and build this project:</p>
+<pre class="codehilite"><code>git clone https://github.com/DANS-KNAW/dd-dans-sword2-examples
+cd dd-dans-sword2-examples
+mvn clean install
+</code></pre>
+
+</li>
+<li>
+<p>Execute the following command from the base directory of your clone:</p>
+<pre class="codehilite"><code>./run-simple-deposit.sh https://demo.sword2.&lt;domain&gt;.datastations.nl/collection/1 &lt;user&gt; &lt;password&gt; &lt;bag&gt;
+</code></pre>
+
+<p>Fill in:</p>
+<ul>
+<li>for <code>&lt;domain&gt;</code> the name of the Data Station that you are depositing to, one of <code>archaeology</code>, <code>ssh</code>, <code>lhms</code>
+  or <code>pts</code>;</li>
+<li>for <code>&lt;user&gt;</code> your Data Station account name;</li>
+<li>for <code>&lt;password&gt;</code> the password of your Data Station account;</li>
+<li>for <code>&lt;bag&gt;</code>: any of the bags in <code>src/main/resources/example-bags</code>, for example
+  <code>src/main/resources/example-bags/valid/audiences</code>.</li>
+</ul>
+</li>
+</ol>
+<p>This will run the example program <code>nl.knaw.dans.sword2examples.SimpleDeposit</code>, which will copy the example bag to the
+   folder <code>target</code> (the Maven build folder), zip it and send it
+   to <code>https://demo.sword2.&lt;domain&gt;.datastations.nl/collection/1</code>
+   authenticating with the provider username and password using basic auth.</p>
+<div class="admonition note">
+<p class="admonition-title">Authenticating with X-Dataverse-key <strong>(Data Station only)</strong></p>
+<p>Instead of using username and password you can also authenticate using your API-token (also known as API-key). You 
+can look up your current current API-token in your account settings in the Data Station user interface. The 
+API-token is specified using the header <code>X-Dataverse-key</code>. To pass it to the example programs using the 
+<code>run-*-deposit.sh</code> scripts specify instead of your user name the literal string <code>API_KEY</code> and instead of your password
+the API-token.</p>
+<p><em>Note that using the API-token is the <strong>only</strong> way to authenticate if your Data Station account is using an external 
+identity provider such as SURFconext or Google.</em></p>
+</div>
+<h5 id="output-analysis">Output analysis<a class="headerlink" href="#output-analysis" title="Permanent link">&para;</a></h5>
+<p><a href="#sword2-in-a-nutshell">In the introduction</a> the SWORD2 deposit process is described in 5 stages, the response messages
+give some indication how far the process has progressed. The output will take the following form, starting with the part
+of the response representing step 2. The UUID will of course be different.</p>
+<pre><code class="language-text"> SUCCESS. Deposit receipt follows:
+ &lt;entry xmlns=&quot;http://www.w3.org/2005/Atom&quot;&gt;
+     &lt;generator uri=&quot;http://www.swordapp.org/&quot; version=&quot;2.0&quot; /&gt;
+     &lt;id&gt;https://demo.sword2.&lt;domain&gt;.datastations.nl/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4&lt;/id&gt;
+     &lt;link href=&quot;https://demo.sword2.&lt;domain&gt;.datastations.nl/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4&quot; rel=&quot;edit&quot; /&gt;
+     &lt;link href=&quot;https://demo.sword2.&lt;domain&gt;.datastations.nl/container/a5bb644a-78a3-47ae-907a-0bdf162a0cd4&quot; rel=&quot;http://purl.org/net/sword/terms/add&quot; /&gt;
+     &lt;link href=&quot;https://demo.sword2.&lt;domain&gt;.datastations.nl/media/a5bb644a-78a3-47ae-907a-0bdf162a0cd4&quot; rel=&quot;edit-media&quot; /&gt;
+     &lt;packaging xmlns=&quot;http://purl.org/net/sword/terms/&quot;&gt;http://purl.org/net/sword/package/BagIt&lt;/packaging&gt;
+     &lt;link href=&quot;https://demo.sword2.&lt;domain&gt;.datastations.nl/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4&quot; rel=&quot;http://purl.org/net/sword/terms/statement&quot; type=&quot;application/atom+xml; type=feed&quot; /&gt;
+     &lt;treatment xmlns=&quot;http://purl.org/net/sword/terms/&quot;&gt;[1] unpacking [2] verifying integrity [3] storing persistently&lt;/treatment&gt;
+     &lt;verboseDescription xmlns=&quot;http://purl.org/net/sword/terms/&quot;&gt;received successfully: bag.zip; MD5: 494dd614e36edf5c929403ed7625b157&lt;/verboseDescription&gt;
+ &lt;/entry&gt;
+ Retrieving Statement IRI (Stat-IRI) from deposit receipt ...
+ Stat-IRI = https://demo.sword2.&lt;domain&gt;.datastations.nl/statement/a5bb644a-78a3-47ae-907a-0bdf162a0cd4
+</code></pre>
+<p>As the deposit is being processed by the server the client polls the Stat-IRI (SWORD2 Statement URI) to track the status
+of the deposit. During this stage steps 3 and 4 are performed.</p>
+<pre><code class="language-text"> Start polling Stat-IRI for the current status of the deposit, waiting 10 seconds before every request ...
+ Checking deposit status ... SUBMITTED
+ Checking deposit status ... SUBMITTED
+ Checking deposit status ... SUBMITTED
+ Checking deposit status ... SUBMITTED
+</code></pre>
+<p>The 5th and final step of the process is represented by the following response messaging.</p>
+<pre><code class="language-text">Checking deposit status ... PUBLISHED
+SUCCESS. 
+Dataset has been published as: &lt;https://doi.org/doi:10.5072/DAR/MNGAHF&gt;. 
+Dataset NBN: &lt;https://www.persistent-identifier.nl?identifier=urn:nbn:nl:ui:13-d4cfb364-c6cc-4242-891a-e9e9673379bc&gt;. 
+Bag ID for this version of the dataset: urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560
+State description: The deposit was successfully ingested in the Data Station and will be automatically archived
+Complete statement follows:
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:sword=&quot;http://purl.org/net/sword/terms/&quot; xmlns:ns3=&quot;http://purl.org/net/sword/&quot;&gt;
+    &lt;id&gt;https://demo.sword2.&lt;domain&gt;.datastations.nl/statement/ca145147-6d15-4c2b-abf0-fb1110271560&lt;/id&gt;
+    &lt;link href=&quot;https://demo.sword2.&lt;domain&gt;.datastations.nl/statement/ca145147-6d15-4c2b-abf0-fb1110271560&quot; rel=&quot;self&quot;/&gt;
+    &lt;title type=&quot;text&quot;&gt;Deposit ca145147-6d15-4c2b-abf0-fb1110271560&lt;/title&gt;
+    &lt;author&gt;
+        &lt;name&gt;DANS SWORD2&lt;/name&gt;
+    &lt;/author&gt;
+    &lt;updated&gt;2023-02-18T12:03:55.966061+01:00&lt;/updated&gt;
+    &lt;entry&gt;
+        &lt;id&gt;urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560&lt;/id&gt;
+        &lt;title type=&quot;text&quot;&gt;Resource urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560&lt;/title&gt;
+        &lt;summary type=&quot;text&quot;&gt;Resource Part&lt;/summary&gt;
+        &lt;content src=&quot;urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560&quot; type=&quot;multipart/related&quot;/&gt;
+        &lt;updated&gt;2023-02-18T12:04:06.251424+01:00&lt;/updated&gt;
+        &lt;link href=&quot;https://doi.org/doi:10.5072/DAR/MNGAHF&quot; rel=&quot;self&quot;/&gt;
+        &lt;link href=&quot;https://www.persistent-identifier.nl?identifier=urn:nbn:nl:ui:13-d4cfb364-c6cc-4242-891a-e9e9673379bc&quot; rel=&quot;self&quot;/&gt;
+    &lt;/entry&gt;
+    &lt;category label=&quot;State&quot; scheme=&quot;http://purl.org/net/sword/terms/state&quot; term=&quot;PUBLISHED&quot;&gt;The deposit was successfully ingested in the Data Station and will be automatically archived&lt;/category&gt;
+&lt;/feed&gt;
+</code></pre>
+<p>How to read this output?</p>
+<ul>
+<li>This confirms that the dataset was successfully published and is resolvable using the DOI
+  URL <a href="https://doi.org/doi:10.5072/DAR/MNGAHF">https://doi.org/doi:10.5072/DAR/MNGAHF</a>. (N.B. in the test environment the DOI will not actually resolve.) The
+  DOI can be used to cite the dataset.</li>
+<li>The dataset has the URN:NBN identifier <code>urn:nbn:nl:ui:13-d4cfb364-c6cc-4242-891a-e9e9673379bc</code>. This can be used be
+  the depositor to retrieve a summary from the DANS Data Vault for this dataset. The summary includes information about
+  for which dataset versions a long term preservation copy exists in the Vault.</li>
+<li>The Bag ID for this <strong>version</strong> of the dataset is <code>urn:uuid:ca145147-6d15-4c2b-abf0-fb1110271560</code>. The Bag ID serves
+  as a unique identifier for a long term preservation package in the DANS Data Vault.</li>
+</ul>
+<h4 id="output-for-a-failed-deposit">Output for a failed deposit<a class="headerlink" href="#output-for-a-failed-deposit" title="Permanent link">&para;</a></h4>
+<p>If you deposit a bag that does not comply with the <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/" target="_blank">DANS BagIt Profile v1</a> requirements, a state
+of <code>REJECTED</code> will be returned. For example, when you use the example bag
+in <code>src/main/resources/example-bags/invalid/two-available-dates</code>, the error will indicate that a second <code>ddm:available</code>
+element was found where a <code>ddm:audience</code> was expected:</p>
+<pre><code class="language-text">Checking deposit status ... REJECTED
+FAILURE. Complete statement follows:
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+&lt;feed xmlns=&quot;http://www.w3.org/2005/Atom&quot; xmlns:sword=&quot;http://purl.org/net/sword/terms/&quot; xmlns:ns3=&quot;http://purl.org/net/sword/&quot;&gt;
+    &lt;id&gt;https://sword2.dar.dans.knaw.nl/statement/dde565d7-878a-4ae2-a607-0a3f55a22630&lt;/id&gt;
+    &lt;link href=&quot;https://sword2.dar.dans.knaw.nl/statement/dde565d7-878a-4ae2-a607-0a3f55a22630&quot; rel=&quot;self&quot;/&gt;
+    &lt;title type=&quot;text&quot;&gt;Deposit dde565d7-878a-4ae2-a607-0a3f55a22630&lt;/title&gt;
+    &lt;author&gt;
+        &lt;name&gt;DANS SWORD2&lt;/name&gt;
+    &lt;/author&gt;
+    &lt;updated&gt;2023-02-18T12:15:02.451030+01:00&lt;/updated&gt;
+    &lt;entry&gt;
+        &lt;id&gt;urn:uuid:dde565d7-878a-4ae2-a607-0a3f55a22630&lt;/id&gt;
+        &lt;title type=&quot;text&quot;&gt;Resource urn:uuid:dde565d7-878a-4ae2-a607-0a3f55a22630&lt;/title&gt;
+        &lt;summary type=&quot;text&quot;&gt;Resource Part&lt;/summary&gt;
+        &lt;content src=&quot;urn:uuid:dde565d7-878a-4ae2-a607-0a3f55a22630&quot; type=&quot;multipart/related&quot;/&gt;
+        &lt;updated&gt;2023-02-18T12:15:12.578076+01:00&lt;/updated&gt;
+    &lt;/entry&gt;
+    &lt;category label=&quot;State&quot; scheme=&quot;http://purl.org/net/sword/terms/state&quot;
+              term=&quot;REJECTED&quot;&gt;Rejected /var/opt/dans.knaw.nl/tmp/auto-ingest/inbox/dde565d7-878a-4ae2-a607-0a3f55a22630: Bag was not valid according to Profile Version 1.0.0. Violations: - [3.1.1] metadata/dataset.xml does not conform to dataset.xml:
+        - cvc-complex-type.2.4.a: Invalid content was found starting with element '{&quot;http://schemas.dans.knaw.nl/dataset/ddm-v2/&quot;:available}'. One of '{&quot;http://schemas.dans.knaw.nl/dataset/ddm-v2/&quot;:audience}' is expected.
+    &lt;/category&gt;
+&lt;/feed&gt;
+</code></pre>
+<h5 id="statuses">Statuses<a class="headerlink" href="#statuses" title="Permanent link">&para;</a></h5>
+<p>The deposit will go through a number of statuses.</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>DRAFT</code></td>
+<td>The deposit is being prepared by the depositor. It is not submitted to the archive yet <br/> and still open for additional data.</td>
+</tr>
+<tr>
+<td><code>UPLOADED</code></td>
+<td>The deposit is in the process of being submitted. It is waiting to be finalized. The data<br/> is completely uploaded. It will automatically move to the next stage and the status will <br/> be updated accordingly.</td>
+</tr>
+<tr>
+<td><code>FINALIZING</code></td>
+<td>The deposit is in the process of being submitted. It is being checked for validity. It will <br/>  automatically move to the next stage and the status will be updated accordingly.</td>
+</tr>
+<tr>
+<td><code>INVALID</code></td>
+<td>The deposit is not accepted by the archive as the submitted bag is not valid. <br/>The description will detail what part of the bag is not according to specifications. <br/>The depositor is asked to fix the bag and resubmit the deposit.</td>
+</tr>
+<tr>
+<td><code>SUBMITTED</code></td>
+<td>The deposit is submitted for processing. At this point the Ingest Flow is processing<br/> the deposit and will update the state when it finishes.</td>
+</tr>
+<tr>
+<td><code>FAILED</code></td>
+<td>An error occurred while processing the deposit</td>
+</tr>
+<tr>
+<td><code>REJECTED</code></td>
+<td>The deposit does not meet the requirements of <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/" target="_blank">DANS BagIt Profile v1</a>. The description<br/> will detail what part of the deposit is not according to specifications. The depositor is<br/> requested to fix and resubmit the deposit.</td>
+</tr>
+<tr>
+<td><code>PUBLISHED</code></td>
+<td>The deposit is successfully published in the Data Station repository <strong>(Data Station)</strong>.</td>
+</tr>
+<tr>
+<td><code>ACCEPTED</code></td>
+<td>The deposit has been accepted for preservation in the DANS Data Vault <strong>(VaaS)</strong>.</td>
+</tr>
+</tbody>
+</table>
+<p>If an error occurs the deposit will end up INVALID, REJECTED (client errors) or FAILED (server error). The text of
+the <code>category</code> element will contain details about the error.</p>
+<h3 id="next-steps">Next steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h3>
+<h4 id="studying-the-example-bags">Studying the example bags<a class="headerlink" href="#studying-the-example-bags" title="Permanent link">&para;</a></h4>
+<p>After successfully depositing the first example to the demo repository you can start thinking about how to design your
+SWORD2 client. Depending on your source repository system this make take various shapes. In any case your code will need
+to assemble a bag conforming to <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/" target="_blank">DANS BagIt Profile v1</a>. Some examples of such bags are included in
+the <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/tree/master/src/main/resources/example-bags" target="_blank">resources directory</a> of this project.</p>
+<h4 id="mapping-rules">Mapping rules<a class="headerlink" href="#mapping-rules" title="Permanent link">&para;</a></h4>
+<p>The contents of the bags you deposit are mapped to data files and metadata in Dataverse. The mapping rules are
+documented
+in the <a href="https://docs.google.com/spreadsheets/d/1G5YHSDg3a91nI9NgRjbz11iRFU9qgnNkde6K84j1NWI/edit#gid=107937978" target="_blank">Ingest Flow Mapping Rules</a> Google spreadsheet. If you are a DANS SWORD2 customer access will be
+granted on request.</p>
+<h4 id="finding-libraries-and-tools">Finding libraries and tools<a class="headerlink" href="#finding-libraries-and-tools" title="Permanent link">&para;</a></h4>
+<ul>
+<li><a href="https://github.com/DANS-KNAW/bagit-java" target="_blank">bagit-java</a>&mdash;a Java library for working with bags. This is a DANS fork of a project started by
+  Library of Congress, which is no longer maintained by them.</li>
+<li><a href="https://github.com/LibraryOfCongress/bagit-python" target="_blank">bagit-python</a>&mdash;a Python library and command line tool for working with bags, also by Library of
+  Congress. This is still maintained by them.</li>
+<li><code>brew install bagit</code> is still available on MacOS to install an older version of <a href="https://github.com/DANS-KNAW/bagit-java" target="_blank">bagit-java</a> which
+  contained a powerful command line interface, but is no longer maintained.</li>
+<li><a href="http://xmlsoft.org/xmllint.html" target="_blank">xmllint</a>&mdash;a tool to check that XML files conform to a given XML schema.</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Abdera project retired</p>
+<p><a href="https://github.com/DANS-KNAW/easy-sword2-dans-examples" target="_blank">easy-sword2-dans-examples</a> used the <a href="https://abdera.apache.org/" target="_blank">Apache Abdera</a> library to parse Atom Entry 
+and Feed documents. We have removed that dependency, because Abdera is no longer maintained and we do not recommend 
+using unmaintained libraries. </p>
+</div>
+<h4 id="end-point-for-dans-bagit-profile-validation">End-point for DANS BagIt Profile validation<a class="headerlink" href="#end-point-for-dans-bagit-profile-validation" title="Permanent link">&para;</a></h4>
+<p>All bags that are deposited to a Data Station are validated by <a href="https://dans-knaw.github.io/dd-validate-dans-bag/" target="_blank">dd-validate-dans-bag</a> to see if they
+conform to <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/" target="_blank">DANS BagIt Profile v1</a>. To facilitate faster development in the demo environment this
+service
+can be invoked directly. The example program <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/blob/master/src/main/java/nl/knaw/dans/sword2examples/ValidateBag.java">nl.knaw.dans.sword2examples.ValidateBag</a> demonstrates how to call this
+API.
+A helper script to start this program is also provided, see <code>run-validation.sh</code>.</p>
+<div class="admonition warning">
+<p class="admonition-title">DO NOT make calling this API part of your production code!</p>
+<p>Use of the validation API end-point is entirely optional during testing. The Ingest Flow will call the validation 
+before further processing a deposit, so if it is not valid it <em>will</em> be rejected. That having been said, when 
+writing the code that assembles the bag to be deposited, using the validation API end-point may shorten the 
+Edit - Compile - Run cycle.</p>
+</div>
+<h4 id="testing-different-scenarios">Testing different scenarios<a class="headerlink" href="#testing-different-scenarios" title="Permanent link">&para;</a></h4>
+<p>This project contains four <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/tree/master/src/main/java/nl/knaw/dans/sword2examples" target="_blank">Java example programs</a> which can be used as a guide to writing a custom
+client to deposit datasets using the SWORD2 protocol. The examples take one or more bags as input parameters. These bags
+may be directories or ZIP files. The code copies each bag to the <code>target</code>-folder of the project, zips it (if necessary)
+and sends it to the specified SWORD2 service. The copying step has been built in because in some examples the bag must
+be modified before it is sent; this way we avoid changing the git working directory.</p>
+<ol>
+<li><code>SimpleDeposit.java</code> sends a zipped dataset in a single chunk and reports on the status.</li>
+<li><code>ContinuedDeposit.java</code> sends a zipped bag in chunks of configurable size and reports on the status.</li>
+<li><code>SequenceSimpleDeposit.java</code> calls the SimpleDeposit class multiple times to send multiple bags belonging to a
+   sequence, the first bag being a new dataset
+   and subsequent bags being updates (new versions) of this dataset.</li>
+<li><code>SequenceContinuedDeposit.java</code> calls the ContinuedDeposit class multiple times to send multiple bags belonging to a
+   sequence, the first bag being a new
+   dataset and subsequent bags being updates (new versions) of this dataset.</li>
+</ol>
+<p>The <code>Common.java</code> class contains elements which are used by all the other classes. This would include parsing, zipping
+and sending of files.</p>
+<p>The project root directory contains several helper scripts (<code>run-*.sh</code>) that can be used to invoke the Java programs.
+See <a href="#synopsis">SYNOPSIS</a>. These scripts were developed to run in a <code>bash</code> or <code>zsh</code> shell, but should be easy to adapt
+for a different shell environment.</p>
+<h2 id="examples">EXAMPLES<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/tree/master/src/main/java/nl/knaw/dans/sword2examples" target="_blank">Java Example programs</a>.</li>
+<li>Example bags can be found in the <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/tree/master/src/main/resources/example-bags" target="_blank">resources directory</a>.</li>
+</ul>
+<h2 id="building-from-source">BUILDING FROM SOURCE<a class="headerlink" href="#building-from-source" title="Permanent link">&para;</a></h2>
+<p>Prerequisites:</p>
+<ul>
+<li>Java 11 or higher</li>
+<li>Maven 3.3.3 or higher</li>
+</ul>
+<p>Steps:</p>
+<pre class="codehilite"><code>git clone https://github.com/DANS-KNAW/dd-dans-sword2-examples.git
+cd dd-dans-sword2-examples
+mvn clean install
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="migrating-from-easy/" class="btn btn-neutral float-right" title="Migrating from EASY">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples" class="fa fa-code-fork" style="color: #fcfcfc"> DANS-KNAW/dd-dans-sword2-examples</a>
+        </span>
+    
+    
+    
+      <span><a href="migrating-from-easy/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.1
+Build Date UTC : 2026-01-20 14:35:15.308614+00:00
+-->
