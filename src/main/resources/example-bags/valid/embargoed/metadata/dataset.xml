@@ -20,7 +20,7 @@
             </dcx-dai:author>
         </dcx-dai:creatorDetails>
         <ddm:created>2015-09-09</ddm:created>
-        <ddm:available>2026-01-01</ddm:available><!-- TODO update when date has passed -->
+        <ddm:available>2027-01-01</ddm:available><!-- TODO update when date has passed -->
         <ddm:audience>D23320</ddm:audience>
         <ddm:accessRights>OPEN_ACCESS</ddm:accessRights>
         <ddm:personalData present="No" />
