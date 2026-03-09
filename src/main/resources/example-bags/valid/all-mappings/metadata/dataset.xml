@@ -18,6 +18,11 @@
         <dcterms:description>
             This bags contains one or more examples of each mapping rule.
         </dcterms:description>
+        <dcterms:description>
+            This is a longer description which boths exceeds the maximum length for a bag-info.txt line and....
+contains a newline
+and yet another one
+        </dcterms:description>
         <!-- CIT009 -->
         <dcterms:description>
             A second description
