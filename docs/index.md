@@ -366,8 +366,8 @@ BUILDING FROM SOURCE
 --------------------
 Prerequisites:
 
-* Java 11 or higher
-* Maven 3.3.3 or higher
+* Java 21 or higher
+* Maven 3.8.7 or higher
 
 Steps:
 
