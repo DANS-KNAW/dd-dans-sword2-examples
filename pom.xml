@@ -21,11 +21,11 @@
     <parent>
         <groupId>nl.knaw.dans</groupId>
         <artifactId>dd-parent</artifactId>
-        <version>1.12.0</version>
+        <version>3.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>dd-dans-sword2-examples</artifactId>
-    <name>DD DANS SWORD2 Examples</name>
     <version>1.2.1-SNAPSHOT</version>
+    <name>DD DANS SWORD2 Examples</name>
     <inceptionYear>2022</inceptionYear>
 
     <scm>
@@ -55,8 +55,8 @@
             <artifactId>httpclient</artifactId>
         </dependency>
         <dependency>
-            <groupId>nl.knaw.dans</groupId>
-            <artifactId>bagit</artifactId>
+            <groupId>nl.datastations</groupId>
+            <artifactId>dans-bagit-lib</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -77,23 +77,23 @@
     </dependencies>
     <repositories>
         <repository>
-            <id>dans-releases</id>
             <releases>
                 <enabled>true</enabled>
             </releases>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
+            <id>dans-releases</id>
             <url>https://maven.dans.knaw.nl/releases/</url>
         </repository>
         <repository>
-            <id>dans-snapshots</id>
             <releases>
                 <enabled>false</enabled>
             </releases>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+            <id>dans-snapshots</id>
             <url>https://maven.dans.knaw.nl/snapshots/</url>
         </repository>
     </repositories>

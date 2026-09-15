@@ -15,10 +15,10 @@
  */
 package nl.knaw.dans.sword2examples;
 
-import gov.loc.repository.bagit.domain.Bag;
-import gov.loc.repository.bagit.reader.BagReader;
-import gov.loc.repository.bagit.verify.BagVerifier;
-import gov.loc.repository.bagit.writer.BagWriter;
+import nl.knaw.dans.bagit.domain.Bag;
+import nl.knaw.dans.bagit.reader.BagReader;
+import nl.knaw.dans.bagit.verify.BagVerifier;
+import nl.knaw.dans.bagit.writer.BagWriter;
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.ZipParameters;
 import nl.knaw.dans.sword2examples.api.entry.Entry;
