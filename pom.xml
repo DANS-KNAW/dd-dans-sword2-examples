@@ -32,7 +32,7 @@
         <connection>scm:git:https://github.com/DANS-KNAW/dd-dans-sword2-examples</connection>
         <developerConnection>scm:git:ssh://github.com/DANS-KNAW/dd-dans-sword2-examples</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/DANS-KNAW/${project.artifactId}</url>
+        <url>https://github.com/DANS-KNAW/dd-dans-sword2-examples</url>
     </scm>
 
     <dependencies>
