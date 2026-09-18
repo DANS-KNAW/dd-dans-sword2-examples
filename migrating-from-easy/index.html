@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Migrating from EASY - dd-dans-sword2-examples</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Migrating from EASY";
+        var mkdocs_page_input_path = "migrating-from-easy.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> dd-dans-sword2-examples
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Manual</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Migrating from EASY</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#service-url">Service URL</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ddm-schema-changes">DDM schema changes</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#new-dans-dataset-metadata-schema-and-uri">New DANS Dataset Metadata schema and URI</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#new-profile-element-ddmpersonaldata">New profile element: ddm:personalData</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#exactly-one-license-element-with-xsitypedctermsuri">Exactly one license element with xsi:type="dcterms:URI"</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#supported-licenses-data-station">Supported licenses (Data Station)</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#supported-licenses-vaas">Supported licenses (VaaS)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#new-element-ddmdatesofcollection-optional">New element ddm:datesOfCollection (optional)</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#new-element-ddmlanguage-optional">New element ddm:language (optional)</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#file-and-directory-names-are-sanitized-no-action-required-data-station-only">File and directory names are sanitized (no action required) (Data Station only)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#organizational-identifier-optional">Organizational identifier (optional)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#final-deposit-state-changed-to-published-data-station-and-accepted-vaas">Final deposit state changed to PUBLISHED (Data Station) and ACCEPTED (VaaS)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#original-metadata-is-stored-as-original-metadatazip-data-station-only">Original metadata is stored as original-metadata.zip (Data Station only)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#files-outside-the-data-folder-are-not-archived">Files outside the data folder are not archived</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../arch/">⇒ DANS Data Station Architecture</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">dd-dans-sword2-examples</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Migrating from EASY</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples/edit/master/docs/migrating-from-easy.md">Edit on DANS-KNAW/dd-dans-sword2-examples</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="migrating-from-easy-to-a-data-station-or-vault-as-a-service">Migrating from EASY to a Data Station or Vault as a Service<a class="headerlink" href="#migrating-from-easy-to-a-data-station-or-vault-as-a-service" title="Permanent link">&para;</a></h1>
+<p>The Data Station SWORD2 service is mostly compatible with the legacy EASY SWORD2 service. However, a couple of things
+have changed that will require a
+change to the client code or configuration. Also, there are some added features. What follows is a list of all the
+changes. Optional ones are marked as
+such.</p>
+<div class="admonition note">
+<p class="admonition-title">Data Station vs Vault as a Service</p>
+<p>Clients can deposit to either a Data Station or the Vault as a Service (Vaas). The protocol is largely the same. 
+The differences are highlighted in the text with the notes <strong>(VaaS)</strong> and <strong>(Data Station)</strong>.</p>
+</div>
+<h2 id="service-url">Service URL<a class="headerlink" href="#service-url" title="Permanent link">&para;</a></h2>
+<p>The service URL has changed from <code>https://easy.dans.knaw.nl/sword2/collection/1</code> to a Data Station specific URL:</p>
+<ul>
+<li><code>https://sword2.archaeology.datastations.nl/collection/1</code></li>
+<li><code>https://sword2.ssh.datastations.nl/collection/1</code></li>
+<li><code>https://sword2.lifesciences.datastations.nl/collection/1</code></li>
+<li><code>https://sword2.phys-techsciences.datastations.nl/collection/1</code></li>
+</ul>
+<p>For the Vault as a Service the URL is:</p>
+<ul>
+<li><code>https://sword2.vault.datastations.nl/collection/&lt;client_name&gt;</code></li>
+</ul>
+<p>The client_name is provided by DANS and is unique for each client.</p>
+<p>Test deposits must be sent to the demo-server, which is hosted at the "demo" subdomain of the Data Station, e.g.,
+<code>https://demo.sword2.archaeology.datastations.nl/collection/1</code>. Since this is a test environment, this server is
+protected with an extra authentication header which is provided to our customers via a different channel.</p>
+<h2 id="ddm-schema-changes">DDM schema changes<a class="headerlink" href="#ddm-schema-changes" title="Permanent link">&para;</a></h2>
+<h3 id="new-dans-dataset-metadata-schema-and-uri">New DANS Dataset Metadata schema and URI<a class="headerlink" href="#new-dans-dataset-metadata-schema-and-uri" title="Permanent link">&para;</a></h3>
+<p>A new version of DANS Dataset Metadata has been introduced. To indicate that it is using the new schema
+the <code>dataset.xml</code> file in the deposit must use the new namespace: <code>http://schemas.dans.knaw.nl/dataset/ddm-v2/</code>.
+Deposits containing a legacy-version <code>dataset.xml</code> will be rejected.</p>
+<h3 id="new-profile-element-ddmpersonaldata">New profile element: <code>ddm:personalData</code><a class="headerlink" href="#new-profile-element-ddmpersonaldata" title="Permanent link">&para;</a></h3>
+<p>The <code>profile</code> element has a new, required element, that provides a statement about the presence of personal data in the
+dataset. It must be added as the last sub-element of <code>profile</code>. It has one required attribute <code>present</code>, which takes one
+of the following values: <code>Yes</code>, <code>No</code>, <code>Unknown</code>.</p>
+<p>Example:</p>
+<pre><code class="language-xml">
+&lt;ddm:profile&gt;
+    &lt;!-- other profile elements --&gt;
+    &lt;ddm:personalData present=&quot;No&quot;/&gt;
+&lt;/ddm:profile&gt;
+</code></pre>
+<h3 id="exactly-one-license-element-with-xsitypedctermsuri">Exactly one <code>license</code> element with <code>xsi:type="dcterms:URI"</code><a class="headerlink" href="#exactly-one-license-element-with-xsitypedctermsuri" title="Permanent link">&para;</a></h3>
+<p>There must be exactly one element with an <code>xsi:type</code> attribute set to <code>dcterms:URI</code>.</p>
+<h4 id="supported-licenses-data-station">Supported licenses <strong>(Data Station)</strong><a class="headerlink" href="#supported-licenses-data-station" title="Permanent link">&para;</a></h4>
+<p>The element text containing the URI of one of the licenses supported by the Data Station. The supported licenses can be
+retrieved from the Data Station API for example:</p>
+<pre><code class="language-bash">curl https://archaeology.datastations.nl/api/licenses | jq '.data[].uri' 
+</code></pre>
+<p>The use of <a href="https://stedolan.github.io/jq/" target="_blank">jq</a> to extract the URIs from the resulting JSON is optional,
+of course.</p>
+<p>Note, that in EASY SWORD2 some deviations from the license URI were allowed (for example both <code>http</code> and <code>https</code> as URI
+scheme were accepted). In Data Station SWORD2 you must provide the license URI identical character by character as in
+the list of supported licenses.</p>
+<h4 id="supported-licenses-vaas">Supported licenses <strong>(VaaS)</strong><a class="headerlink" href="#supported-licenses-vaas" title="Permanent link">&para;</a></h4>
+<p>The Vault as a Service only requires a license to be specified. It does not have a list of supported licenses, so any
+license URI is accepted.</p>
+<h3 id="new-element-ddmdatesofcollection-optional">New element <code>ddm:datesOfCollection</code> (optional)<a class="headerlink" href="#new-element-ddmdatesofcollection-optional" title="Permanent link">&para;</a></h3>
+<p>The <code>ddm:dcmiMetadata</code> section of DDM supports a new element <code>ddm:datesOfCollection</code> that allows you to specify the
+start and end dates for the date of collection. This will then be mapped to the Dataverse Citation Metadata field "Date
+of Collection" which is a structured field with Start and End subfields.</p>
+<p>In <code>ddm:datesOfCollection</code> the start and end dates must be entered in the element text, separated by a slash. The dates
+must be formatted as YYYY-MM-DD</p>
+<p>Example:</p>
+<pre><code class="language-xml">
+&lt;ddm:dcmiMetadata&gt;
+    &lt;!-- other elements --&gt;
+    &lt;ddm:datesOfCollection&gt;2018-01-02/2018-05-01&lt;/ddm:datesOfCollection&gt;
+    &lt;!-- other elements --&gt;
+&lt;/ddm:dcmiMetadata&gt;
+</code></pre>
+<h3 id="new-element-ddmlanguage-optional">New element <code>ddm:language</code> (optional)<a class="headerlink" href="#new-element-ddmlanguage-optional" title="Permanent link">&para;</a></h3>
+<p>The <code>ddm:dcmiMetadata</code> section of DDM supports a new element <code>ddm:language</code> that allows you to specify the language of the
+dataset in the attribute <code>code</code>. This will then be mapped to the Dataverse Citation Metadata field "Language". The supported
+encoding schemes are <code>ISO639-1</code> and <code>ISO639-2</code>; which one is used must be specified in the attribute <code>encodingScheme</code>. For
+the list of supported codes see the wikipedia page on <a href="https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes" target="_blank">ISO 639</a>.</p>
+<p>Note, that the element text can be specified, but is not checked against the code, nor is it mapped to any Dataverse field.</p>
+<p>Example:</p>
+<pre><code class="language-xml">
+&lt;ddm:dcmiMetadata&gt;
+    &lt;!-- other elements --&gt;
+    &lt;ddm:language encodingScheme=&quot;ISO639-1&quot; code=&quot;fy&quot;&gt;West-Fries&lt;/ddm:language&gt;
+    &lt;ddm:language encodingScheme=&quot;ISO639-2&quot; code=&quot;kal&quot;&gt;Groenlands&lt;/ddm:language&gt;
+    &lt;ddm:language encodingScheme=&quot;ISO639-2&quot; code=&quot;baq&quot;&gt;Baskisch&lt;/ddm:language&gt;
+    &lt;!-- other elements --&gt;
+&lt;/ddm:dcmiMetadata&gt;  
+</code></pre>
+<div class="admonition warn">
+<p class="admonition-title">dc:language not mapped (Data Station)</p>
+<p>In EASY SWORD2 the element <code>dc:language</code> was mapped to the EASY metadata field "Language" for a very limited set of
+languages. This is no longer the case. If you want to specify the language of the dataset, you must use the new
+element <code>ddm:language</code>.</p>
+</div>
+<h2 id="file-and-directory-names-are-sanitized-no-action-required-data-station-only">File and directory names are sanitized (no action required) <strong>(Data Station only)</strong><a class="headerlink" href="#file-and-directory-names-are-sanitized-no-action-required-data-station-only" title="Permanent link">&para;</a></h2>
+<p>Dataverse has specific rules about what characters it allows in file names and directory names.</p>
+<ul>
+<li>file names: all allowed <strong>except</strong>: <code>:</code>, <code>*</code>, <code>?</code>, <code>"</code>, <code>&lt;</code>, <code>&gt;</code>, <code>|</code>, <code>;</code>, <code>#</code>;</li>
+<li>directory names: <strong>only the following allowed</strong>: alphanumeric characters from ASCII, <code>_</code>, <code>-</code>, <code>.</code>, <code>\</code>, <code></code> (space)</li>
+</ul>
+<p>All forbidden characters are replaced with an underscore by Ingest Flow, so it is not necessary for the client to change
+any file or directory names. The original file and directory name are recorded in the file's description metadata in
+Dataverse, e.g. <code>original_filepath: path/with/strænge/&lt;chars&gt;</code></p>
+<h2 id="organizational-identifier-optional">Organizational identifier (optional)<a class="headerlink" href="#organizational-identifier-optional" title="Permanent link">&para;</a></h2>
+<p>The client now has the option to provide an organizational identifier. The Depositor Organization most likely assign its
+own identifier to its datasets. It is <strong>highly recommended</strong> to store this identifier with the dataset deposited in the
+Data Station, so that it can be more easily correlated with the information in the client's repository or database. This
+is done using two elements in <code>bag-info.txt</code>: <code>Has-Organizational-Identifier</code> and, if
+available, <code>Has-Organizational-Identifier-Version</code>. For example:</p>
+<pre><code class="language-text">Has-Organizational-Identifier: REPO1:1234
+Has-Organizational-Identifier-Version: 1
+</code></pre>
+<p><code>REPO1</code> is an organization specific prefix that must be agreed on with DANS beforehand. In this case <code>1234</code> would be the
+unique identifier that the REPO1 organization uses to reference the corresponding dataset. The version has no
+constraints and can be left out, if no such information is kept by the Depositor Organization.</p>
+<p>See also <a href="https://dans-knaw.github.io/dans-bagit-profile/versions/1.2.0/#4-deposit-data-station-context-requirements" target="_blank">DANS BagIt Profile, Section 4</a>.</p>
+<h2 id="final-deposit-state-changed-to-published-data-station-and-accepted-vaas">Final deposit state changed to <code>PUBLISHED</code> <strong>(Data Station)</strong> and <code>ACCEPTED</code> <strong>(VaaS)</strong><a class="headerlink" href="#final-deposit-state-changed-to-published-data-station-and-accepted-vaas" title="Permanent link">&para;</a></h2>
+<p>The final state of a deposit in EASY was <code>ARCHIVED</code>. This has changed to the state <code>PUBLISHED</code> for the Data Stations and
+<code>ACCEPTED</code> for the Vault as a Service. The meaning is still that the client can stop tracking the deposit and rest
+assured that archiving in the <a href="https://dans-knaw.github.io/dans-datastation-architecture/#dans-data-vault" target="_blank">DANS Data Vault</a> will occur in due course.</p>
+<h2 id="original-metadata-is-stored-as-original-metadatazip-data-station-only">Original metadata is stored as <code>original-metadata.zip</code> <strong>(Data Station only)</strong><a class="headerlink" href="#original-metadata-is-stored-as-original-metadatazip-data-station-only" title="Permanent link">&para;</a></h2>
+<p>The DDM schema allows you to include any DCTERMS element you wish in the section <code>ddm:dcmiMetadata</code> section. However,
+not everything is mapped to Dataverse metadata. To ensure that the originally deposited metadata is not lost, it is
+saved in an uncompressed ZIP-file in the dataset, called <code>original-metadata.zip</code>. It includes <code>dataset.xml</code>
+and <code>files.xml</code>.</p>
+<h2 id="files-outside-the-data-folder-are-not-archived">Files outside the <code>data</code> folder are not archived<a class="headerlink" href="#files-outside-the-data-folder-are-not-archived" title="Permanent link">&para;</a></h2>
+<p>The EASY SWORD2 Service stored any files it did not process in the archive "as is". The Data Station SWORD2 Service will
+not store any files outside the <code>data</code> folder of the bag (except for the original metadata: see previous section).</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Manual"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../arch/" class="btn btn-neutral float-right" title="⇒ DANS Data Station Architecture">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/DANS-KNAW/dd-dans-sword2-examples" class="fa fa-code-fork" style="color: #fcfcfc"> DANS-KNAW/dd-dans-sword2-examples</a>
+        </span>
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../arch/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
