@@ -22,8 +22,8 @@ import net.sourceforge.argparse4j.inf.Namespace;
 import nl.knaw.dans.sword2examples.api.entry.Entry;
 import nl.knaw.dans.sword2examples.api.entry.Link;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -117,8 +117,8 @@ public class ContinuedDeposit {
 
                 // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
                 bodyText = Common.readEntityAsString(response.getEntity());
-                if (response.getStatusLine().getStatusCode() != 201) {
-                    System.err.println("FAILED. Status = " + response.getStatusLine());
+                if (response.getCode() != 201) {
+                    System.err.println("FAILED. Status = " + response.getCode() + " " + response.getReasonPhrase());
                     System.err.println("Response body follows:");
                     Common.printXml(bodyText);
                     System.exit(2);
@@ -139,8 +139,8 @@ public class ContinuedDeposit {
                 System.out.printf("POST-ing chunk of %d bytes to SE-IRI (remaining: %d) ... ", currentChunkSize, remaining);
                 try (CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", seIri, "bag.zip." + count++, "application/octet-stream", http, remaining > 0)) {
                     bodyText = Common.readEntityAsString(response.getEntity());
-                    if (response.getStatusLine().getStatusCode() != 200) {
-                        System.err.println("FAILED. Status = " + response.getStatusLine());
+                    if (response.getCode() != 200) {
+                        System.err.println("FAILED. Status = " + response.getCode() + " " + response.getReasonPhrase());
                         System.err.println("Response body follows:");
                         System.err.println(bodyText);
                         System.exit(2);

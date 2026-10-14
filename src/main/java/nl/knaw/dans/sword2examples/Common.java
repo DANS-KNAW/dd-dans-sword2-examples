@@ -29,21 +29,23 @@ import nl.knaw.dans.sword2examples.api.statement.FeedEntry;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpEntity;
-import org.apache.http.auth.AuthScope;
-import org.apache.http.auth.UsernamePasswordCredentials;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.client.methods.RequestBuilder;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.impl.client.BasicCredentialsProvider;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicHeader;
+import org.apache.hc.client5.http.auth.AuthScope;
+import org.apache.hc.client5.http.auth.UsernamePasswordCredentials;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
+import org.apache.hc.core5.http.ClassicHttpRequest;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.HttpHost;
+import org.apache.hc.core5.http.io.entity.ByteArrayEntity;
+import org.apache.hc.core5.http.io.entity.FileEntity;
+import org.apache.hc.core5.http.io.support.ClassicRequestBuilder;
+import org.apache.hc.core5.http.message.BasicHeader;
 import org.xml.sax.InputSource;
 
 import javax.xml.XMLConstants;
@@ -130,8 +132,8 @@ public class Common {
             System.out.print("Checking deposit status ... ");
             try (CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(new HttpGet(statUri)))) {
                 System.out.print("(received response) ... ");
-                if (response.getStatusLine().getStatusCode() != 200) {
-                    System.out.println("Stat-IRI returned " + response.getStatusLine().getStatusCode());
+                if (response.getCode() != 200) {
+                    System.out.println("Stat-IRI returned " + response.getCode());
                     System.exit(1);
                 }
                 bodyText = readEntityAsString(response.getEntity());
@@ -242,7 +244,7 @@ public class Common {
     public static CloseableHttpClient createHttpClient(URI uri, String uid, String pw) {
         System.out.println("Using Basic-Auth: " + uid + ":" + pw);
         BasicCredentialsProvider credsProv = new BasicCredentialsProvider();
-        credsProv.setCredentials(new AuthScope(uri.getHost(), uri.getPort()), new UsernamePasswordCredentials(uid, pw));
+        credsProv.setCredentials(new AuthScope(new HttpHost(uri.getScheme(), uri.getHost(), uri.getPort())), new UsernamePasswordCredentials(uid, pw.toCharArray()));
         return HttpClients.custom().setDefaultCredentialsProvider(credsProv).build();
     }
 
@@ -261,23 +263,24 @@ public class Common {
         // filename, size, mimeType, Boolean.toString(inProgress)));
         byte[] chunk = readChunk(dis, size);
         String md5 = new String(Hex.encodeHex(dis.getMessageDigest().digest()));
-        HttpUriRequest request = RequestBuilder.create(method).setUri(uri).setConfig(RequestConfig.custom()
-                /*
-                 * When using an HTTPS-connection EXPECT-CONTINUE must be enabled, otherwise buffer overflow may follow
-                 */
-                .setExpectContinueEnabled(true).build()) //
+        ClassicHttpRequest request = ClassicRequestBuilder.create(method).setUri(uri) //
             .addHeader("Content-Disposition", String.format("attachment; filename=%s", filename)) //
             .addHeader("Content-MD5", md5) //
             .addHeader("Packaging", BAGIT_URI) //
             .addHeader("In-Progress", Boolean.toString(inProgress)) //
             .setEntity(new ByteArrayEntity(chunk, ContentType.create(mimeType))) //
             .build();
-        CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(request));
+        var context = HttpClientContext.create();
+        /*
+         * When using an HTTPS-connection EXPECT-CONTINUE must be enabled, otherwise buffer overflow may follow
+         */
+        context.setRequestConfig(RequestConfig.custom().setExpectContinueEnabled(true).build());
+        CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(request), context);
         // System.out.println("Response received.");
         return response;
     }
 
-    private static HttpUriRequest addXAuthorizationToRequest(HttpUriRequest request) throws Exception {
+    private static ClassicHttpRequest addXAuthorizationToRequest(ClassicHttpRequest request) throws Exception {
         File autValueFile = new File("x-auth-value.txt");
         if (autValueFile.exists()) {
             request.addHeader("X-Authorization", FileUtils.readFileToString(autValueFile, StandardCharsets.UTF_8).trim());
@@ -337,10 +340,10 @@ public class Common {
 
     public static void validateZip(File zippedBag, URI uri) throws Exception {
         try (CloseableHttpClient httpClient = createHttpClient()) {
-            var post = RequestBuilder
+            var post = ClassicRequestBuilder
                 .post(uri)
                 .setHeader("Content-Type", "application/zip")
-                .setEntity(new FileEntity(zippedBag)).build();
+                .setEntity(new FileEntity(zippedBag, ContentType.create("application/zip"))).build();
             var response = httpClient.execute(addXAuthorizationToRequest(post));
             var responseText = IOUtils.toString(response.getEntity().getContent(), StandardCharsets.UTF_8);
             System.out.println(responseText);
@@ -403,4 +406,3 @@ public class Common {
     }
 
 }
-
