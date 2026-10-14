@@ -21,8 +21,8 @@ import net.sourceforge.argparse4j.inf.ArgumentParserException;
 import net.sourceforge.argparse4j.inf.Namespace;
 import nl.knaw.dans.sword2examples.api.entry.Entry;
 import nl.knaw.dans.sword2examples.api.entry.Link;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -114,7 +114,7 @@ public class SimpleDeposit {
 
                     // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
                     bodyText = Common.readEntityAsString(response.getEntity());
-                    if (response.getStatusLine().getStatusCode() != 201) {
+                    if (response.getCode() != 201) {
                         System.err.println("FAILED. Status = " + response.getStatusLine());
                         System.err.println("Response body follows:");
                         Common.printXml(bodyText);
