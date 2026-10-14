@@ -118,7 +118,7 @@ public class ContinuedDeposit {
                 // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
                 bodyText = Common.readEntityAsString(response.getEntity());
                 if (response.getCode() != 201) {
-                    System.err.println("FAILED. Status = " + response.getStatusLine());
+                    System.err.println("FAILED. Status = " + response.getCode() + " " + response.getReasonPhrase());
                     System.err.println("Response body follows:");
                     Common.printXml(bodyText);
                     System.exit(2);
@@ -140,7 +140,7 @@ public class ContinuedDeposit {
                 try (CloseableHttpResponse response = Common.sendChunk(dis, chunkSize, "POST", seIri, "bag.zip." + count++, "application/octet-stream", http, remaining > 0)) {
                     bodyText = Common.readEntityAsString(response.getEntity());
                     if (response.getCode() != 200) {
-                        System.err.println("FAILED. Status = " + response.getStatusLine());
+                        System.err.println("FAILED. Status = " + response.getCode() + " " + response.getReasonPhrase());
                         System.err.println("Response body follows:");
                         System.err.println(bodyText);
                         System.exit(2);

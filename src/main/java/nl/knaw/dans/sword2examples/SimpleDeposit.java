@@ -115,7 +115,7 @@ public class SimpleDeposit {
                     // 3. Check the response. If transfer corrupt (MD5 doesn't check out), report and exit.
                     bodyText = Common.readEntityAsString(response.getEntity());
                     if (response.getCode() != 201) {
-                        System.err.println("FAILED. Status = " + response.getStatusLine());
+                        System.err.println("FAILED. Status = " + response.getCode() + " " + response.getReasonPhrase());
                         System.err.println("Response body follows:");
                         Common.printXml(bodyText);
                         System.exit(2);

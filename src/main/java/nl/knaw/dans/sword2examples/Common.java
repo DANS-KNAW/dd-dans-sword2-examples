@@ -37,6 +37,7 @@ import org.apache.hc.client5.http.impl.auth.BasicCredentialsProvider;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.client5.http.protocol.HttpClientContext;
 import org.apache.hc.core5.http.ClassicHttpRequest;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
@@ -243,7 +244,7 @@ public class Common {
     public static CloseableHttpClient createHttpClient(URI uri, String uid, String pw) {
         System.out.println("Using Basic-Auth: " + uid + ":" + pw);
         BasicCredentialsProvider credsProv = new BasicCredentialsProvider();
-        credsProv.setCredentials(new AuthScope(new HttpHost(uri.getHost(), uri.getPort())), new UsernamePasswordCredentials(uid, pw.toCharArray()));
+        credsProv.setCredentials(new AuthScope(new HttpHost(uri.getScheme(), uri.getHost(), uri.getPort())), new UsernamePasswordCredentials(uid, pw.toCharArray()));
         return HttpClients.custom().setDefaultCredentialsProvider(credsProv).build();
     }
 
@@ -262,18 +263,19 @@ public class Common {
         // filename, size, mimeType, Boolean.toString(inProgress)));
         byte[] chunk = readChunk(dis, size);
         String md5 = new String(Hex.encodeHex(dis.getMessageDigest().digest()));
-        ClassicHttpRequest request = ClassicRequestBuilder.create(method).setUri(uri).setConfig(RequestConfig.custom()
-                /*
-                 * When using an HTTPS-connection EXPECT-CONTINUE must be enabled, otherwise buffer overflow may follow
-                 */
-                .setExpectContinueEnabled(true).build()) //
+        ClassicHttpRequest request = ClassicRequestBuilder.create(method).setUri(uri) //
             .addHeader("Content-Disposition", String.format("attachment; filename=%s", filename)) //
             .addHeader("Content-MD5", md5) //
             .addHeader("Packaging", BAGIT_URI) //
             .addHeader("In-Progress", Boolean.toString(inProgress)) //
             .setEntity(new ByteArrayEntity(chunk, ContentType.create(mimeType))) //
             .build();
-        CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(request));
+        var context = HttpClientContext.create();
+        /*
+         * When using an HTTPS-connection EXPECT-CONTINUE must be enabled, otherwise buffer overflow may follow
+         */
+        context.setRequestConfig(RequestConfig.custom().setExpectContinueEnabled(true).build());
+        CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(request), context);
         // System.out.println("Response received.");
         return response;
     }
