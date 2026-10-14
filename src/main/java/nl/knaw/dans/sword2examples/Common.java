@@ -129,7 +129,7 @@ public class Common {
         while (true) {
             Thread.sleep(numberOfSecondBetweenStatusChecks * 1000);
             System.out.print("Checking deposit status ... ");
-            try (CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(new HttpGet(statUri))) {
+            try (CloseableHttpResponse response = http.execute(addXAuthorizationToRequest(new HttpGet(statUri)))) {
                 System.out.print("(received response) ... ");
                 if (response.getCode() != 200) {
                     System.out.println("Stat-IRI returned " + response.getCode());
@@ -338,7 +338,7 @@ public class Common {
 
     public static void validateZip(File zippedBag, URI uri) throws Exception {
         try (CloseableHttpClient httpClient = createHttpClient()) {
-            var post = RequestBuilder
+            var post = ClassicRequestBuilder
                 .post(uri)
                 .setHeader("Content-Type", "application/zip")
                 .setEntity(new FileEntity(zippedBag, ContentType.create("application/zip"))).build();
