@@ -356,8 +356,8 @@ and yet another one
         <!-- Preferred: selection by term URI -->
         <ddm:reportNumber
                 subjectScheme="ABR Rapporten"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/7a99aaba-c1e7-49a4-9dd8-d295dbcc870e"
-                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/d6b2e162-3f49-4027-8f03-28194db2905e"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/7a99aaba-c1e7-49a4-9dd8-d295dbcc870e"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/2/d6b2e162-3f49-4027-8f03-28194db2905e"
                 reportNo="123-A">
             BAAC 123-A
         </ddm:reportNumber>
@@ -365,7 +365,7 @@ and yet another one
         <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
         <ddm:reportNumber
                 subjectScheme="ABR Rapporten"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/7a99aaba-c1e7-49a4-9dd8-d295dbcc870e"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/7a99aaba-c1e7-49a4-9dd8-d295dbcc870e"
                 valueCode="RCERAMZ"
                 reportNo="123-A">
             RCE Rapportage Archeologische Monumentenzorg
@@ -375,15 +375,15 @@ and yet another one
         <!-- Preferred: selection by term URI -->
         <ddm:acquisitionMethod
                 subjectScheme="ABR verwervingswijzen"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/554ca1ec-3ed8-42d3-ae4b-47bcb848b238"
-                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/967bfdf8-c44d-4c69-8318-34ed1ab1e784">
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/554ca1ec-3ed8-42d3-ae4b-47bcb848b238"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/2/967bfdf8-c44d-4c69-8318-34ed1ab1e784">
             archeologisch: onderwaterarcheologie
         </ddm:acquisitionMethod>
 
         <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
         <ddm:acquisitionMethod
                 subjectScheme="ABR verwervingswijzen"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/554ca1ec-3ed8-42d3-ae4b-47bcb848b238"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/554ca1ec-3ed8-42d3-ae4b-47bcb848b238"
                 valueCode="ICO">
             indirect: collectiebeschrijving
         </ddm:acquisitionMethod>
@@ -393,15 +393,15 @@ and yet another one
         <!-- Preferred: selection by term URI -->
         <ddm:subject
                 subjectScheme="ABR Complextypen"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/e9546020-4b28-4819-b0c2-29e7c864c5c0"
-                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/9a758542-8d0d-4afa-b664-104b938fe13e">
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/e9546020-4b28-4819-b0c2-29e7c864c5c0"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/2/9a758542-8d0d-4afa-b664-104b938fe13e">
             houtwinning
         </ddm:subject>
 
         <!-- Preferred: selection by term URI -->
         <ddm:subject
                 subjectScheme="ABR Complextypen"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/e9546020-4b28-4819-b0c2-29e7c864c5c0"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/e9546020-4b28-4819-b0c2-29e7c864c5c0"
                 valueURI="https://data.cultureelerfgoed.nl/term/id/rn/60bc20cd-0010-48ea-8d6f-42d333bfb39d">
             vaartuig, houten huid en houten spanten
         </ddm:subject>
@@ -409,7 +409,7 @@ and yet another one
         <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
         <ddm:subject
                 subjectScheme="ABR Complextypen"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/e9546020-4b28-4819-b0c2-29e7c864c5c0"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/e9546020-4b28-4819-b0c2-29e7c864c5c0"
                 valueCode="CTHD.KPL">
             kapel
         </ddm:subject>
@@ -418,15 +418,15 @@ and yet another one
         <!-- Preferred: selection by term URI -->
         <ddm:subject
                 subjectScheme="ABR Artefacten"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/22cbb070-6542-48f0-8afe-7d98d398cc0b"
-                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/5bd97bc0-697c-4128-b7b2-d2324bc4a2e1">
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/22cbb070-6542-48f0-8afe-7d98d398cc0b"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/2/5bd97bc0-697c-4128-b7b2-d2324bc4a2e1">
             rammelaar
         </ddm:subject>
 
         <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
         <ddm:subject
                 subjectScheme="ABR Artefacten"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/22cbb070-6542-48f0-8afe-7d98d398cc0b"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/22cbb070-6542-48f0-8afe-7d98d398cc0b"
                 valueCode="SPEELGD.SCHAAKST">
             schaakstuk
         </ddm:subject>
@@ -434,7 +434,7 @@ and yet another one
         <!-- Legacy term URI (with "rn") will be converted to new term URI-->
         <ddm:subject
                 subjectScheme="ABR Artefacten"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/22cbb070-6542-48f0-8afe-7d98d398cc0b"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/22cbb070-6542-48f0-8afe-7d98d398cc0b"
                 valueURI="https://data.cultureelerfgoed.nl/term/id/rn/84bccabd-a463-4fda-8a7c-60390699436b">
             aambeeld
         </ddm:subject>
@@ -452,15 +452,15 @@ and yet another one
         <!-- Preferred: selection by term URI -->
         <ddm:temporal
                 subjectScheme="ABR Periodes"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/9b688754-1315-484b-9c89-8817e87c1e84"
-                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/5b253754-ddd0-4ae0-a5bb-555176bca858">
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/9b688754-1315-484b-9c89-8817e87c1e84"
+                valueURI="https://data.cultureelerfgoed.nl/term/id/abr/2/5b253754-ddd0-4ae0-a5bb-555176bca858">
             Midden Romeinse Tijd A
         </ddm:temporal>
 
         <!-- Legacy support: selection by "hasCode" attribute instead of the term URI -->
         <ddm:temporal
                 subjectScheme="ABR Periodes"
-                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/9b688754-1315-484b-9c89-8817e87c1e84"
+                schemeURI="https://data.cultureelerfgoed.nl/term/id/abr/2/9b688754-1315-484b-9c89-8817e87c1e84"
                 valueCode="BRONSV">
             Vroege Bronstijd
         </ddm:temporal>
